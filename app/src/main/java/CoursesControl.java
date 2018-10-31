@@ -4,19 +4,25 @@ public class CoursesControl
 {
     private List<Course> Courses;
 
-    public boolean AddCourse(String xName)
+    // Checks before adding a course
+    // Returns the added course if successful
+    public Course addCourse(String xName)
     {
         Course course = new Course();
 
         // Try to set the name
-        if (!SetNameCheck(course, xName))
-            return false;
+        if (!setNameCheck(course, xName))
+            return null;
 
         // Try to add to the list
-        return Courses.add(course);
+        Courses.add(course);
+
+        return course;
     }
 
-    public boolean RemoveCourse(String xName)
+    // Remove a course with a name
+    // True if successful removal
+    public boolean removeCourse(String xName)
     {
         Course course = null;
 
@@ -34,8 +40,14 @@ public class CoursesControl
             return Courses.remove(course);
     }
 
+    // Get an array of all courses
+    public Course[] getCourses()
+    {
+        return Courses.toArray(new Course[Courses.size()]);
+    }
+
     // True if successful set
-    private boolean SetNameCheck(Course xCourse, String xName)
+    private boolean setNameCheck(Course xCourse, String xName)
     {
         // Check if a course with the name already exists
         for (Course iCourse : Courses)
