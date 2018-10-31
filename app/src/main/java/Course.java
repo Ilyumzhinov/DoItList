@@ -1,26 +1,14 @@
 public class Course
 {
-    private int ID = 0;
     private String Name;
 
-    // Allows to assign ID only once
-    public boolean setID(int xID)
-    {
-        if (ID == 0)
-            return false;
-
-        ID = xID;
-        return true;
-    }
-
-    public int getID()
-    {
-        return ID;
-    }
-
     // Name should be smaller than 50 characters long
+    // Returns true if set was successful
     public boolean setName(String xName)
     {
+        if (xName.trim().equals(""))
+            return false;
+
         if (xName.length() > 50)
             return false;
 
