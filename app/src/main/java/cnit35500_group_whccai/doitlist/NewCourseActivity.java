@@ -23,6 +23,8 @@ public class NewCourseActivity extends AppCompatActivity
         setContentView(R.layout.activity_new_course);
     }
 
+    // Save button
+    // Reference: https://stackoverflow.com/questions/38158953/how-to-create-button-in-action-bar-in-android
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
