@@ -4,14 +4,14 @@ import java.text.SimpleDateFormat;
 public class Task {
 
     private String taskName;
-    private Course taskCourse;
+    private String taskCourse;
     private SimpleDateFormat taskStart;
     private SimpleDateFormat taskDeadline;
     private SimpleDateFormat timeSpent;
     private String taskDetail;
 
     /* Constructor for a new task, sets all variables as well as time spent to 0 */
-    Task(String name, Course course, SimpleDateFormat start, SimpleDateFormat deadline, String detail) {
+    Task(String name, String course, SimpleDateFormat start, SimpleDateFormat deadline, String detail) {
         taskName = name;
         taskCourse = course;
         taskStart = start;
@@ -30,7 +30,7 @@ public class Task {
         return taskName;
     }
 
-    public Course getTaskCourse() {
+    public String getTaskCourse() {
         return taskCourse;
     }
 
@@ -56,7 +56,7 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public void setTaskCourse(Course taskCourse) {
+    public void setTaskCourse(String taskCourse) {
         this.taskCourse = taskCourse;
     }
 
