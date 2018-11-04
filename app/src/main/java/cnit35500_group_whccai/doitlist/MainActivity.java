@@ -19,4 +19,9 @@ public class MainActivity extends AppCompatActivity
         Intent i = new Intent(this,TaskActivity.class);
         startActivity(i);
     }
+
+    public void NewCourse(View view) {
+        Intent i = new Intent(this,NewCourseActivity.class);
+        startActivity(i);
+    }
 }
