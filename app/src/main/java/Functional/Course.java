@@ -1,3 +1,5 @@
+package Functional;
+
 public class Course
 {
     private String Name;

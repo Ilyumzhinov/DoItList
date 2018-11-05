@@ -1,8 +1,12 @@
+package Functional;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class CoursesControl
+public class CoursesControl implements Serializable
 {
-    private List<Course> Courses;
+    private List<Course> Courses = new ArrayList<>();
 
     // Checks before adding a course
     // Returns the added course if successful
@@ -43,11 +47,11 @@ public class CoursesControl
     // Get an array of all courses
     public Course[] getCourses()
     {
-        return Courses.toArray(new Course[Courses.size()]);
+        return Courses.toArray(new Course[0]);
     }
 
     // True if successful set
-    private boolean setNameCheck(Course xCourse, String xName)
+    public boolean setNameCheck(Course xCourse, String xName)
     {
         // Check if a course with the name already exists
         for (Course iCourse : Courses)
