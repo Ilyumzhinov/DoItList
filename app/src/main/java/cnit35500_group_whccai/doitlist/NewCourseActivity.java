@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Objects;
@@ -31,39 +32,49 @@ public class NewCourseActivity extends AppCompatActivity
         if (extras != null)
         {
             mCourses = (CoursesControl) getIntent().getSerializableExtra("courses"); //Obtaining data
-
-            if (mCourses == null)
-                Toast.makeText(this, "failed", Toast.LENGTH_LONG).show();
-            else
-                Toast.makeText(this, mCourses.getCourses()[0].getName(), Toast.LENGTH_LONG).show();
         }
     }
 
     // Add Save button
     // Reference: https://stackoverflow.com/questions/38158953/how-to-create-button-in-action-bar-in-android
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.toolbar_buttons, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     // Handle button activities
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
 
-        if (id == R.id.mybutton) {
-            onSupportNavigateUp();
+        if (id == R.id.btnSave)
+        {
+            // Try to save a course
+            TextView txt = findViewById(R.id.txtInpCourseTitle);
+            if (null == mCourses.addCourse(txt.getText().toString()))
+            {
+                Toast.makeText(this, "Something is wrong", Toast.LENGTH_SHORT).show();
+                return false;
+            } else
+                txt.setText("");
+
+            // Send data back
+            Intent i = new Intent();
+            i.putExtra("courses", mCourses);
+            setResult(RESULT_OK, i);
+
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
+
     // Reference: https://stackoverflow.com/questions/15686555/display-back-button-on-action-bar
     @Override
-    public boolean onSupportNavigateUp(){
-        // Send data back
-        Intent i = new Intent();
-        i.putExtra("courses", mCourses);
-        setResult(RESULT_OK, i);
+    public boolean onSupportNavigateUp()
+    {
 
         finish();
         return true;

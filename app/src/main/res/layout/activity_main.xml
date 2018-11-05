@@ -5,33 +5,36 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
     tools:context=".MainActivity">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/imgMenu"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/productivity" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imgMenu"
+        android:gravity="center_vertical|center_horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.88">
 
-            <ImageView
-                android:id="@+id/imgMenu"
-                android:layout_width="350dp"
-                android:layout_height="350dp"
-                android:layout_gravity="center"
-                android:src="@drawable/productivity" />
-
             <Button
                 android:id="@+id/btnNew"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal|fill_horizontal"
                 android:layout_margin="5dp"
                 android:background="@drawable/roundedbutton"
                 android:onClick="NewTask"
@@ -43,7 +46,7 @@
                 android:id="@+id/btnNewCourse"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal|fill_horizontal"
                 android:layout_margin="5dp"
                 android:background="@drawable/roundedbutton"
                 android:onClick="NewCourse"
@@ -55,7 +58,7 @@
                 android:id="@+id/btnToday"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal|fill_horizontal"
                 android:layout_margin="5dp"
                 android:background="@drawable/roundedbutton"
                 android:text="Today"
@@ -63,6 +66,6 @@
                 android:textSize="15sp" />
 
         </LinearLayout>
-    </ScrollView>
+    </RelativeLayout>
 
 </RelativeLayout>
