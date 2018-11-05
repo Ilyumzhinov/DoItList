@@ -50,7 +50,7 @@ public class NewCourseActivity extends AppCompatActivity
     {
         int id = item.getItemId();
 
-        if (id == R.id.btnSave)
+        if (id == R.id.btnSaveToolBar)
         {
             // Try to save a course
             TextView txt = findViewById(R.id.txtInpCourseTitle);
@@ -68,6 +68,19 @@ public class NewCourseActivity extends AppCompatActivity
 
             finish();
         }
+        else if (id == R.id.btnDeleteToolBar)
+        {
+            // Try to save a course
+            TextView txt = findViewById(R.id.txtInpCourseTitle);
+            if (!mCourses.removeCourse(txt.getText().toString()))
+            {
+                Toast.makeText(this, "Something is wrong", Toast.LENGTH_SHORT).show();
+                return false;
+            } else
+                txt.setText("");
+
+            // Send data back
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -75,6 +88,9 @@ public class NewCourseActivity extends AppCompatActivity
     @Override
     public boolean onSupportNavigateUp()
     {
+        Intent i = new Intent();
+        i.putExtra("courses", mCourses);
+        setResult(RESULT_CANCELED, i);
 
         finish();
         return true;
