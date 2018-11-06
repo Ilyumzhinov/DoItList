@@ -141,7 +141,7 @@ public class NewCourseActivity extends AppCompatActivity
 
             if (null == mCourses.addCourse(txt.getText().toString()))
             {
-                Toast.makeText(this, "Failed to added: may already exist", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error: wrong input OR may exist already", Toast.LENGTH_SHORT).show();
                 return false;
             } else
             {
