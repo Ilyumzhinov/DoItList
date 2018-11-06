@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity
     public void NewTask(View view)
     {
         Intent i = new Intent(this, TaskActivity.class);
-        startActivity(i);
 
         // Pass an object to another activity
         // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android

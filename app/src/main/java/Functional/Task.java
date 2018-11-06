@@ -2,30 +2,18 @@ package Functional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.xml.datatype.Duration;
 
 public class Task {
 
     private String taskName;
     private Course taskCourse;
-    private SimpleDateFormat taskStart;
-    private SimpleDateFormat taskDeadline;
-    private SimpleDateFormat timeSpent;
+    private Date taskDeadline;
+    private Duration timeEst;
+    private Duration timeSpent;
     private String taskDetail;
-
-    /* Constructor for a new task, sets all variables as well as time spent to 0 */
-    Task(String name, Course course, SimpleDateFormat start, SimpleDateFormat deadline, String detail) {
-        taskName = name;
-        taskCourse = course;
-        taskStart = start;
-        taskDeadline = deadline;
-        taskDetail = detail;
-        // Set total time spent to 0, catch parse error which shouldn't be an issue.
-        try {
-            timeSpent.parse("00:00");
-        } catch (ParseException e) {
-            return;
-        }
-    }
 
     // All get methods
     public String getTaskName() {
@@ -36,15 +24,15 @@ public class Task {
         return taskCourse;
     }
 
-    public SimpleDateFormat getTaskStart() {
-        return taskStart;
-    }
-
-    public SimpleDateFormat getTaskDeadline() {
+    public Date getTaskDeadline() {
         return taskDeadline;
     }
 
-    public SimpleDateFormat getTimeSpent() {
+    public Duration getTimeEst() {
+        return timeEst;
+    }
+
+    public Duration getTimeSpent() {
         return timeSpent;
     }
 
@@ -62,15 +50,15 @@ public class Task {
         this.taskCourse = taskCourse;
     }
 
-    public void setTaskStart(SimpleDateFormat taskStart) {
-        this.taskStart = taskStart;
-    }
-
-    public void setTaskDeadline(SimpleDateFormat taskDeadline) {
+    public void setTaskDeadline(Date taskDeadline) {
         this.taskDeadline = taskDeadline;
     }
 
-    public void setTimeSpent(SimpleDateFormat timeSpent) {
+    public void setTimeEst(Duration timeEst) {
+        this.timeEst = timeEst;
+    }
+
+    public void setTimeSpent(Duration timeSpent) {
         this.timeSpent = timeSpent;
     }
 

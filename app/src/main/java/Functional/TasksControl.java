@@ -3,7 +3,10 @@ package Functional;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.xml.datatype.Duration;
 
 public class TasksControl implements Serializable
 {
@@ -11,10 +14,12 @@ public class TasksControl implements Serializable
 
     // Checks before adding a course
     // Returns the added course if successful
-    public Task addTask(String name, Course course, SimpleDateFormat start, SimpleDateFormat deadline, String detail)
+    public Task addTask(String name, String detail, Course course, Date deadline, Duration timeEst, boolean highlight)
     {
         // Try to set the values
-        Task task = new Task(name, course, start, deadline, detail);
+        Task task = new Task();
+
+
 
         // Try to add to the list
         Tasks.add(task);

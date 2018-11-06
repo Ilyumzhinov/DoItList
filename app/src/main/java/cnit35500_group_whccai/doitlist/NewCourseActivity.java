@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -98,7 +99,7 @@ public class NewCourseActivity extends AppCompatActivity
             itemSave.setVisible(true);
     }
 
-    // Add ToolBar button
+    // Add ToolBar buttons
     // Reference: https://stackoverflow.com/questions/38158953/how-to-create-button-in-action-bar-in-android
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

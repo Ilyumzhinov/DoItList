@@ -1,6 +1,9 @@
 package cnit35500_group_whccai.doitlist;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.icu.util.LocaleData;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,18 +13,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 import Functional.Course;
 import Functional.CoursesControl;
 import Functional.TasksControl;
 
-public class TaskActivity extends AppCompatActivity
+public class TaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener
 {
 
     private DrawerLayout drawerLayout;
@@ -30,6 +41,9 @@ public class TaskActivity extends AppCompatActivity
     private TasksControl mTasks;
     private CoursesControl mCourses;
     private Menu menu;
+
+    private int day, month, year, hour, minute;
+    private int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,7 +74,7 @@ public class TaskActivity extends AppCompatActivity
 
         // Populate spinner with currency values
         // Reference: SpinnerTest1
-        Spinner spinner = findViewById(R.id.spnClass);
+        Spinner spinner = findViewById(R.id.spnCourse);
 
         // Create an ArrayAdapter
         ArrayAdapter<Course> adapter = new ArrayAdapter<>
@@ -118,6 +132,18 @@ public class TaskActivity extends AppCompatActivity
     {
     }
 
+
+    public void PickDate(View view)
+    {
+        Calendar calc = Calendar.getInstance();
+        this.year = calc.get(Calendar.YEAR);
+        this.month = calc.get(Calendar.MONTH);
+        this.day = calc.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, this.year, this.month, this.day);
+        datePickerDialog.show();
+    }
+
     // Add ToolBar button
     // Reference: https://stackoverflow.com/questions/38158953/how-to-create-button-in-action-bar-in-android
     @Override
@@ -147,22 +173,16 @@ public class TaskActivity extends AppCompatActivity
             // To-Do
         } else if (id == R.id.btnSaveToolBar)
         {
-            // Try to save a course
-            TextView txt = findViewById(R.id.txtInpCourseTitle);
+            // Try to save a task
+            TextView nameView = findViewById(R.id.edtTaskName);
+            TextView notesView = findViewById(R.id.edtNote);
+            Spinner courseView = findViewById(R.id.spnCourse);
+            TextView dueDateView = findViewById(R.id.edtDueDate);
+            EditText timeEstView = findViewById(R.id.edtTimeEst);
+            CheckBox highlight = findViewById(R.id.chkHighlight);
 
-            if (null == mCourses.addCourse(txt.getText().toString()))
-            {
-                Toast.makeText(this, "Failed to added: may already exist", Toast.LENGTH_SHORT).show();
-                return false;
-            } else
-            {
-                LinearLayout lytCourses = findViewById(R.id.lytCourses);
-                TextView tv = new TextView(this);
-                tv.setText(txt.getText().toString());
-                lytCourses.addView(tv);
+           // mTasks.addTask(nameView.getText().toString(), courseView.getSelectedItem(), )
 
-                txt.setText("");
-            }
             //
         } else if (id == R.id.btnDoneToolBar)
         {
@@ -175,5 +195,43 @@ public class TaskActivity extends AppCompatActivity
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Implement method for setting date and time in a dialog window
+    // Reference: https://www.youtube.com/watch?v=a_Ap6T4RlYU
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
+    {
+        this.yearFinal = year;
+        this.monthFinal = month + 1;
+        this.dayFinal = dayOfMonth;
+
+        Calendar calc = Calendar.getInstance();
+
+        this.hour = calc.get(Calendar.HOUR);
+        this.minute = calc.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, this.hour, this.minute,true);
+        timePickerDialog.show();
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute)
+    {
+        this.hourFinal = hourOfDay;
+        this.minuteFinal = minute;
+
+        TextView txtView = findViewById(R.id.edtDueDate);
+
+        String date = String.valueOf(this.monthFinal) + "-" + String.valueOf(this.dayFinal) + "-" + String.valueOf(this.yearFinal) + " at " + String.valueOf(this.hourFinal) + ":" + String.valueOf(this.minuteFinal);
+
+        txtView.setText(date);
+
+        // Set new defaults
+        this.year = this.yearFinal;
+        this.month = this.monthFinal;
+        this.day = this.dayFinal;
+        this.hour = this.hourFinal;
+        this.minute = this.minuteFinal;
     }
 }
