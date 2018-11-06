@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -175,16 +176,8 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
             String name = ((TextView) findViewById(R.id.edtTaskName)).getText().toString();
             String notes = ((TextView) findViewById(R.id.edtNotes)).getText().toString();
             Course course = (Course) ((Spinner) findViewById(R.id.spnCourse)).getSelectedItem();
-            Date dueDate;
-            try
-            {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
+            LocalDateTime dueDate = LocalDateTime.of(yearFinal, monthFinal, dayFinal, hourFinal, minuteFinal);
 
-                dueDate = dateFormat.parse(((TextView) findViewById(R.id.edtDueDate)).getText().toString());
-            } catch (ParseException c)
-            {
-                dueDate = null;
-            }
             Long timeEst = calculateMinutesFromTimeInput(((EditText) findViewById(R.id.edtTimeEst)).getText().toString());
             Boolean highlight = ((CheckBox) findViewById(R.id.chkHighlight)).isChecked();
             //
@@ -218,9 +211,8 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
             hours = Long.valueOf(parsedTime[0]);
             minutes = Long.valueOf(parsedTime[0]);
         }
-        catch (Exception c)
+        catch (Exception ignored)
         {
-
         }
 
         return hours * 60L + minutes;

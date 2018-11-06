@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        // Receive Intent info from NewCourseActivity
         switch (requestCode)
         {
+            // Receive Intent info from NewCourseActivity
             case cNewCourseRequestCode:
                 if (resultCode == RESULT_OK)
                 {
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity
                         mCourses = (CoursesControl) data.getSerializableExtra("courses");
                     }
                 }
+                // Receive Intent info from TaskActivity
             case cNewTaskRequestCode:
                 if (resultCode == RESULT_OK)
                 {
@@ -84,35 +85,5 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
         }
-//        if (requestCode == cNewCourseRequestCode)
-//        {
-//            if (resultCode == RESULT_OK)
-//            {
-//                // Receive object through Intent
-//                // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
-//                Bundle extras = data.getExtras();
-//                if (extras != null)
-//                {
-//                    // Obtain data
-//                    mCourses = (CoursesControl) data.getSerializableExtra("courses");
-//                }
-//            }
-//        } // Receive Intent info from TaskActivity
-//        else if (requestCode == cNewTaskRequestCode)
-//        {
-//            if (resultCode == RESULT_OK)
-//            {
-//                // Receive object through Intent
-//                // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
-//                Bundle extras = data.getExtras();
-//                if (extras != null)
-//                {
-//                    // Obtain data
-//                    mTasks = (TasksControl) data.getSerializableExtra("tasks");
-//                    mCourses = (CoursesControl) data.getSerializableExtra("courses");
-//                }
-//            }
-//
-//        }
     }
 }

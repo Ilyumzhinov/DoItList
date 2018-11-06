@@ -1,12 +1,13 @@
 package Functional;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Task
 {
     private String taskName;
     private Course taskCourse;
-    private Date taskDeadline;
+    private LocalDateTime taskDateAdded;
+    private LocalDateTime taskDeadline;
     private Long taskTimeEst;
     private Long taskTimeSpent;
     private String taskDetail;
@@ -23,9 +24,14 @@ public class Task
         return taskCourse;
     }
 
-    public Date getDeadline()
+    public LocalDateTime getDeadline()
     {
         return taskDeadline;
+    }
+
+    public LocalDateTime getDateAdded()
+    {
+        return taskDateAdded;
     }
 
     public Long getTimeEst()
@@ -61,9 +67,14 @@ public class Task
         this.taskCourse = taskCourse;
     }
 
-    public void setDeadline(Date taskDeadline)
+    public void setDeadline(LocalDateTime taskDeadline)
     {
         this.taskDeadline = taskDeadline;
+    }
+
+    public void setDateAdded(LocalDateTime taskDateAdded)
+    {
+        this.taskDateAdded = taskDateAdded;
     }
 
     public void setTimeEst(Long timeEst)
