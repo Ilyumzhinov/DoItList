@@ -23,4 +23,10 @@ public class Course
     {
         return Name;
     }
+
+    @Override
+    public String toString()
+    {
+        return this.Name;
+    }
 }
