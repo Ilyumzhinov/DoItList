@@ -12,46 +12,87 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <LinearLayout
+
+            <RelativeLayout
                 android:id="@+id/nameTask"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:background="@color/colorPrimary"
-                android:padding="20dp">
+                android:padding="30dp">
 
-                <TextView
-                    android:id="@+id/lblNewTask"
+                <LinearLayout
+                    android:id="@+id/taskName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Task Name"
-                    android:textColor="#8ed2b9"
-                    android:textSize="25sp"
-                    android:textStyle="bold"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp">
 
-                <EditText
-                    android:id="@+id/edtTaskName"
+                    <TextView
+                        android:id="@+id/lblNewTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Task Name"
+                        android:textColor="#8ed2b9"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edtTaskName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter task name"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter task name"
-                    android:inputType="textPersonName" />
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/taskName"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/lblNote"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Notes"
-                    android:textColor="#8ed2b9"
-                    android:textSize="20sp"/>
+                    <TextView
+                        android:id="@+id/lblNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Deadline"
+                        android:textColor="#8ed2b9"
+                        android:textSize="20sp" />
 
-                <EditText
-                    android:id="@+id/edtNote"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:hint="Enter note"/>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_marginVertical="20dp"
+                        android:gravity="center">
 
-            </LinearLayout>
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="0"
+                            android:src="@drawable/alarm" />
+
+                        <TextView
+                            android:id="@+id/edtDueDate"
+                            android:layout_width="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:enabled="true"
+                            android:hint="pick date/time"
+                            android:inputType="datetime|date" />
+
+                        <Button
+                            android:id="@+id/btnDateTimePick"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="PickDate"
+                            android:text="Pick" />
+
+                    </TableRow>
+
+                </LinearLayout>
+            </RelativeLayout>
 
             <TableLayout
                 android:id="@+id/taskDetail"
@@ -126,45 +167,6 @@
                 </TableRow>
 
                 <TableRow
-                    android:layout_marginVertical="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_weight="0"
-                        android:src="@drawable/alarm" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="0"
-                        android:text="Due Date"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/edtDueDate"
-                        android:layout_width="0dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_weight="1"
-                        android:enabled="true"
-                        android:inputType="datetime|date"
-                        android:text="pick first" />
-
-                    <Button
-                        android:id="@+id/btnDateTimePick"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="PickDate"
-                        android:text="Pick" />
-
-                </TableRow>
-
-                <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginVertical="20dp"
@@ -195,13 +197,6 @@
                         android:ems="10"
                         android:inputType="time" />
 
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        android:text="hours" />
-
                 </TableRow>
 
                 <TableRow
@@ -231,6 +226,39 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="0"
+                        android:src="@mipmap/ic_launcher_round" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="0"
+                        android:text="Notes"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/edtNotes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="time" />
 
                 </TableRow>
 

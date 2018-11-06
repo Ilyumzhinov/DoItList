@@ -19,10 +19,10 @@ public class TasksControl implements Serializable
         // Try to set the values
         Task task = new Task();
 
-        task.setTaskName(name);
-        task.setTaskDetail(detail);
-        task.setTaskCourse(course);
-        task.setTaskDeadline(deadline);
+        task.setName(name);
+        task.setDetail(detail);
+        task.setCourse(course);
+        task.setDeadline(deadline);
         task.setTimeEst(timeEst);
         task.setTimeSpent(null);
 
