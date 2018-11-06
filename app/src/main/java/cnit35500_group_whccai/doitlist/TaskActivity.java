@@ -3,11 +3,10 @@ package cnit35500_group_whccai.doitlist;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.icu.util.LocaleData;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,15 +15,15 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -68,8 +67,7 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
             // Obtain data
             mTasks = (TasksControl) getIntent().getSerializableExtra("tasks");
             mCourses = (CoursesControl) getIntent().getSerializableExtra("courses");
-        }
-        else return;
+        } else return;
         //
 
         // Populate spinner with currency values
@@ -167,24 +165,35 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
 
         if (id == R.id.btnRemoveToolBar)
         {
-           // To-Do
+            // To-Do
         } else if (id == R.id.btnEditToolBar)
         {
             // To-Do
         } else if (id == R.id.btnSaveToolBar)
         {
+            // Try to get input values
+            String name = ((TextView) findViewById(R.id.edtTaskName)).getText().toString();
+            String notes = ((TextView) findViewById(R.id.edtNotes)).getText().toString();
+            Course course = (Course) ((Spinner) findViewById(R.id.spnCourse)).getSelectedItem();
+            Date dueDate;
+            try
+            {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
+
+                dueDate = dateFormat.parse(((TextView) findViewById(R.id.edtDueDate)).getText().toString());
+            } catch (ParseException c)
+            {
+                dueDate = null;
+            }
+            Long timeEst = calculateMinutesFromTimeInput(((EditText) findViewById(R.id.edtTimeEst)).getText().toString());
+            Boolean highlight = ((CheckBox) findViewById(R.id.chkHighlight)).isChecked();
+            //
+
             // Try to save a task
-            TextView nameView = findViewById(R.id.edtTaskName);
-            TextView notesView = findViewById(R.id.edtNote);
-            Spinner courseView = findViewById(R.id.spnCourse);
-            TextView dueDateView = findViewById(R.id.edtDueDate);
-            EditText timeEstView = findViewById(R.id.edtTimeEst);
-            CheckBox highlightView = findViewById(R.id.chkHighlight);
-
-            mTasks.addTask(nameView.getText().toString(),notesView.getText().toString(), (Course) courseView.getSelectedItem(),null,null,highlightView.isChecked());
-
-            Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
-
+            if (null != mTasks.addTask(name, notes, course, dueDate, timeEst, highlight))
+                Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, "Failed to add!", Toast.LENGTH_SHORT).show();
             //
         } else if (id == R.id.btnDoneToolBar)
         {
@@ -197,6 +206,24 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public Long calculateMinutesFromTimeInput(String xTime)
+    {
+        Long hours = 0L, minutes = 0L;
+
+        try
+        {
+            String[] parsedTime = xTime.split(":");
+            hours = Long.valueOf(parsedTime[0]);
+            minutes = Long.valueOf(parsedTime[0]);
+        }
+        catch (Exception c)
+        {
+
+        }
+
+        return hours * 60L + minutes;
     }
 
     // Implement method for setting date and time in a dialog window
@@ -213,7 +240,7 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
         this.hour = calc.get(Calendar.HOUR);
         this.minute = calc.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, this.hour, this.minute,true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, this.hour, this.minute, true);
         timePickerDialog.show();
     }
 
@@ -225,7 +252,7 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
 
         TextView txtView = findViewById(R.id.edtDueDate);
 
-        String date = String.valueOf(this.monthFinal) + "-" + String.valueOf(this.dayFinal) + "-" + String.valueOf(this.yearFinal) + " at " + String.valueOf(this.hourFinal) + ":" + String.valueOf(this.minuteFinal);
+        String date = String.valueOf(this.monthFinal) + "-" + String.valueOf(this.dayFinal) + "-" + String.valueOf(this.yearFinal) + " " + String.valueOf(this.hourFinal) + ":" + String.valueOf(this.minuteFinal);
 
         txtView.setText(date);
 

@@ -14,7 +14,7 @@ public class TasksControl implements Serializable
 
     // Checks before adding a course
     // Returns the added course if successful
-    public Task addTask(String name, String detail, Course course, Date deadline, Duration timeEst, Boolean highlight)
+    public Task addTask(String name, String detail, Course course, Date deadline, Long timeEst, Boolean highlight)
     {
         // Try to set the values
         Task task = new Task();
@@ -24,12 +24,14 @@ public class TasksControl implements Serializable
         task.setCourse(course);
         task.setDeadline(deadline);
         task.setTimeEst(timeEst);
-        task.setTimeSpent(null);
+        task.setTimeSpent(0L);
+        task.setHighlight(false);
 
         // Try to add to the list
-        Tasks.add(task);
+        if (!Tasks.add(task))
+            return task;
 
-        return task;
+        return null;
     }
 
     // Remove a course with a name

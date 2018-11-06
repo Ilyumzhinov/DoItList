@@ -56,34 +56,63 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         // Receive Intent info from NewCourseActivity
-        if (requestCode == cNewCourseRequestCode)
+        switch (requestCode)
         {
-            if (resultCode == RESULT_OK)
-            {
-                // Receive object through Intent
-                // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
-                Bundle extras = data.getExtras();
-                if (extras != null)
+            case cNewCourseRequestCode:
+                if (resultCode == RESULT_OK)
                 {
-                    // Obtain data
-                    mCourses = (CoursesControl) data.getSerializableExtra("courses");
+                    // Receive object through Intent
+                    // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
+                    Bundle extras = data.getExtras();
+                    if (extras != null)
+                    {
+                        // Obtain data
+                        mCourses = (CoursesControl) data.getSerializableExtra("courses");
+                    }
                 }
-            }
-        } // Receive Intent info from TaskActivity
-        else if (requestCode == cNewTaskRequestCode)
-        {
-            if (resultCode == RESULT_OK)
-            {
-                // Receive object through Intent
-                // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
-                Bundle extras = data.getExtras();
-                if (extras != null)
+            case cNewTaskRequestCode:
+                if (resultCode == RESULT_OK)
                 {
-                    // Obtain data
-                    mTasks = (TasksControl) data.getSerializableExtra("tasks");
-                    mCourses = (CoursesControl) data.getSerializableExtra("courses");
+                    // Receive object through Intent
+                    // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
+                    Bundle extras = data.getExtras();
+                    if (extras != null)
+                    {
+                        // Obtain data
+                        mTasks = (TasksControl) data.getSerializableExtra("tasks");
+                        mCourses = (CoursesControl) data.getSerializableExtra("courses");
+                    }
                 }
-            }
         }
+//        if (requestCode == cNewCourseRequestCode)
+//        {
+//            if (resultCode == RESULT_OK)
+//            {
+//                // Receive object through Intent
+//                // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
+//                Bundle extras = data.getExtras();
+//                if (extras != null)
+//                {
+//                    // Obtain data
+//                    mCourses = (CoursesControl) data.getSerializableExtra("courses");
+//                }
+//            }
+//        } // Receive Intent info from TaskActivity
+//        else if (requestCode == cNewTaskRequestCode)
+//        {
+//            if (resultCode == RESULT_OK)
+//            {
+//                // Receive object through Intent
+//                // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
+//                Bundle extras = data.getExtras();
+//                if (extras != null)
+//                {
+//                    // Obtain data
+//                    mTasks = (TasksControl) data.getSerializableExtra("tasks");
+//                    mCourses = (CoursesControl) data.getSerializableExtra("courses");
+//                }
+//            }
+//
+//        }
     }
 }

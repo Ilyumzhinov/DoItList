@@ -2,15 +2,13 @@ package Functional;
 
 import java.util.Date;
 
-import javax.xml.datatype.Duration;
-
 public class Task
 {
     private String taskName;
     private Course taskCourse;
     private Date taskDeadline;
-    private Duration taskTimeEst;
-    private Duration taskTimeSpent;
+    private Long taskTimeEst;
+    private Long taskTimeSpent;
     private String taskDetail;
     private Boolean taskHighlight;
 
@@ -30,12 +28,12 @@ public class Task
         return taskDeadline;
     }
 
-    public Duration getTimeEst()
+    public Long getTimeEst()
     {
         return taskTimeEst;
     }
 
-    public Duration getTimeSpent()
+    public Long getTimeSpent()
     {
         return taskTimeSpent;
     }
@@ -68,12 +66,12 @@ public class Task
         this.taskDeadline = taskDeadline;
     }
 
-    public void setTimeEst(Duration timeEst)
+    public void setTimeEst(Long timeEst)
     {
         this.taskTimeEst = timeEst;
     }
 
-    public void setTimeSpent(Duration timeSpent)
+    public void setTimeSpent(Long timeSpent)
     {
         this.taskTimeSpent = timeSpent;
     }
