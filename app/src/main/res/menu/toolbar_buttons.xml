@@ -2,13 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-    android:id="@+id/btnSaveToolBar"
-    android:title="Save"
-    app:showAsAction="always"
-    />
+        android:id="@+id/btnRemoveToolBar"
+        android:title="Remove"
+        app:showAsAction="ifRoom"
+        android:visible="false"
+        />
+
     <item
-        android:id="@+id/btnDeleteToolBar"
-        android:title="Delete"
+        android:id="@+id/btnEditToolBar"
+        android:title="Edit"
         app:showAsAction="always"
+        android:visible="false"
+        />
+
+    <item
+        android:id="@+id/btnDoneToolBar"
+        android:title="Done"
+        app:showAsAction="always"
+        android:visible="false"
+        />
+
+    <item
+        android:id="@+id/btnSaveToolBar"
+        android:title="Save"
+        app:showAsAction="always"
+        android:visible="false"
         />
 </menu>

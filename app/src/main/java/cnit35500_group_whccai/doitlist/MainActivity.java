@@ -49,15 +49,12 @@ public class MainActivity extends AppCompatActivity
         {
             // Receive object through Intent
             // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
-//            Bundle extras = data.getExtras();
-//            if (extras != null)
-//            {
-//                // Obtain data
-//                mCourses = (CoursesControl) getIntent().getSerializableExtra("courses");
-//            }
-//
-//            if (mCourses.getCourses().length > 0)
-//                Toast.makeText(this, mCourses.getCourses()[0].getName(), Toast.LENGTH_LONG).show();
+            Bundle extras = data.getExtras();
+            if (extras != null)
+            {
+                // Obtain data
+                mCourses = (CoursesControl) data.getSerializableExtra("courses");
+            }
         }
     }
 }
