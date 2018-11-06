@@ -57,10 +57,24 @@ public class CoursesControl implements Serializable
         for (Course iCourse : Courses)
         {
             if (xName.equals(iCourse.getName()))
-               return false;
+                return false;
         }
 
         // Check if name satisfies other Set requirements
         return xCourse.setName(xName);
+    }
+
+    public Course getTaskAt(Integer index)
+    {
+        return Courses.get(index);
+    }
+
+    public Course getCourseWithName(String name)
+    {
+        for (Course iCourse : Courses)
+            if (iCourse.getName().equals(name))
+                return iCourse;
+
+        return null;
     }
 }

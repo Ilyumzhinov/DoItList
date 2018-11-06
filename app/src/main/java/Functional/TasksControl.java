@@ -14,12 +14,17 @@ public class TasksControl implements Serializable
 
     // Checks before adding a course
     // Returns the added course if successful
-    public Task addTask(String name, String detail, Course course, Date deadline, Duration timeEst, boolean highlight)
+    public Task addTask(String name, String detail, Course course, Date deadline, Duration timeEst, Boolean highlight)
     {
         // Try to set the values
         Task task = new Task();
 
-
+        task.setTaskName(name);
+        task.setTaskDetail(detail);
+        task.setTaskCourse(course);
+        task.setTaskDeadline(deadline);
+        task.setTimeEst(timeEst);
+        task.setTimeSpent(null);
 
         // Try to add to the list
         Tasks.add(task);
@@ -52,4 +57,6 @@ public class TasksControl implements Serializable
     {
         return Tasks.toArray(new Task[0]);
     }
+
+    public Task getTaskAt(Integer index) {return Tasks.get(index);}
 }

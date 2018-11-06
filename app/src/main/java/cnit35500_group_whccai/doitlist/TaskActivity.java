@@ -154,7 +154,7 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
         this.menu = menu;
 
         // Show and hide menu buttons
-        updateMenuVisibles("d");
+        updateMenuVisibles("sd");
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -179,9 +179,11 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
             Spinner courseView = findViewById(R.id.spnCourse);
             TextView dueDateView = findViewById(R.id.edtDueDate);
             EditText timeEstView = findViewById(R.id.edtTimeEst);
-            CheckBox highlight = findViewById(R.id.chkHighlight);
+            CheckBox highlightView = findViewById(R.id.chkHighlight);
 
-           // mTasks.addTask(nameView.getText().toString(), courseView.getSelectedItem(), )
+            mTasks.addTask(nameView.getText().toString(),notesView.getText().toString(), (Course) courseView.getSelectedItem(),null,null,highlightView.isChecked());
+
+            Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
 
             //
         } else if (id == R.id.btnDoneToolBar)

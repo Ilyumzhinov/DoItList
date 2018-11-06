@@ -6,7 +6,8 @@ import java.util.Date;
 
 import javax.xml.datatype.Duration;
 
-public class Task {
+public class Task
+{
 
     private String taskName;
     private Course taskCourse;
@@ -14,56 +15,80 @@ public class Task {
     private Duration timeEst;
     private Duration timeSpent;
     private String taskDetail;
+    private Boolean taskHighlight;
 
     // All get methods
-    public String getTaskName() {
+    public String getTaskName()
+    {
         return taskName;
     }
 
-    public Course getTaskCourse() {
+    public Course getTaskCourse()
+    {
         return taskCourse;
     }
 
-    public Date getTaskDeadline() {
+    public Date getTaskDeadline()
+    {
         return taskDeadline;
     }
 
-    public Duration getTimeEst() {
+    public Duration getTimeEst()
+    {
         return timeEst;
     }
 
-    public Duration getTimeSpent() {
+    public Duration getTimeSpent()
+    {
         return timeSpent;
     }
 
-    public String getTaskDetail() {
+    public String getTaskDetail()
+    {
         return taskDetail;
     }
 
+    public Boolean getTaskHighlight()
+    {
+        return taskHighlight;
+    }
+
+
     // All set methods
 
-    public void setTaskName(String taskName) {
+    public void setTaskName(String taskName)
+    {
         this.taskName = taskName;
     }
 
-    public void setTaskCourse(Course taskCourse) {
+    public void setTaskCourse(Course taskCourse)
+    {
         this.taskCourse = taskCourse;
     }
 
-    public void setTaskDeadline(Date taskDeadline) {
+    public void setTaskDeadline(Date taskDeadline)
+    {
         this.taskDeadline = taskDeadline;
     }
 
-    public void setTimeEst(Duration timeEst) {
+    public void setTimeEst(Duration timeEst)
+    {
         this.timeEst = timeEst;
     }
 
-    public void setTimeSpent(Duration timeSpent) {
+    public void setTimeSpent(Duration timeSpent)
+    {
         this.timeSpent = timeSpent;
     }
 
-    public void setTaskDetail(String taskDetail) {
+    public void setTaskDetail(String taskDetail)
+    {
         this.taskDetail = taskDetail;
+    }
+
+    public void setTaskHighlight(Boolean taskHighlight)
+    {
+        this.taskHighlight = taskHighlight;
     }
 
     @Override
