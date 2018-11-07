@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         ssTemp2.setEndDate(LocalDateTime.of(2018, 11, 4, 0, 35));
 
         // Test
-        mTasks.addTask("Task Test", "Test task", mCourses.getCourseWithName("default"), LocalDateTime.of(2018, 11, 15, 23, 59), 5, true);
+        mTasks.addTask("Task Test", "Test task", mCourses.getCourseWithName("default"), LocalDateTime.of(2018, 11, 15, 23, 59), 45, true);
         mTasks.getTaskAt(0).addSession(ssTemp);
         mTasks.getTaskAt(0).addSession(ssTemp2);
         mTasks.getTaskAt(0).setDateAdded(LocalDateTime.of(2018, 11, 1, 23, 59));
@@ -193,35 +193,36 @@ public class MainActivity extends AppCompatActivity
 
     public void RecordTask(View view)
     {
+        Thread thread = new Thread()
+        {
+            @Override
+            public void run()
+            {
+                int spentTime = 0;
+                int totalTime = 9999;
+
+                while (spentTime < totalTime)
+                {
+                    try
+                    {
+                        Thread.sleep(60000); // Just to display the progress
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    spentTime += 1;
+
+                    handler.sendMessage(new Message());
+                }
+            }
+        };
+
         if (!mRecordTaskStatus)
         {
             mTasks.getTaskAt(0).startRecordingTime();
 
             view.setBackground(getDrawable(R.drawable.roundeditem_active));
 
-            Thread thread = new Thread()
-            {
-                @Override
-                public void run()
-                {
-                    int spentTime = 4;
-
-                    while (spentTime < 5)
-                    {
-                        try
-                        {
-                            Thread.sleep(60000); // Just to display the progress
-                        } catch (InterruptedException e)
-                        {
-                            e.printStackTrace();
-                        }
-                        spentTime += 1;
-
-
-                        handler.sendMessage(new Message());
-                    }
-                }
-            };
             thread.start();
 
             mRecordTaskStatus = true;
@@ -231,7 +232,9 @@ public class MainActivity extends AppCompatActivity
 
             view.setBackground(getDrawable(R.drawable.roundeditem));
 
-            mRecordTaskStatus = true;
+            mRecordTaskStatus = false;
+
+            thread.interrupt();
         }
     }
 }

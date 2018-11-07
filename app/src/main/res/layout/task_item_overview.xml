@@ -143,6 +143,15 @@
             android:paddingEnd="20dp">
 
             <TextView
+                android:id="@+id/lblTaskState"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="active"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:visibility="invisible" />
+
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
