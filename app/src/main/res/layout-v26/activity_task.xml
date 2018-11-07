@@ -259,7 +259,7 @@
                         android:layout_weight="1"
                         android:ems="10"
                         android:hint="anything important?"
-                        android:inputType="time" />
+                        android:inputType="textMultiLine" />
 
                 </TableRow>
 

@@ -1,8 +1,12 @@
 package cnit35500_group_whccai.doitlist;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -11,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import Functional.CoursesControl;
+import Functional.Session;
 import Functional.Task;
 import Functional.TasksControl;
 
@@ -35,10 +40,19 @@ public class MainActivity extends AppCompatActivity
         // Set default value
         mCourses.addCourse("default");
 
+        Session ssTemp = new Session();
+        ssTemp.setStartDate(LocalDateTime.of(2018, 11, 1, 0, 0));
+        ssTemp.setEndDate(LocalDateTime.of(2018, 11, 1, 0, 2));
+
+        Session ssTemp2 = new Session();
+        ssTemp2.setStartDate(LocalDateTime.of(2018, 11, 4, 0, 33));
+        ssTemp2.setEndDate(LocalDateTime.of(2018, 11, 4, 0, 35));
+
         // Test
-        mTasks.addTask("Task Test","Test task",mCourses.getCourseWithName("default"),LocalDateTime.of(2018,11,15,23,59),5,true);
-        mTasks.getTaskAt(0).setTimeSpent(3);
-        mTasks.getTaskAt(0).setDateAdded(LocalDateTime.of(2018,11,1,23,59));
+        mTasks.addTask("Task Test", "Test task", mCourses.getCourseWithName("default"), LocalDateTime.of(2018, 11, 15, 23, 59), 5, true);
+        mTasks.getTaskAt(0).addSession(ssTemp);
+        mTasks.getTaskAt(0).addSession(ssTemp2);
+        mTasks.getTaskAt(0).setDateAdded(LocalDateTime.of(2018, 11, 1, 23, 59));
         populateTaskItemView(mTasks.getTaskAt(0));
     }
 
@@ -141,5 +155,83 @@ public class MainActivity extends AppCompatActivity
         ProgressBar timeSpent = findViewById(R.id.prgSpent);
         timeSpent.setMax(xtask.getTimeEst());
         timeSpent.setProgress(xtask.getTimeSpent());
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            Task xtask = mTasks.getTaskAt(0);
+            TextView txt;
+
+            //
+            Integer remain = xtask.getTimeEst() - xtask.getTimeSpent();
+
+            txt = findViewById(R.id.txtTaskTimeRemaining);
+            txt.setText(String.valueOf(remain) + " min");
+
+            //
+            txt = findViewById(R.id.txtTaskTimeSpent);
+            txt.setText(String.valueOf(xtask.getTimeSpent()) + " min");
+
+            //
+            long timeBefore = ChronoUnit.MINUTES.between(LocalDateTime.now(), xtask.getDeadline());
+
+            txt = findViewById(R.id.txtTaskBeforeDeadline);
+            txt.setText(String.valueOf(timeBefore) + " min");
+
+
+            //
+            ProgressBar timeSpent = findViewById(R.id.prgSpent);
+            timeSpent.setProgress(xtask.getTimeSpent());
+        }
+    };
+
+    private boolean mRecordTaskStatus = false;
+
+    public void RecordTask(View view)
+    {
+        if (!mRecordTaskStatus)
+        {
+            mTasks.getTaskAt(0).startRecordingTime();
+
+            view.setBackground(getDrawable(R.drawable.roundeditem_active));
+
+            Thread thread = new Thread()
+            {
+                @Override
+                public void run()
+                {
+                    int spentTime = 4;
+
+                    while (spentTime < 5)
+                    {
+                        try
+                        {
+                            Thread.sleep(60000); // Just to display the progress
+                        } catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        spentTime += 1;
+
+
+                        handler.sendMessage(new Message());
+                    }
+                }
+            };
+            thread.start();
+
+            mRecordTaskStatus = true;
+        } else
+        {
+            mTasks.getTaskAt(0).stopRecordingTime();
+
+            view.setBackground(getDrawable(R.drawable.roundeditem));
+
+            mRecordTaskStatus = true;
+        }
     }
 }

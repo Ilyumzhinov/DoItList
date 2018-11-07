@@ -9,9 +9,14 @@ public class Task
     private LocalDateTime taskDateAdded;
     private LocalDateTime taskDeadline;
     private Integer taskTimeEst;
-    private Integer taskTimeSpent;
     private String taskDetail;
     private Boolean taskHighlight;
+    private SessionsControl taskSessions;
+
+    Task()
+    {
+        taskSessions = new SessionsControl();
+    }
 
     // All get methods
     public String getName()
@@ -41,7 +46,7 @@ public class Task
 
     public Integer getTimeSpent()
     {
-        return taskTimeSpent;
+        return taskSessions.getGrandTotal();
     }
 
     public String getDetail()
@@ -54,9 +59,12 @@ public class Task
         return taskHighlight;
     }
 
+    public Session[] getSessions()
+    {
+        return taskSessions.getSessions();
+    }
 
     // All set methods
-
     public void setName(String taskName)
     {
         this.taskName = taskName;
@@ -82,9 +90,19 @@ public class Task
         this.taskTimeEst = timeEst;
     }
 
-    public void setTimeSpent(Integer timeSpent)
+    public void startRecordingTime()
     {
-        this.taskTimeSpent = timeSpent;
+        this.taskSessions.openSession();
+    }
+
+    public void stopRecordingTime()
+    {
+        this.taskSessions.closeSession();
+    }
+
+    public void addSession(Session session)
+    {
+        this.taskSessions.addSession(session);
     }
 
     public void setDetail(String taskDetail)

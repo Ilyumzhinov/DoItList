@@ -9,8 +9,7 @@ public class TasksControl implements Serializable
 {
     private final static List<Task> Tasks = new ArrayList<>();
 
-    // Checks before adding a course
-    // Returns the added course if successful
+    // Returns the added task if successful
     public Task addTask(String name, String detail, Course course, LocalDateTime deadline, Integer timeEst, Boolean highlight)
     {
         // Try to set the values
@@ -22,7 +21,6 @@ public class TasksControl implements Serializable
         task.setDeadline(deadline);
         task.setDateAdded(LocalDateTime.now());
         task.setTimeEst(timeEst);
-        task.setTimeSpent(0);
         task.setHighlight(highlight);
 
         // Try to add to the list
@@ -31,9 +29,9 @@ public class TasksControl implements Serializable
         return task;
     }
 
-    // Remove a course with a name
+    // Remove a task with a name
     // True if successful removal
-    public boolean removeCourse(Task xTask)
+    public boolean removeTask(Task xTask)
     {
         Task task = null;
 
@@ -51,7 +49,7 @@ public class TasksControl implements Serializable
             return Tasks.remove(task);
     }
 
-    // Get an array of all courses
+    // Get an array of all tasks
     public Task[] getTasks()
     {
         return Tasks.toArray(new Task[0]);
