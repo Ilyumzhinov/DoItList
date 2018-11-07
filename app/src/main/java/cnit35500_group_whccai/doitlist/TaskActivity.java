@@ -174,20 +174,33 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
         } else if (id == R.id.btnSaveToolBar)
         {
             // Try to get input values
-            String name = ((TextView) findViewById(R.id.edtTaskName)).getText().toString();
-            String notes = ((TextView) findViewById(R.id.edtNotes)).getText().toString();
-            Course course = (Course) ((Spinner) findViewById(R.id.spnCourse)).getSelectedItem();
-            LocalDateTime dueDate = LocalDateTime.of(yearFinal, monthFinal, dayFinal, hourFinal, minuteFinal);
-
-            Integer timeEst = calculateMinutesFromTimeInput(((EditText) findViewById(R.id.edtTimeEst)).getText().toString());
-            Boolean highlight = ((CheckBox) findViewById(R.id.chkHighlight)).isChecked();
+            String name, notes;
+            Course course;
+            LocalDateTime dueDate;
+            Integer timeEst;
+            Boolean highlight;
+            try {
+                name = ((TextView) findViewById(R.id.edtTaskName)).getText().toString();
+                notes = ((TextView) findViewById(R.id.edtNotes)).getText().toString();
+                course = (Course) ((Spinner) findViewById(R.id.spnCourse)).getSelectedItem();
+                dueDate = LocalDateTime.of(yearFinal, monthFinal, dayFinal, hourFinal, minuteFinal);
+                timeEst = calculateMinutesFromTimeInput(((EditText) findViewById(R.id.edtTimeEst)).getText().toString());
+                highlight = ((CheckBox) findViewById(R.id.chkHighlight)).isChecked();
+            } catch (Exception e) {
+                Toast.makeText(this,"Check input values!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
             //
 
             // Try to save a task
-            if (null != mTasks.addTask(name, notes, course, dueDate, timeEst, highlight))
+            try {
+                mTasks.addTask(name, notes, course, dueDate, timeEst, highlight);
                 Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
-            else
+            } catch (Exception  e) {
                 Toast.makeText(this, "Failed to add!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
             //
         } else if (id == R.id.btnDoneToolBar)
         {
