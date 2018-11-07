@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,6 +25,62 @@ public class MainActivity extends AppCompatActivity
 
     private final static int cNewCourseRequestCode = 1;
     private final static int cNewTaskRequestCode = 2;
+
+    Thread thUpdateViews = new Thread()
+    {
+        @Override
+        public void run()
+        {
+            int spentTime = 0;
+            int totalTime = 9999;
+
+            while (spentTime < totalTime)
+            {
+                handler.sendMessage(new Message());
+
+                try
+                {
+                    Thread.sleep(6000); // Just to display the progress
+                } catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+                spentTime += 1;
+            }
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            Task xtask = mTasks.getTaskAt(0);
+            TextView txt;
+
+            //
+            Integer remain = xtask.getTimeEst() - xtask.getTimeSpent();
+
+            txt = findViewById(R.id.txtTaskTimeRemaining);
+            txt.setText(String.valueOf(remain) + " min");
+
+            //
+            txt = findViewById(R.id.txtTaskTimeSpent);
+            txt.setText(String.valueOf(xtask.getTimeSpent()) + " min");
+
+            //
+            long timeBefore = ChronoUnit.MINUTES.between(LocalDateTime.now(), xtask.getDeadline());
+
+            txt = findViewById(R.id.txtTaskBeforeDeadline);
+            txt.setText(String.valueOf(timeBefore) + " min");
+
+
+            //
+            ProgressBar timeSpent = findViewById(R.id.prgSpent);
+            timeSpent.setProgress(xtask.getTimeSpent());
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,6 +109,8 @@ public class MainActivity extends AppCompatActivity
         mTasks.getTaskAt(0).addSession(ssTemp2);
         mTasks.getTaskAt(0).setDateAdded(LocalDateTime.of(2018, 11, 1, 23, 59));
         populateTaskItemView(mTasks.getTaskAt(0));
+
+        thUpdateViews.start();
     }
 
     public void NewTask(View view)
@@ -157,73 +214,15 @@ public class MainActivity extends AppCompatActivity
         timeSpent.setProgress(xtask.getTimeSpent());
     }
 
-    @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler()
-    {
-        @Override
-        public void handleMessage(Message msg)
-        {
-            Task xtask = mTasks.getTaskAt(0);
-            TextView txt;
-
-            //
-            Integer remain = xtask.getTimeEst() - xtask.getTimeSpent();
-
-            txt = findViewById(R.id.txtTaskTimeRemaining);
-            txt.setText(String.valueOf(remain) + " min");
-
-            //
-            txt = findViewById(R.id.txtTaskTimeSpent);
-            txt.setText(String.valueOf(xtask.getTimeSpent()) + " min");
-
-            //
-            long timeBefore = ChronoUnit.MINUTES.between(LocalDateTime.now(), xtask.getDeadline());
-
-            txt = findViewById(R.id.txtTaskBeforeDeadline);
-            txt.setText(String.valueOf(timeBefore) + " min");
-
-
-            //
-            ProgressBar timeSpent = findViewById(R.id.prgSpent);
-            timeSpent.setProgress(xtask.getTimeSpent());
-        }
-    };
-
     private boolean mRecordTaskStatus = false;
 
     public void RecordTask(View view)
     {
-        Thread thread = new Thread()
-        {
-            @Override
-            public void run()
-            {
-                int spentTime = 0;
-                int totalTime = 9999;
-
-                while (spentTime < totalTime)
-                {
-                    try
-                    {
-                        Thread.sleep(60000); // Just to display the progress
-                    } catch (InterruptedException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    spentTime += 1;
-
-                    handler.sendMessage(new Message());
-                }
-            }
-        };
-
         if (!mRecordTaskStatus)
         {
             mTasks.getTaskAt(0).startRecordingTime();
 
             view.setBackground(getDrawable(R.drawable.roundeditem_active));
-
-            thread.start();
 
             mRecordTaskStatus = true;
         } else
@@ -233,8 +232,6 @@ public class MainActivity extends AppCompatActivity
             view.setBackground(getDrawable(R.drawable.roundeditem));
 
             mRecordTaskStatus = false;
-
-            thread.interrupt();
         }
     }
 }
