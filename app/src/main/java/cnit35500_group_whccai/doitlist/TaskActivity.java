@@ -54,6 +54,7 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
         drawerLayout = findViewById(R.id.taskLayout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
 
+
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);

@@ -12,154 +12,257 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <LinearLayout
+
+            <RelativeLayout
                 android:id="@+id/nameTask"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:background="@color/colorPrimary"
-                android:padding="20dp">
+                android:padding="30dp">
 
-                <TextView
-                    android:id="@+id/lblNewTask"
+                <LinearLayout
+                    android:id="@+id/taskName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Task Name"
-                    android:textColor="#8ed2b9"
-                    android:textSize="25dp"
-                    android:textStyle="bold"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp">
 
-                <EditText
-                    android:id="@+id/edtTaskName"
+                    <TextView
+                        android:id="@+id/lblNewTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Task Name"
+                        android:textColor="@color/colorAccentLight"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edtTaskName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter task name"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:hint="Enter task name"/>
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/taskName"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/lblNote"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Notes"
-                    android:textColor="#8ed2b9"
-                    android:textSize="20dp"/>
+                    <TextView
+                        android:id="@+id/lblNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Deadline"
+                        android:textColor="@color/colorAccentLight"
+                        android:textSize="20sp" />
 
-                <EditText
-                    android:id="@+id/edtNote"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:hint="Enter note"/>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_marginVertical="20dp"
+                        android:gravity="center">
 
-            </LinearLayout>
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="0"
+                            android:src="@drawable/alarm" />
+
+                        <TextView
+                            android:id="@+id/edtDueDate"
+                            android:layout_width="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:enabled="true"
+                            android:hint="pick date/time"
+                            android:inputType="datetime|date" />
+
+                        <Button
+                            android:id="@+id/btnDateTimePick"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="PickDate"
+                            android:text="Pick" />
+
+                    </TableRow>
+
+                </LinearLayout>
+            </RelativeLayout>
+
             <TableLayout
                 android:id="@+id/taskDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_below="@+id/nameTask"
-                android:layout_marginHorizontal="30dp">
-                <TableRow android:layout_marginVertical="20dp">
-                    <ImageView
-                        android:layout_height="30dp"
-                        android:layout_width="30dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/list"/>
-                    <TextView
-                        android:text="Class"
-                        android:textSize="20dp"
-                        android:layout_width="0dp"
-                        android:layout_weight="5"/>
-                    <TextView
-                        android:layout_weight="9"
-                        android:layout_width="0dp"
-                        android:id="@+id/classID"/>
+                android:layout_margin="0dp"
+                android:layout_marginHorizontal="30dp"
+                android:divider="?android:attr/dividerHorizontal"
+                android:orientation="vertical"
+                android:showDividers="middle|end">
 
-                </TableRow>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimary" />
-                <TableRow android:layout_marginVertical="20dp">
-                    <ImageView
-                        android:layout_height="30dp"
-                        android:layout_width="30dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/alarm"/>
-                    <TextView
-                        android:text="Due Date"
-                        android:textSize="20sp"
-                        android:layout_width="0dp"
-                        android:layout_weight="5"/>
-                    <TextView
-                        android:layout_weight="9"
-                        android:layout_width="0dp"
-                        android:id="@+id/dueDate"/>
-
-                </TableRow>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimary" />
                 <TableRow
+                    android:layout_marginVertical="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center">
 
-                    android:layout_marginVertical="20dp">
                     <ImageView
-                        android:layout_height="30dp"
                         android:layout_width="30dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/important"/>
-                    <TextView
-                        android:text="Priority"
-                        android:textSize="20dp"
-                        android:layout_width="0dp"
-                        android:layout_weight="5"/>
-                    <TextView
-                        android:layout_weight="9"
-                        android:layout_width="0dp"
-                        android:id="@+id/priority"/>
-
-                </TableRow>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimary" />
-                <TableRow
-                    android:onClick="highlight">
-                    <ImageView
                         android:layout_height="30dp"
-                        android:layout_width="30dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/star"
-                        android:layout_marginVertical="20dp"/>
-                    <TextView
-                        android:text="Highlight"
-                        android:textSize="20dp"
-                        android:layout_width="0dp"
-                        android:layout_weight="5"
-                        android:layout_marginVertical="20dp"/>
-                    <TextView
-                        android:layout_weight="9"
-                        android:layout_width="0dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Make this task standout in today task"/>
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="0"
+                        android:src="@drawable/list" />
 
-                </TableRow>
-                <LinearLayout
-                    android:layout_gravity="center_horizontal">
-                    <Button
-                        android:id="@+id/btnSave"
-                        android:layout_below="@+id/taskDetail"
-                        android:layout_width="100dp"
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Save"
-                        android:textSize="15dp"
-                        android:layout_margin="5dp"
-                        android:layout_gravity="center_horizontal"
-                        android:textColor="#fff"
-                        android:onClick="saveTask"
-                        android:background="@drawable/roundedbutton" />
-                </LinearLayout>
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="0"
+                        android:text="Course"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spnCourse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                </TableRow>
+
+                <TableRow
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="0"
+                        android:src="@drawable/important" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="0"
+                        android:text="Type"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/sonType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="0"
+                        android:src="@drawable/alarm" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="0"
+                        android:text="Time est."
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/edtTimeEst"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="time" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center"
+                    android:onClick="highlight">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginVertical="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="0"
+                        android:src="@drawable/star" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginVertical="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="0"
+                        android:text="Highlight"
+                        android:textSize="20sp" />
+
+                    <CheckBox
+                        android:id="@+id/chkHighlight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="0"
+                        android:src="@mipmap/ic_launcher_round" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="0"
+                        android:text="Notes"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/edtNotes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="anything important?"
+                        android:inputType="textMultiLine" />
+
+                </TableRow>
+
             </TableLayout>
         </RelativeLayout>
     </ScrollView>
