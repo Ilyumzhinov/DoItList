@@ -32,7 +32,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Task Name"
-                        android:textColor="#8ed2b9"
+                        android:textColor="@color/colorAccentLight"
                         android:textSize="25sp"
                         android:textStyle="bold" />
 
@@ -55,7 +55,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Deadline"
-                        android:textColor="#8ed2b9"
+                        android:textColor="@color/colorAccentLight"
                         android:textSize="20sp" />
 
                     <TableRow

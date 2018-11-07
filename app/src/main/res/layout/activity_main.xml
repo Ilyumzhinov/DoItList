@@ -7,65 +7,82 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imgMenu"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/productivity" />
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/imgMenu"
-        android:gravity="center_vertical|center_horizontal">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.88">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/btnNew"
-                android:layout_width="150dp"
+            <ImageView
+                android:id="@+id/imgMenu"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/productivity" />
+
+            <LinearLayout
+                android:id="@+id/lytMenu"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|fill_horizontal"
-                android:layout_margin="5dp"
-                android:background="@drawable/roundedbutton"
-                android:onClick="NewTask"
-                android:text="New Task"
-                android:textColor="#fff"
-                android:textSize="15sp" />
+                android:layout_below="@+id/imgMenu"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.88">
 
-            <Button
-                android:id="@+id/btnNewCourse"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|fill_horizontal"
-                android:layout_margin="5dp"
-                android:background="@drawable/roundedbutton"
-                android:onClick="NewCourse"
-                android:text="New Course"
-                android:textColor="#fff"
-                android:textSize="15sp" />
+                <Button
+                    android:id="@+id/btnNew"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|fill_horizontal"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/roundedbutton"
+                    android:onClick="NewTask"
+                    android:text="New Task"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
 
-            <Button
-                android:id="@+id/btnToday"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|fill_horizontal"
-                android:layout_margin="5dp"
-                android:background="@drawable/roundedbutton"
-                android:text="Today"
-                android:textColor="#fff"
-                android:textSize="15sp" />
+                <Button
+                    android:id="@+id/btnNewCourse"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|fill_horizontal"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/roundedbutton"
+                    android:onClick="NewCourse"
+                    android:text="New Course"
+                    android:textColor="#fff"
+                    android:textSize="15sp" />
 
-        </LinearLayout>
-    </RelativeLayout>
+                <Button
+                    android:id="@+id/btnToday"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|fill_horizontal"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/roundedbutton"
+                    android:text="Today"
+                    android:textColor="#fff"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <include
+                layout="@layout/task_item_overview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/lytMenu"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp" />
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

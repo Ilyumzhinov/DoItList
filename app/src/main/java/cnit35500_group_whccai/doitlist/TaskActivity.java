@@ -169,7 +169,7 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
             // To-Do
         } else if (id == R.id.btnEditToolBar)
         {
-            // To-Do
+
         } else if (id == R.id.btnSaveToolBar)
         {
             // Try to get input values
@@ -178,7 +178,7 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
             Course course = (Course) ((Spinner) findViewById(R.id.spnCourse)).getSelectedItem();
             LocalDateTime dueDate = LocalDateTime.of(yearFinal, monthFinal, dayFinal, hourFinal, minuteFinal);
 
-            Long timeEst = calculateMinutesFromTimeInput(((EditText) findViewById(R.id.edtTimeEst)).getText().toString());
+            Integer timeEst = calculateMinutesFromTimeInput(((EditText) findViewById(R.id.edtTimeEst)).getText().toString());
             Boolean highlight = ((CheckBox) findViewById(R.id.chkHighlight)).isChecked();
             //
 
@@ -201,21 +201,20 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
         return super.onOptionsItemSelected(item);
     }
 
-    public Long calculateMinutesFromTimeInput(String xTime)
+    public Integer calculateMinutesFromTimeInput(String xTime)
     {
-        Long hours = 0L, minutes = 0L;
+        Integer hours = 0, minutes = 0;
 
         try
         {
             String[] parsedTime = xTime.split(":");
-            hours = Long.valueOf(parsedTime[0]);
-            minutes = Long.valueOf(parsedTime[0]);
-        }
-        catch (Exception ignored)
+            hours = Integer.valueOf(parsedTime[0]);
+            minutes = Integer.valueOf(parsedTime[0]);
+        } catch (Exception ignored)
         {
         }
 
-        return hours * 60L + minutes;
+        return hours * 60 + minutes;
     }
 
     // Implement method for setting date and time in a dialog window

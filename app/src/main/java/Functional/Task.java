@@ -8,8 +8,8 @@ public class Task
     private Course taskCourse;
     private LocalDateTime taskDateAdded;
     private LocalDateTime taskDeadline;
-    private Long taskTimeEst;
-    private Long taskTimeSpent;
+    private Integer taskTimeEst;
+    private Integer taskTimeSpent;
     private String taskDetail;
     private Boolean taskHighlight;
 
@@ -34,12 +34,12 @@ public class Task
         return taskDateAdded;
     }
 
-    public Long getTimeEst()
+    public Integer getTimeEst()
     {
         return taskTimeEst;
     }
 
-    public Long getTimeSpent()
+    public Integer getTimeSpent()
     {
         return taskTimeSpent;
     }
@@ -77,12 +77,12 @@ public class Task
         this.taskDateAdded = taskDateAdded;
     }
 
-    public void setTimeEst(Long timeEst)
+    public void setTimeEst(Integer timeEst)
     {
         this.taskTimeEst = timeEst;
     }
 
-    public void setTimeSpent(Long timeSpent)
+    public void setTimeSpent(Integer timeSpent)
     {
         this.taskTimeSpent = timeSpent;
     }

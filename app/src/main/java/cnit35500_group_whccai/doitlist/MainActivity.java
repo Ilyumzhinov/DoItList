@@ -4,8 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import Functional.CoursesControl;
+import Functional.Task;
 import Functional.TasksControl;
 
 public class MainActivity extends AppCompatActivity
@@ -28,6 +34,12 @@ public class MainActivity extends AppCompatActivity
 
         // Set default value
         mCourses.addCourse("default");
+
+        // Test
+        mTasks.addTask("Task Test","Test task",mCourses.getCourseWithName("default"),LocalDateTime.of(2018,11,15,23,59),5,true);
+        mTasks.getTaskAt(0).setTimeSpent(3);
+        mTasks.getTaskAt(0).setDateAdded(LocalDateTime.of(2018,11,1,23,59));
+        populateTaskItemView(mTasks.getTaskAt(0));
     }
 
     public void NewTask(View view)
@@ -70,7 +82,8 @@ public class MainActivity extends AppCompatActivity
                         mCourses = (CoursesControl) data.getSerializableExtra("courses");
                     }
                 }
-                // Receive Intent info from TaskActivity
+                break;
+            // Receive Intent info from TaskActivity
             case cNewTaskRequestCode:
                 if (resultCode == RESULT_OK)
                 {
@@ -84,6 +97,49 @@ public class MainActivity extends AppCompatActivity
                         mCourses = (CoursesControl) data.getSerializableExtra("courses");
                     }
                 }
+                break;
         }
+    }
+
+    public void populateTaskItemView(Task xtask)
+    {
+        TextView txt = findViewById(R.id.txtTaskName);
+        txt.setText(xtask.getName());
+
+        //
+        txt = findViewById(R.id.txtTaskCourse);
+        txt.setText(xtask.getCourse().getName());
+
+        //
+        txt = findViewById(R.id.txtTaskCourse);
+        txt.setText(xtask.getCourse().getName());
+
+        //
+        Integer remain = xtask.getTimeEst() - xtask.getTimeSpent();
+
+        txt = findViewById(R.id.txtTaskTimeRemaining);
+        txt.setText(String.valueOf(remain) + " min");
+
+        //
+        txt = findViewById(R.id.txtTaskTimeSpent);
+        txt.setText(String.valueOf(xtask.getTimeSpent()) + " min");
+
+        //
+//        long timeTotal = ChronoUnit.MINUTES.between(xtask.getDateAdded(), xtask.getDeadline());
+        long timeBefore = ChronoUnit.MINUTES.between(LocalDateTime.now(), xtask.getDeadline());
+//        long timeElapsed = ChronoUnit.MINUTES.between(xtask.getDateAdded(), LocalDateTime.now());
+
+        txt = findViewById(R.id.txtTaskBeforeDeadline);
+        txt.setText(String.valueOf(timeBefore) + " min");
+
+        //
+//        ProgressBar timeEstimated = findViewById(R.id.prgEstimated);
+//        timeEstimated.setMax((int) timeTotal);
+//        timeEstimated.setProgress((int) timeElapsed);
+
+        //
+        ProgressBar timeSpent = findViewById(R.id.prgSpent);
+        timeSpent.setMax(xtask.getTimeEst());
+        timeSpent.setProgress(xtask.getTimeSpent());
     }
 }

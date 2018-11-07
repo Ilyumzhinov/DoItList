@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:background="@drawable/roundeditem"
+    android:padding="0dp">
+
+    <LinearLayout
+        android:id="@+id/lytTaskMainPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp">
+
+        <RelativeLayout
+            android:id="@+id/lytTitlePanel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/txtTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtTaskType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTaskName"
+                android:text="Type"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+
+            <TextView
+                android:id="@+id/lblType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTaskName"
+                android:layout_toEndOf="@+id/txtTaskType"
+                android:text=", "
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+
+            <TextView
+                android:id="@+id/txtTaskCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTaskName"
+                android:layout_toEndOf="@+id/lblType"
+                android:text="Course"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lytTimeRemainPanel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/txtTaskTimeRemaining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:text="0 h"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblTaskRemaining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTaskTimeRemaining"
+                android:layout_alignParentEnd="true"
+                android:text="remain"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtTaskTimeSpent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTaskRemaining"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:text="0 h"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTaskTimeSpent"
+                android:layout_alignParentEnd="true"
+                android:text="spent"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+
+        </RelativeLayout>
+
+        <!-- <RelativeLayout
+            android:id="@+id/lytActionsPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:gravity="center|end">
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/important" />
+        </RelativeLayout>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lytTaskProgressPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lytTaskMainPanel"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/lytStatsPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="deadline in "
+                android:textAlignment="viewEnd" />
+
+            <TextView
+                android:id="@+id/txtTaskBeforeDeadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="0 h"
+                android:textAlignment="viewEnd" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/prgSpent"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:scaleY="1" />
+
+    </LinearLayout>
+
+</RelativeLayout>
