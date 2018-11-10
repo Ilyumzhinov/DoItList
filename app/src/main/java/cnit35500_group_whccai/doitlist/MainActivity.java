@@ -61,12 +61,9 @@ public class MainActivity extends AppCompatActivity
             //
             Integer remain = xtask.getTimeEst() - xtask.getTimeSpent();
 
-            txt = findViewById(R.id.txtTaskTimeRemaining);
+            txt = findViewById(R.id.txtTimePrg);
             txt.setText(String.valueOf(remain) + " min");
 
-            //
-            txt = findViewById(R.id.txtTaskTimeSpent);
-            txt.setText(String.valueOf(xtask.getTimeSpent()) + " min");
 
             //
             long timeBefore = ChronoUnit.MINUTES.between(LocalDateTime.now(), xtask.getDeadline());
@@ -162,12 +159,8 @@ public class MainActivity extends AppCompatActivity
         //
         Integer remain = xtask.getTimeEst() - xtask.getTimeSpent();
 
-        txt = findViewById(R.id.txtTaskTimeRemaining);
+        txt = findViewById(R.id.txtTimePrg);
         txt.setText(String.valueOf(remain) + " min");
-
-        //
-        txt = findViewById(R.id.txtTaskTimeSpent);
-        txt.setText(String.valueOf(xtask.getTimeSpent()) + " min");
 
         //
 //        long timeTotal = ChronoUnit.MINUTES.between(xtask.getDateAdded(), xtask.getDeadline());
@@ -184,6 +177,7 @@ public class MainActivity extends AppCompatActivity
 
         //
         ProgressBar timeSpent = findViewById(R.id.prgSpent);
+        timeSpent.setIndeterminate(false);
         timeSpent.setMax(xtask.getTimeEst());
         timeSpent.setProgress(xtask.getTimeSpent());
     }

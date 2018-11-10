@@ -140,7 +140,7 @@
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:onClick="NewCourse"
                         android:tint="@color/colorAccent"
-                        app:srcCompat="@drawable/add_icon_plus_circle" />
+                        app:srcCompat="@drawable/plus_circle_icon" />
 
                 </TableRow>
 
@@ -179,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:tint="@color/colorAccent"
-                        app:srcCompat="@drawable/add_icon_plus_circle" />
+                        app:srcCompat="@drawable/plus_circle_icon" />
 
                 </TableRow>
 
