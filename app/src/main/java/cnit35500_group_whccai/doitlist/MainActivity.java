@@ -234,4 +234,9 @@ public class MainActivity extends AppCompatActivity
             mRecordTaskStatus = false;
         }
     }
+
+    public void openTaskList(View view) {
+        Intent intent = new Intent(this, NavigationActivity.class);
+        startActivity(intent);
+    }
 }

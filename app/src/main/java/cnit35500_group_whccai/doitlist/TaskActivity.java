@@ -20,12 +20,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 import Functional.Course;
@@ -35,8 +31,7 @@ import Functional.TasksControl;
 public class TaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener
 {
 
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
+
 
     private TasksControl mTasks;
     private CoursesControl mCourses;
@@ -49,15 +44,7 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task);
-
-        drawerLayout = findViewById(R.id.taskLayout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-
-
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_new_task);
 
         setTitle("New Task");
 
@@ -122,10 +109,6 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
 
         if (mode.contains("s"))
             itemSave.setVisible(true);
-    }
-
-    public void saveTask(View view)
-    {
     }
 
     public void highlight(View view)
