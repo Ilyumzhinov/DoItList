@@ -6,19 +6,18 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_class"
-            android:icon="@drawable/book"
+            android:icon="@drawable/course_icon"
             android:title="Class" />
         <item
             android:id="@+id/nav_category"
-            android:icon="@drawable/event"
+            android:icon="@drawable/type_icon"
             android:title="Category" />
         <item
             android:id="@+id/nav_about"
-            android:icon="@drawable/search"
+            android:icon="@drawable/info_icon"
             android:title="About" />
         <item
             android:id="@+id/nav_main"
-            android:icon="@drawable/logout"
             android:title="MainMenu" />
     </group>
 
