@@ -27,8 +27,6 @@
 
     <item
         android:id="@+id/btnDoneToolBar"
-        android:icon="@drawable/ic_keyboard_arrow_down_black_24dp"
-        android:iconTint="@color/colorAccent"
         android:title="Done"
         android:visible="false"
         app:showAsAction="always" />
