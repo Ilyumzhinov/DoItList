@@ -10,10 +10,11 @@
 
     <item
         android:id="@+id/btnEditToolBar"
+        android:icon="@drawable/ic_edit_black_24dp"
+        android:iconTint="@android:color/black"
         android:title="Edit"
-        app:showAsAction="ifRoom"
         android:visible="false"
-        />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/btnSaveToolBar"
@@ -25,7 +26,6 @@
     <item
         android:id="@+id/btnDoneToolBar"
         android:title="Done"
-        app:showAsAction="always"
         android:visible="false"
-        />
+        app:showAsAction="always" />
 </menu>

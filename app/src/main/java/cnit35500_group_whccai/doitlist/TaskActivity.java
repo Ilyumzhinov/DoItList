@@ -30,8 +30,7 @@ import Functional.TasksControl;
 
 public class TaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener
 {
-
-
+    private final static int cNewCourseRequestCode = 1;
 
     private TasksControl mTasks;
     private CoursesControl mCourses;
@@ -59,7 +58,7 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
         } else return;
         //
 
-        // Populate spinner with currency values
+        // Populate spinner with courses values
         // Reference: SpinnerTest1
         Spinner spinner = findViewById(R.id.spnCourse);
 
@@ -84,6 +83,51 @@ public class TaskActivity extends AppCompatActivity implements DatePickerDialog.
             }
         });
         //
+    }
+
+    public void NewCourse(View view)
+    {
+        Intent i = new Intent(this, NewCourseActivity.class);
+
+        // Pass an object to another activity
+        // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
+        i.putExtra("courses", mCourses);
+
+        startActivityForResult(i, cNewCourseRequestCode);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        switch (requestCode)
+        {
+            // Receive Intent info from NewCourseActivity
+            case cNewCourseRequestCode:
+                if (resultCode == RESULT_OK)
+                {
+                    // Receive object through Intent
+                    // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
+                    Bundle extras = data.getExtras();
+                    if (extras != null)
+                    {
+                        // Obtain data
+                        mCourses = (CoursesControl) data.getSerializableExtra("courses");
+                    }
+
+                    // Populate spinner with courses values
+                    // Reference: SpinnerTest1
+                    Spinner spinner = findViewById(R.id.spnCourse);
+
+                    // Create an ArrayAdapter
+                    ArrayAdapter<Course> adapter = new ArrayAdapter<>
+                            (this, android.R.layout.simple_spinner_item, mCourses.getCourses());
+
+                    // Specify the layout to use when the list of choices appears
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+
+                }
+                break;
+        }
     }
 
     private void updateMenuVisibles(String mode)

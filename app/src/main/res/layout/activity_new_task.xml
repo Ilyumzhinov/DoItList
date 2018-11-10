@@ -133,6 +133,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
 
+                    <ImageButton
+                        android:id="@+id/btnPlusCourse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:onClick="NewCourse"
+                        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
+
                 </TableRow>
 
                 <TableRow
@@ -163,6 +171,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
+
+                    <ImageButton
+                        android:id="@+id/btnPlusType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
 
                 </TableRow>
 

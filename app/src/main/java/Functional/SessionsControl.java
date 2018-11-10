@@ -18,7 +18,6 @@ public class SessionsControl
             ss.openSession(LocalDateTime.now());
 
             Sessions.add(ss);
-
             sessionOpen = ss;
         }
     }

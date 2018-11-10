@@ -48,18 +48,6 @@
                     android:textSize="15sp" />
 
                 <Button
-                    android:id="@+id/btnNewCourse"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|fill_horizontal"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/roundedbutton"
-                    android:onClick="NewCourse"
-                    android:text="New Course"
-                    android:textColor="#fff"
-                    android:textSize="15sp" />
-
-                <Button
                     android:id="@+id/btnToday"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
