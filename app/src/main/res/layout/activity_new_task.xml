@@ -139,6 +139,7 @@
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:onClick="NewCourse"
+                        android:tint="@color/colorAccent"
                         app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
 
                 </TableRow>
@@ -177,6 +178,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackgroundBorderless"
+                        android:tint="@color/colorAccent"
                         app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
 
                 </TableRow>
