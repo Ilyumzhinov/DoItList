@@ -22,6 +22,7 @@ public class TasksControl implements Serializable
         task.setDateAdded(LocalDateTime.now());
         task.setTimeEst(timeEst);
         task.setHighlight(highlight);
+        task.setStatusFinished(false);
 
         // Try to add to the list
         Tasks.add(task);

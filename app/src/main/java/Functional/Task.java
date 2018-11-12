@@ -12,9 +12,12 @@ public class Task
     private String taskDetail;
     private Boolean taskHighlight;
     private SessionsControl taskSessions;
+    private Boolean taskStatusFinished;
 
+    // Constructors
     Task()
     {
+        // Initialise attributes
         taskSessions = new SessionsControl();
     }
 
@@ -57,6 +60,11 @@ public class Task
     public Boolean getHighlight()
     {
         return taskHighlight;
+    }
+
+    public Boolean getStatusFinished()
+    {
+        return taskStatusFinished;
     }
 
     public Session[] getSessions()
@@ -113,6 +121,11 @@ public class Task
     public void setHighlight(Boolean taskHighlight)
     {
         this.taskHighlight = taskHighlight;
+    }
+
+    public void setStatusFinished(Boolean taskStatusFinished)
+    {
+        this.taskStatusFinished = taskStatusFinished;
     }
 
     @Override

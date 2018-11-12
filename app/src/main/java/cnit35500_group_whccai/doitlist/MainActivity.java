@@ -58,6 +58,25 @@ public class MainActivity extends AppCompatActivity
             Task xtask = mTasks.getTaskAt(0);
             TextView txt;
 
+            // Set status label
+            txt = findViewById(R.id.txtTaskStatus);
+
+            String status;
+
+            if (xtask.getStatusFinished())
+                status = "Finished";
+            else
+            {
+                if (xtask.getSessions().length == 0)
+                    status = "Not started";
+                else if (mRecordTaskStatus)
+                    status = "Active";
+                else
+                    status = "Not finished";
+            }
+            txt.setText(status);
+            //
+
             //
             Integer remain = xtask.getTimeEst() - xtask.getTimeSpent();
 
@@ -144,12 +163,28 @@ public class MainActivity extends AppCompatActivity
 
     public void populateTaskItemView(Task xtask)
     {
+        //
         TextView txt = findViewById(R.id.txtTaskName);
         txt.setText(xtask.getName());
 
+        // Set status label
+        txt = findViewById(R.id.txtTaskStatus);
+
+        String status;
+
+        if (xtask.getStatusFinished())
+            status = "Finished";
+        else
+        {
+            if (xtask.getSessions().length == 0)
+                status = "Not started";
+            else if (mRecordTaskStatus)
+                status = "Active";
+            else
+                status = "Not finished";
+        }
+        txt.setText(status);
         //
-        txt = findViewById(R.id.txtTaskCourse);
-        txt.setText(xtask.getCourse().getName());
 
         //
         txt = findViewById(R.id.txtTaskCourse);
@@ -162,17 +197,10 @@ public class MainActivity extends AppCompatActivity
         txt.setText(String.valueOf(remain) + " min");
 
         //
-//        long timeTotal = ChronoUnit.MINUTES.between(xtask.getDateAdded(), xtask.getDeadline());
         long timeBefore = ChronoUnit.MINUTES.between(LocalDateTime.now(), xtask.getDeadline());
-//        long timeElapsed = ChronoUnit.MINUTES.between(xtask.getDateAdded(), LocalDateTime.now());
 
         txt = findViewById(R.id.txtTaskBeforeDeadline);
         txt.setText(String.valueOf(timeBefore) + " min");
-
-        //
-//        ProgressBar timeEstimated = findViewById(R.id.prgEstimated);
-//        timeEstimated.setMax((int) timeTotal);
-//        timeEstimated.setProgress((int) timeElapsed);
 
         //
         ProgressBar timeSpent = findViewById(R.id.prgSpent);
@@ -185,21 +213,33 @@ public class MainActivity extends AppCompatActivity
 
     public void RecordTask(View view)
     {
+        Task taskReceived =  mTasks.getTaskAt(0);
+
+        if (taskReceived.getStatusFinished())
+            return;
+
         if (!mRecordTaskStatus)
         {
-            mTasks.getTaskAt(0).startRecordingTime();
+            taskReceived.startRecordingTime();
 
             view.setBackground(getDrawable(R.drawable.roundeditem_active));
 
             mRecordTaskStatus = true;
         } else
         {
-            mTasks.getTaskAt(0).stopRecordingTime();
+            taskReceived.stopRecordingTime();
 
             view.setBackground(getDrawable(R.drawable.roundeditem));
 
             mRecordTaskStatus = false;
         }
+    }
+
+    public void CompleteTask(View view)
+    {
+        Boolean taskStatusFinished = mTasks.getTaskAt(0).getStatusFinished();
+
+        mTasks.getTaskAt(0).setStatusFinished(!taskStatusFinished);
     }
 
     public void openTaskList(View view) {
