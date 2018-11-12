@@ -67,9 +67,9 @@ public class Task
         return taskStatusFinished;
     }
 
-    public Session[] getSessions()
+    public SessionsControl getSessions()
     {
-        return taskSessions.getSessions();
+        return taskSessions;
     }
 
     // All set methods

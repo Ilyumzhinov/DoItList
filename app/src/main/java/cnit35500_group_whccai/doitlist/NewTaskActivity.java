@@ -46,14 +46,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task);
 
-        // Set up toolbar
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.ios_toolbar);
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
-        col_toolbar.setTitle("New Task");
-        //
-
-        // Receive object through Intent
+        // Receive data through Intent
         // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -61,7 +54,18 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
             // Obtain data
             mTasks = (TasksControl) getIntent().getSerializableExtra("tasks");
             mCourses = (CoursesControl) getIntent().getSerializableExtra("courses");
-        } else return;
+        } else {
+            Toast.makeText(this, "Failed to receive data", Toast.LENGTH_SHORT).show();
+
+            finish();
+        }
+        //
+
+        // Set up toolbar
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.ios_toolbar);
+        setSupportActionBar(toolbar);
+        CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
+        col_toolbar.setTitle("New Task");
         //
 
         // Populate spinner with courses values
@@ -80,7 +84,6 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                // To-Do
             }
 
             @Override
@@ -268,7 +271,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         return hours * 60 + minutes;
     }
 
-    // Implement method for setting date and time in a dialog window
+    // Implement method for setting date in a dialog window
     // Reference: https://www.youtube.com/watch?v=a_Ap6T4RlYU
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
@@ -286,6 +289,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         timePickerDialog.show();
     }
 
+    // Implement method for setting time in a dialog window
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute)
     {

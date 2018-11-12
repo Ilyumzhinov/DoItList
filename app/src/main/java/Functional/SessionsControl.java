@@ -1,14 +1,15 @@
 package Functional;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SessionsControl
+public class SessionsControl implements Serializable
 {
-    private List<Session> Sessions = new ArrayList<>();
-    private Session sessionOpen = null;
+    private final static List<Session> Sessions = new ArrayList<>();
+    private static Session sessionOpen = null;
 
     public void openSession()
     {
@@ -26,8 +27,7 @@ public class SessionsControl
     {
         if (sessionOpen != null)
         {
-            Session ssOpen = Sessions.get(Sessions.size() - 1);
-            ssOpen.endSession(LocalDateTime.now());
+            sessionOpen.endSession(LocalDateTime.now());
 
             sessionOpen = null;
         }
@@ -62,5 +62,10 @@ public class SessionsControl
     public void addSession(Session session)
     {
         Sessions.add(session);
+    }
+
+    public Boolean checkOpenSession()
+    {
+        return sessionOpen != null;
     }
 }

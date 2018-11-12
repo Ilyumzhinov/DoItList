@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity
     private CoursesControl mCourses;
     private TasksControl mTasks;
 
-    private final static int cNewTaskRequestCode = 2;
+    private final static int cNewTaskRequestCode = 2, cOpenTaskRequestCode = 3;
 
     Thread thUpdateViews = new Thread()
     {
@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity
                 status = "Finished";
             else
             {
-                if (xtask.getSessions().length == 0)
+                if (xtask.getSessions().getSessions().length == 0)
                     status = "Not started";
-                else if (mRecordTaskStatus)
+                else if (xtask.getSessions().checkOpenSession())
                     status = "Active";
                 else
                     status = "Not finished";
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity
         ssTemp2.setEndDate(LocalDateTime.of(2018, 11, 4, 0, 35));
 
         // Test
-        mTasks.addTask("Task Test", "Test task", mCourses.getCourseWithName("default"), LocalDateTime.of(2018, 11, 15, 23, 59), 45, true);
+        mTasks.addTask("Test task", "You need to hurry up!", mCourses.getCourseWithName("default"), LocalDateTime.of(2018, 11, 15, 23, 59), 45, true);
         mTasks.getTaskAt(0).addSession(ssTemp);
         mTasks.getTaskAt(0).addSession(ssTemp2);
         mTasks.getTaskAt(0).setDateAdded(LocalDateTime.of(2018, 11, 1, 23, 59));
@@ -137,6 +137,19 @@ public class MainActivity extends AppCompatActivity
         i.putExtra("courses", mCourses);
 
         startActivityForResult(i, cNewTaskRequestCode);
+    }
+
+    public void OpenTask(View view)
+    {
+        Intent i = new Intent(this, TaskActivity.class);
+
+        // Pass an object to another activity
+        // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
+        i.putExtra("tasks", mTasks);
+        i.putExtra("courses", mCourses);
+        i.putExtra("index", 0);
+
+        startActivityForResult(i, cOpenTaskRequestCode);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -176,9 +189,9 @@ public class MainActivity extends AppCompatActivity
             status = "Finished";
         else
         {
-            if (xtask.getSessions().length == 0)
+            if (xtask.getSessions().getSessions().length == 0)
                 status = "Not started";
-            else if (mRecordTaskStatus)
+            else if (xtask.getSessions().checkOpenSession())
                 status = "Active";
             else
                 status = "Not finished";
@@ -209,8 +222,6 @@ public class MainActivity extends AppCompatActivity
         timeSpent.setProgress(xtask.getTimeSpent());
     }
 
-    private boolean mRecordTaskStatus = false;
-
     public void RecordTask(View view)
     {
         Task taskReceived =  mTasks.getTaskAt(0);
@@ -218,20 +229,12 @@ public class MainActivity extends AppCompatActivity
         if (taskReceived.getStatusFinished())
             return;
 
-        if (!mRecordTaskStatus)
+        if (!taskReceived.getSessions().checkOpenSession())
         {
             taskReceived.startRecordingTime();
-
-            view.setBackground(getDrawable(R.drawable.roundeditem_active));
-
-            mRecordTaskStatus = true;
         } else
         {
             taskReceived.stopRecordingTime();
-
-            view.setBackground(getDrawable(R.drawable.roundeditem));
-
-            mRecordTaskStatus = false;
         }
     }
 

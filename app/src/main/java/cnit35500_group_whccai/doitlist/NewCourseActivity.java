@@ -32,14 +32,6 @@ public class NewCourseActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_new_course);
 
-        // Set up toolbar
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.ios_toolbar);
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
-        col_toolbar.setTitle("New Course");
-        //
-
-
         // Receive object through Intent
         // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
         Bundle extras = getIntent().getExtras();
@@ -75,6 +67,14 @@ public class NewCourseActivity extends AppCompatActivity
             }
         });
 
+        // Set up toolbar
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.ios_toolbar);
+        setSupportActionBar(toolbar);
+        CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
+        col_toolbar.setTitle("New Course");
+        //
+
+        // Populate history layout
         LinearLayout lytCourses = findViewById(R.id.lytCourses);
         for (Course iCourse : mCourses.getCourses())
         {

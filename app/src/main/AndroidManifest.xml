@@ -28,7 +28,8 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".TaskActivity"
-            android:theme="@style/AppTheme"> </activity>
+            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".SessionsHistoryActivity"></activity>
     </application>
 
 </manifest>
