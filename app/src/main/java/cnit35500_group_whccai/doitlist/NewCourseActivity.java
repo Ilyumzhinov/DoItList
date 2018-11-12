@@ -2,6 +2,9 @@ package cnit35500_group_whccai.doitlist;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import Functional.Course;
 import Functional.CoursesControl;
@@ -28,7 +32,13 @@ public class NewCourseActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_new_course);
 
-        setTitle("New Course");
+        // Set up toolbar
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.ios_toolbar);
+        setSupportActionBar(toolbar);
+        CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
+        col_toolbar.setTitle("New Course");
+        //
+
 
         // Receive object through Intent
         // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
@@ -88,9 +98,6 @@ public class NewCourseActivity extends AppCompatActivity
 
         if (mode.contains("r"))
             itemRemove.setVisible(true);
-
-        if (mode.contains("e"))
-            itemEdit.setVisible(true);
 
         if (mode.contains("d"))
             itemDone.setVisible(true);

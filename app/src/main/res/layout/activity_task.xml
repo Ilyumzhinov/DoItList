@@ -5,16 +5,17 @@
     android:id="@+id/taskLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewTaskActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".TaskActivity">
 
     <include
         layout="@layout/ios_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -93,7 +94,6 @@
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:onClick="PickDate"
                             android:text="Pick" />
 
                     </TableRow>
@@ -145,7 +145,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:onClick="NewCourse"
                         android:tint="@color/colorAccent"
                         app:srcCompat="@drawable/plus_circle_icon" />
 

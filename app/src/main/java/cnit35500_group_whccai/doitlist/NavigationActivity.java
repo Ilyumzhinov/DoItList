@@ -43,7 +43,7 @@ public class NavigationActivity extends AppCompatActivity
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                Intent i = new Intent(NavigationActivity.this,TaskActivity.class);
+                Intent i = new Intent(NavigationActivity.this,NewTaskActivity.class);
                 startActivity(i);
 
             }

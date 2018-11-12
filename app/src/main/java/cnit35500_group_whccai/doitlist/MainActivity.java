@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity
 
                 try
                 {
-                    Thread.sleep(6000); // Just to display the progress
+                    Thread.sleep(1000); // Just to display the progress
                 } catch (InterruptedException e)
                 {
                     e.printStackTrace();
@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity
 
             txt = findViewById(R.id.txtTimePrg);
             txt.setText(String.valueOf(remain) + " min");
-
 
             //
             long timeBefore = ChronoUnit.MINUTES.between(LocalDateTime.now(), xtask.getDeadline());
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity
 
     public void NewTask(View view)
     {
-        Intent i = new Intent(this, TaskActivity.class);
+        Intent i = new Intent(this, NewTaskActivity.class);
 
         // Pass an object to another activity
         // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
@@ -125,7 +124,7 @@ public class MainActivity extends AppCompatActivity
     {
         switch (requestCode)
         {
-            // Receive Intent info from TaskActivity
+            // Receive Intent info from NewTaskActivity
             case cNewTaskRequestCode:
                 if (resultCode == RESULT_OK)
                 {
