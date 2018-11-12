@@ -78,10 +78,11 @@ public class TaskActivity extends AppCompatActivity
         txt.setText(String.valueOf(timBeforeDeadline) + " min");
 
         // Set time remaining
-        long timeRemain = currentTask.getTimeEst() - currentTask.getTimeSpent();
+        long timeGoal = currentTask.getTimeEst();
+        long timeSpentMin = currentTask.getTimeSpent();
 
         txt = findViewById(R.id.lblTaskProgressRemaining);
-        txt.setText(String.valueOf(timeRemain) + " min");
+        txt.setText(String.valueOf(timeSpentMin) + " min / " + String.valueOf(timeGoal) + " min");
 
         // Set progress bar
         ProgressBar timeSpent = findViewById(R.id.prgTaskSpent);

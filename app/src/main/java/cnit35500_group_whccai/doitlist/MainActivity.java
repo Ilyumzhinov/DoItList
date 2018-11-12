@@ -107,21 +107,21 @@ public class MainActivity extends AppCompatActivity
         mTasks = new TasksControl();
 
         // Set default value
-        mCourses.addCourse("default");
+        mCourses.addCourse("CNIT 35500");
 
         Session ssTemp = new Session();
-        ssTemp.setStartDate(LocalDateTime.of(2018, 11, 1, 0, 0));
-        ssTemp.setEndDate(LocalDateTime.of(2018, 11, 1, 0, 2));
+        ssTemp.setStartDate(LocalDateTime.of(2018, 11, 12, 5, 45));
+        ssTemp.setEndDate(LocalDateTime.of(2018, 11, 12, 5, 50));
 
         Session ssTemp2 = new Session();
-        ssTemp2.setStartDate(LocalDateTime.of(2018, 11, 4, 0, 33));
-        ssTemp2.setEndDate(LocalDateTime.of(2018, 11, 4, 0, 35));
+        ssTemp2.setStartDate(LocalDateTime.of(2018, 11, 13, 13, 30));
+        ssTemp2.setEndDate(LocalDateTime.of(2018, 11, 13, 13, 35));
 
         // Test
-        mTasks.addTask("Test task", "You need to hurry up!", mCourses.getCourseWithName("default"), LocalDateTime.of(2018, 11, 15, 23, 59), 45, true);
+        mTasks.addTask("Sprint 3", "You need to hurry up!", mCourses.getCourseWithName("CNIT 35500"), LocalDateTime.of(2018, 11, 18, 23, 59), 60, true);
         mTasks.getTaskAt(0).addSession(ssTemp);
         mTasks.getTaskAt(0).addSession(ssTemp2);
-        mTasks.getTaskAt(0).setDateAdded(LocalDateTime.of(2018, 11, 1, 23, 59));
+        mTasks.getTaskAt(0).setDateAdded(LocalDateTime.of(2018, 11, 12, 6, 0));
         populateTaskItemView(mTasks.getTaskAt(0));
 
         thUpdateViews.start();
