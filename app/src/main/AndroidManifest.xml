@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewTaskActivity" />
+        <activity android:name=".ManageTaskActivity" />
         <activity android:name=".NewCourseActivity" />
         <activity
             android:name=".NavigationActivity"

@@ -99,14 +99,12 @@ public class Task implements Serializable
         this.taskTimeEst = timeEst;
     }
 
-    public void startRecordingTime()
+    public void updateRecordingTime()
     {
-        this.taskSessions.openSession();
-    }
+        if (this.taskStatusFinished)
+            return;
 
-    public void stopRecordingTime()
-    {
-        this.taskSessions.closeSession();
+        this.taskSessions.updateSession();
     }
 
     public void addSession(Session session)
@@ -127,6 +125,9 @@ public class Task implements Serializable
     public void setStatusFinished(Boolean taskStatusFinished)
     {
         this.taskStatusFinished = taskStatusFinished;
+
+        if (this.taskStatusFinished && this.taskSessions.checkOpenSession())
+            this.taskSessions.updateSession();
     }
 
     @Override

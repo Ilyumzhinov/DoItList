@@ -1,0 +1,408 @@
+package cnit35500_group_whccai.doitlist;
+
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+
+import Functional.Course;
+import Functional.CoursesControl;
+import Functional.Globals;
+import Functional.Task;
+import Functional.TasksControl;
+
+public class ManageTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener
+{
+    private TasksControl mTasks;
+    private CoursesControl mCourses;
+
+    private int day, month, year, hour, minute;
+    private LocalDateTime dueDatePicked;
+    private Task currentTask;
+    private Menu menu;
+    private String viewMode;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_manage_task);
+
+        // Set up toolbar
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.ios_toolbar);
+        setSupportActionBar(toolbar);
+        CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
+
+        // Receive data through Intent
+        // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
+        Bundle extras = getIntent().getExtras();
+        viewMode = getIntent().getStringExtra("viewMode");
+        if (extras != null && viewMode != null)
+        {
+            switch (viewMode)
+            {
+                case ("new"):
+                    // Obtain data
+                    mTasks = (TasksControl) getIntent().getSerializableExtra("tasks");
+                    mCourses = (CoursesControl) getIntent().getSerializableExtra("courses");
+
+                    // Set global values
+                    dueDatePicked = LocalDateTime.now();
+                    dueDatePicked = dueDatePicked.plusDays(7);
+
+                    col_toolbar.setTitle("New Task");
+
+                    // Populate views with data
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
+                    ((TextView) findViewById(R.id.txtDueDate)).setText(dueDatePicked.format(formatter));
+
+                    break;
+
+                case ("edit"):
+                    // Obtain data
+                    mTasks = (TasksControl) getIntent().getSerializableExtra("tasks");
+                    mCourses = (CoursesControl) getIntent().getSerializableExtra("courses");
+                    Integer cIndex = getIntent().getIntExtra("index", 0);
+
+                    // Set global values
+                    currentTask = mTasks.getTaskAt(cIndex);
+                    dueDatePicked = currentTask.getDeadline();
+
+                    col_toolbar.setTitle("Edit Task");
+
+                    // Populate views with data
+                    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
+
+                    ((TextView) findViewById(R.id.edtTaskName)).setText(currentTask.getName());
+                    ((TextView) findViewById(R.id.txtDueDate)).setText(dueDatePicked.format(formatter2));
+                    ((EditText) findViewById(R.id.edtTimeEstH)).setText(String.valueOf(Math.round(currentTask.getTimeEst() / 60)));
+                    ((EditText) findViewById(R.id.edtTimeEstM)).setText(String.valueOf(currentTask.getTimeEst() % 60));
+                    ((CheckBox) findViewById(R.id.chkHighlight)).setChecked(currentTask.getHighlight());
+                    ((TextView) findViewById(R.id.edtNotes)).setText(currentTask.getDetail());
+
+                    break;
+            }
+
+        } else
+        {
+            Toast.makeText(this, "Failed to receive data", Toast.LENGTH_SHORT).show();
+
+            finish();
+            return;
+        }
+        //
+
+        // Populate spinner with courses values
+        // Reference: SpinnerTest1
+        Spinner spinner = findViewById(R.id.spnCourse);
+
+        // Create an ArrayAdapter
+        ArrayAdapter<Course> adapter = new ArrayAdapter<>
+                (this, android.R.layout.simple_spinner_item, mCourses.getCourses());
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+        //
+    }
+
+    public void NewCourse(View view)
+    {
+        Intent i = new Intent(this, NewCourseActivity.class);
+
+        // Pass an object to another activity
+        // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
+        i.putExtra("courses", mCourses);
+
+        startActivityForResult(i, Globals.NewCourseRequestCode);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        switch (requestCode)
+        {
+            // Receive Intent info from NewCourseActivity
+            case (Globals.NewCourseRequestCode):
+                if (resultCode == Globals.RESULT_OK)
+                {
+                    // Receive object through Intent
+                    // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
+                    Bundle extras = data.getExtras();
+                    if (extras != null)
+                    {
+                        // Obtain data
+                        mCourses = (CoursesControl) data.getSerializableExtra("courses");
+                    }
+
+                    // Populate spinner with courses values
+                    // Reference: SpinnerTest1
+                    Spinner spinner = findViewById(R.id.spnCourse);
+
+                    // Create an ArrayAdapter
+                    ArrayAdapter<Course> adapter = new ArrayAdapter<>
+                            (this, android.R.layout.simple_spinner_item, mCourses.getCourses());
+
+                    // Specify the layout to use when the list of choices appears
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                }
+                break;
+        }
+    }
+
+    private void updateMenuVisibles(String mode)
+    {
+        MenuItem itemSave = menu.findItem(R.id.btnSaveToolBar);
+        MenuItem itemDone = menu.findItem(R.id.btnDoneToolBar);
+        MenuItem itemEdit = menu.findItem(R.id.btnEditToolBar);
+        MenuItem itemRemove = menu.findItem(R.id.btnRemoveToolBar);
+
+        itemSave.setVisible(false);
+        itemDone.setVisible(false);
+        itemEdit.setVisible(false);
+        itemRemove.setVisible(false);
+
+        if (mode.contains("r"))
+            itemRemove.setVisible(true);
+
+        if (mode.contains("e"))
+            itemEdit.setVisible(true);
+
+        if (mode.contains("d"))
+            itemDone.setVisible(true);
+
+        if (mode.contains("s"))
+            itemSave.setVisible(true);
+    }
+
+    public void PickDate(View view)
+    {
+        Calendar calc = Calendar.getInstance();
+        this.year = calc.get(Calendar.YEAR);
+        this.month = calc.get(Calendar.MONTH);
+        this.day = calc.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, dueDatePicked.getYear(), (dueDatePicked.getMonthValue() -1), dueDatePicked.getDayOfMonth());
+        datePickerDialog.show();
+    }
+
+    // Add ToolBar button
+    // Reference: https://stackoverflow.com/questions/38158953/how-to-create-button-in-action-bar-in-android
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.toolbar_buttons, menu);
+
+        this.menu = menu;
+
+        // Show and hide menu buttons
+        switch (viewMode)
+        {
+            case ("new"):
+                updateMenuVisibles("sd");
+                break;
+
+            case("edit"):
+                updateMenuVisibles("rsd");
+                break;
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // Handle button activities
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        switch (id)
+        {
+            case (R.id.btnRemoveToolBar):
+
+                mTasks.removeTask(currentTask);
+
+                Toast.makeText(this, "Task removed!", Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent();
+                i.putExtra("tasks", mTasks);
+                i.putExtra("courses", mCourses);
+                setResult(Globals.RESULT_REMOVE, i);
+
+                finish();
+
+                break;
+
+            case (R.id.btnSaveToolBar):
+                String name, notes;
+                Course course;
+                LocalDateTime dueDate;
+                Integer timeEst;
+                Boolean highlight;
+
+                // Try to get input values
+                try
+                {
+                    name = ((TextView) findViewById(R.id.edtTaskName)).getText().toString();
+                    notes = ((TextView) findViewById(R.id.edtNotes)).getText().toString();
+                    course = (Course) ((Spinner) findViewById(R.id.spnCourse)).getSelectedItem();
+                    dueDate = dueDatePicked;
+                    highlight = ((CheckBox) findViewById(R.id.chkHighlight)).isChecked();
+
+                    int timefromInput = calculateMinutesFromTimeInput(((TextView) findViewById(R.id.edtTimeEstH)).getText().toString(), ((TextView) findViewById(R.id.edtTimeEstM)).getText().toString());
+                    if (timefromInput >= 0)
+                        timeEst = timefromInput;
+                    else
+                        throw new Exception();
+                } catch (Exception e)
+                {
+                    Toast.makeText(this, "Check input values!", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                //
+
+                try
+                {
+                    switch (viewMode)
+                    {
+                        // Try to save a task
+                        case ("new"):
+                            mTasks.addTask(name, notes, course, dueDate, timeEst, highlight);
+                            Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
+
+                            // Show up the Task Activity
+                            i = new Intent(this, TaskActivity.class);
+                            i.putExtra("tasks", mTasks);
+                            i.putExtra("courses", mCourses);
+                            i.putExtra("index", mTasks.getTasks().length - 1);
+                            startActivityForResult(i, Globals.OpenTaskRequestCode);
+
+                            break;
+
+                        // Try to update a task
+                        case ("edit"):
+                            mTasks.updateTask(currentTask, name, notes, course, dueDate, timeEst, highlight);
+                            Toast.makeText(this, "Task updated!", Toast.LENGTH_SHORT).show();
+
+                            i = new Intent();
+                            i.putExtra("tasks", mTasks);
+                            i.putExtra("courses", mCourses);
+                            setResult(Globals.RESULT_OK, i);
+
+                            break;
+                    }
+                    finish();
+                } catch (Exception e)
+                {
+                    Toast.makeText(this, "Failed to add!", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                //
+
+                break;
+
+            case (R.id.btnDoneToolBar):
+                // Send data back
+                i = new Intent();
+                i.putExtra("tasks", mTasks);
+                i.putExtra("courses", mCourses);
+                setResult(Globals.RESULT_OK, i);
+
+                finish();
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public Integer calculateMinutesFromTimeInput(String xHours, String xMinutes)
+    {
+        Integer hours, minutes;
+
+        try
+        {
+            if (xHours.isEmpty())
+                hours = 1;
+            else
+                hours = Integer.valueOf(xHours);
+
+            if (xMinutes.isEmpty())
+                minutes = 0;
+            else
+                minutes = Integer.valueOf(xMinutes);
+
+            return hours * 60 + minutes;
+        } catch (Exception ignored)
+        {
+            return -1;
+        }
+    }
+
+    // Implement method for setting date in a dialog window
+    // Reference: https://www.youtube.com/watch?v=a_Ap6T4RlYU
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
+    {
+        this.year = year;
+        this.month = month + 1;
+        this.day = dayOfMonth;
+
+        LocalTime timeNow = LocalTime.now();
+
+        this.hour = timeNow.getHour();
+        this.minute = timeNow.getMinute();
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, dueDatePicked.getHour(), dueDatePicked.getMinute(), true);
+        timePickerDialog.show();
+    }
+
+    // Implement method for setting time in a dialog window
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute)
+    {
+        this.hour = hourOfDay;
+        this.minute = minute;
+
+        TextView txtView = findViewById(R.id.txtDueDate);
+
+        String date = String.valueOf(this.month) + "-" + String.valueOf(this.day) + "-" + String.valueOf(this.year) + " " + String.valueOf(this.hour) + ":" + String.valueOf(this.minute);
+
+        txtView.setText(date);
+
+        dueDatePicked =  LocalDateTime.of(this.year, this.month, this.day, this.hour, this.minute);
+    }
+}

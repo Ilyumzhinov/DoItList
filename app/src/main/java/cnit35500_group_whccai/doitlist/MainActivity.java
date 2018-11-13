@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import Functional.CoursesControl;
+import Functional.Globals;
 import Functional.Session;
 import Functional.Task;
 import Functional.TasksControl;
@@ -22,8 +23,6 @@ public class MainActivity extends AppCompatActivity
 {
     private CoursesControl mCourses;
     private TasksControl mTasks;
-
-    private final static int cNewTaskRequestCode = 2, cOpenTaskRequestCode = 3;
 
     Thread thUpdateViews = new Thread()
     {
@@ -55,7 +54,17 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void handleMessage(Message msg)
         {
-            Task xtask = mTasks.getTaskAt(0);
+            Task xtask;
+
+            try
+            {
+                xtask = mTasks.getTaskAt(0);
+            }
+            catch (Exception c)
+            {
+                return;
+            }
+
             TextView txt;
 
             // Set status label
@@ -129,14 +138,15 @@ public class MainActivity extends AppCompatActivity
 
     public void NewTask(View view)
     {
-        Intent i = new Intent(this, NewTaskActivity.class);
+        Intent i = new Intent(this, ManageTaskActivity.class);
 
         // Pass an object to another activity
         // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
+        i.putExtra("viewMode","new");
         i.putExtra("tasks", mTasks);
         i.putExtra("courses", mCourses);
 
-        startActivityForResult(i, cNewTaskRequestCode);
+        startActivityForResult(i, Globals.ManageTaskRequestCode);
     }
 
     public void OpenTask(View view)
@@ -149,16 +159,16 @@ public class MainActivity extends AppCompatActivity
         i.putExtra("courses", mCourses);
         i.putExtra("index", 0);
 
-        startActivityForResult(i, cOpenTaskRequestCode);
+        startActivityForResult(i, Globals.OpenTaskRequestCode);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         switch (requestCode)
         {
-            // Receive Intent info from NewTaskActivity
-            case cNewTaskRequestCode:
-                if (resultCode == RESULT_OK)
+            // Receive Intent info from ManageTaskActivity
+            case (Globals.ManageTaskRequestCode):
+                if (resultCode == Globals.RESULT_OK)
                 {
                     // Receive object through Intent
                     // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
@@ -224,18 +234,9 @@ public class MainActivity extends AppCompatActivity
 
     public void RecordTask(View view)
     {
-        Task taskReceived =  mTasks.getTaskAt(0);
+        Task taskReceived = mTasks.getTaskAt(0);
 
-        if (taskReceived.getStatusFinished())
-            return;
-
-        if (!taskReceived.getSessions().checkOpenSession())
-        {
-            taskReceived.startRecordingTime();
-        } else
-        {
-            taskReceived.stopRecordingTime();
-        }
+        taskReceived.updateRecordingTime();
     }
 
     public void CompleteTask(View view)

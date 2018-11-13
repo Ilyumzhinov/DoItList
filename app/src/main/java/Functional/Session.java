@@ -8,12 +8,12 @@ public class Session implements Serializable
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public void openSession(LocalDateTime localDateTime)
+    public void setStartDate(LocalDateTime localDateTime)
     {
         this.startDate = localDateTime;
     }
 
-    public void endSession(LocalDateTime localDateTime)
+    public void setEndDate(LocalDateTime localDateTime)
     {
         this.endDate = localDateTime;
     }
@@ -26,16 +26,5 @@ public class Session implements Serializable
     public LocalDateTime getEndDate()
     {
         return endDate;
-    }
-
-    public void setEndDate(LocalDateTime endDate)
-    {
-        this.endDate = endDate;
-    }
-
-    public void setStartDate(LocalDateTime startDate)
-    {
-
-        this.startDate = startDate;
     }
 }

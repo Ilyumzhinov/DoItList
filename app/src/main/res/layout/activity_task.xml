@@ -141,7 +141,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0"
                         android:text=" Sessions"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
@@ -150,9 +150,10 @@
                         style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:onClick="OpenSessionsHistory"
                         android:padding="0dp"
-                        android:text="View >"
+                        android:text="View All >"
                         android:textAlignment="viewEnd" />
                 </TableRow>
 
@@ -188,7 +189,7 @@
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab3"
+        android:id="@+id/btnFloatTaskRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"

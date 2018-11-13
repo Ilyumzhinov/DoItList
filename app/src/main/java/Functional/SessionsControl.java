@@ -11,23 +11,18 @@ public class SessionsControl implements Serializable
     private List<Session> Sessions = new ArrayList<>();
     private Session sessionOpen = null;
 
-    public void openSession()
+    public void updateSession()
     {
         if (sessionOpen == null)
         {
             Session ss = new Session();
-            ss.openSession(LocalDateTime.now());
+            ss.setStartDate(LocalDateTime.now());
 
             Sessions.add(ss);
             sessionOpen = ss;
-        }
-    }
-
-    public void closeSession()
-    {
-        if (sessionOpen != null)
+        } else
         {
-            sessionOpen.endSession(LocalDateTime.now());
+            sessionOpen.setEndDate(LocalDateTime.now());
 
             sessionOpen = null;
         }

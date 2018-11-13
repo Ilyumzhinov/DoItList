@@ -3,6 +3,7 @@ package cnit35500_group_whccai.doitlist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import Functional.CoursesControl;
+import Functional.Globals;
 import Functional.Task;
 import Functional.TasksControl;
 
@@ -25,8 +27,6 @@ public class TaskActivity extends AppCompatActivity
     private CoursesControl mCourses;
     private Task currentTask;
     private Menu menu;
-
-    private final static int cSessionsHistoryRequestCode = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,8 +50,6 @@ public class TaskActivity extends AppCompatActivity
             // Set up toolbar
             android.support.v7.widget.Toolbar toolbar = findViewById(R.id.ios_toolbar);
             setSupportActionBar(toolbar);
-            CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
-            col_toolbar.setTitle(currentTask.getName());
             //
         } else
         {
@@ -60,6 +58,61 @@ public class TaskActivity extends AppCompatActivity
             finish();
         }
         //
+
+        populateViews();
+    }
+
+    public void OpenSessionsHistory(View view)
+    {
+        Intent i = new Intent(this, SessionsHistoryActivity.class);
+
+        // Pass an object to another activity
+        // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
+        i.putExtra("sessions", currentTask.getSessions());
+
+        startActivityForResult(i, Globals.SessionsHistoryRequestCode);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        switch (requestCode)
+        {
+            // Receive Intent info from ManageTaskActivity
+            case (Globals.ManageTaskRequestCode):
+                switch (resultCode)
+                {
+                    case (Globals.RESULT_OK):
+                        // Receive object through Intent
+                        // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
+                        Bundle extras = data.getExtras();
+                        if (extras != null)
+                        {
+                            // Obtain data
+                            mTasks = (TasksControl) data.getSerializableExtra("tasks");
+                            mCourses = (CoursesControl) data.getSerializableExtra("courses");
+                        }
+
+                        populateViews();
+                        break;
+
+                    case (Globals.RESULT_REMOVE):
+                        // Send data back
+                        Intent i = new Intent();
+                        i.putExtra("tasks", mTasks);
+                        i.putExtra("courses", mCourses);
+                        setResult(Globals.RESULT_OK, i);
+
+                        finish();
+                        break;
+                }
+                break;
+        }
+    }
+
+    private void populateViews()
+    {
+        CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
+        col_toolbar.setTitle(currentTask.getName());
 
         // Populate views with data
         // Set deadline label
@@ -100,17 +153,14 @@ public class TaskActivity extends AppCompatActivity
         txt = findViewById(R.id.lblTaskNotes);
 
         txt.setText(currentTask.getDetail());
-    }
 
-    public void OpenSessionsHistory(View view)
-    {
-        Intent i = new Intent(this, SessionsHistoryActivity.class);
+        // Set record floating button
+        FloatingActionButton fab = findViewById(R.id.btnFloatTaskRecord);
 
-        // Pass an object to another activity
-        // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
-        i.putExtra("sessions", currentTask.getSessions());
-
-        startActivityForResult(i, cSessionsHistoryRequestCode);
+        if (currentTask.getStatusFinished())
+            fab.hide();
+        else
+            fab.show();
     }
 
     // Add ToolBar button
@@ -123,7 +173,7 @@ public class TaskActivity extends AppCompatActivity
         this.menu = menu;
 
         // Show and hide menu buttons
-        updateMenuVisibles("fred");
+        updateMenuVisibles("fed");
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -143,9 +193,6 @@ public class TaskActivity extends AppCompatActivity
         if (mode.contains("f"))
             itemFinish.setVisible(true);
 
-        if (mode.contains("r"))
-            itemRemove.setVisible(true);
-
         if (mode.contains("e"))
             itemEdit.setVisible(true);
 
@@ -159,21 +206,43 @@ public class TaskActivity extends AppCompatActivity
     {
         int id = item.getItemId();
 
-        if (id == R.id.btnRemoveToolBar)
+        switch (id)
         {
-            // To-Do
-        } else if (id == R.id.btnEditToolBar)
-        {
+            case (R.id.btnToolBarFinish):
+                currentTask.setStatusFinished(!currentTask.getStatusFinished());
 
-        } else if (id == R.id.btnDoneToolBar)
-        {
-            // Send data back
-            Intent i = new Intent();
-            i.putExtra("tasks", mTasks);
-            i.putExtra("courses", mCourses);
-            setResult(RESULT_OK, i);
+                FloatingActionButton fab = findViewById(R.id.btnFloatTaskRecord);
 
-            finish();
+                if (currentTask.getStatusFinished())
+                    fab.hide();
+                else
+                    fab.show();
+
+                break;
+
+            case (R.id.btnEditToolBar):
+                Intent i = new Intent(this, ManageTaskActivity.class);
+
+                // Pass an object to another activity
+                // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
+                i.putExtra("viewMode", "edit");
+                i.putExtra("tasks", mTasks);
+                i.putExtra("courses", mCourses);
+                i.putExtra("index", mTasks.getTaskIndexFor(currentTask));
+
+                startActivityForResult(i, Globals.ManageTaskRequestCode);
+
+                break;
+
+            case (R.id.btnDoneToolBar):
+                // Send data back
+                Intent i2 = new Intent();
+                i2.putExtra("tasks", mTasks);
+                i2.putExtra("courses", mCourses);
+                setResult(Globals.RESULT_OK, i2);
+
+                finish();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -182,12 +251,6 @@ public class TaskActivity extends AppCompatActivity
     {
         Task taskReceived = currentTask;
 
-        if (taskReceived.getStatusFinished())
-            return;
-
-        if (!taskReceived.getSessions().checkOpenSession())
-            taskReceived.startRecordingTime();
-        else
-            taskReceived.stopRecordingTime();
+        taskReceived.updateRecordingTime();
     }
 }

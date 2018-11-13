@@ -5,7 +5,7 @@
     android:id="@+id/taskLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewTaskActivity">
+    tools:context=".ManageTaskActivity">
 
     <include
         layout="@layout/ios_toolbar"
@@ -44,7 +44,8 @@
                     android:layout_height="wrap_content"
                     android:hint="e.g. CNIT 35500"
                     android:inputType="text"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
             </LinearLayout>
 

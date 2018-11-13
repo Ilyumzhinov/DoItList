@@ -30,6 +30,19 @@ public class TasksControl implements Serializable
         return task;
     }
 
+    public Task updateTask(Task xTask, String name, String detail, Course course, LocalDateTime deadline, Integer timeEst, Boolean highlight)
+    {
+        // Try to set the values
+        xTask.setName(name);
+        xTask.setDetail(detail);
+        xTask.setCourse(course);
+        xTask.setDeadline(deadline);
+        xTask.setTimeEst(timeEst);
+        xTask.setHighlight(highlight);
+
+        return xTask;
+    }
+
     // Remove a task with a name
     // True if successful removal
     public boolean removeTask(Task xTask)
@@ -57,4 +70,9 @@ public class TasksControl implements Serializable
     }
 
     public Task getTaskAt(Integer index) {return Tasks.get(index);}
+
+    public int getTaskIndexFor(Task xTask)
+    {
+        return Tasks.indexOf(xTask);
+    }
 }
