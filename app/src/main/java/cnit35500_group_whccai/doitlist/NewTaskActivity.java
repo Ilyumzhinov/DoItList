@@ -31,7 +31,7 @@ import Functional.TasksControl;
 
 public class NewTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener
 {
-    private final static int cNewCourseRequestCode = 1;
+    private final static int cNewCourseRequestCode = 1, cNewTaskRequestCode = 2, cOpenTaskRequestCode = 3;
 
     private TasksControl mTasks;
     private CoursesControl mCourses;
@@ -235,6 +235,17 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
             {
                 mTasks.addTask(name, notes, course, dueDate, timeEst, highlight);
                 Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent();
+                i.putExtra("tasks", mTasks);
+                i.putExtra("courses", mCourses);
+                setResult(RESULT_OK, i);
+
+                View emptyView = new View(this);
+                emptyView.setId(mTasks.getTasks().length - 1);
+                OpenTask(emptyView);
+
+                finish();
             } catch (Exception e)
             {
                 Toast.makeText(this, "Failed to add!", Toast.LENGTH_SHORT).show();
@@ -253,6 +264,19 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void OpenTask(View view)
+    {
+        Intent i = new Intent(this, TaskActivity.class);
+
+        // Pass an object to another activity
+        // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
+        i.putExtra("tasks", mTasks);
+        i.putExtra("courses", mCourses);
+        i.putExtra("index", view.getId());
+
+        startActivityForResult(i, cOpenTaskRequestCode);
     }
 
     public Integer calculateMinutesFromTimeInput(String xTime)
