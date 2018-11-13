@@ -8,8 +8,8 @@ import java.util.List;
 
 public class SessionsControl implements Serializable
 {
-    private final static List<Session> Sessions = new ArrayList<>();
-    private static Session sessionOpen = null;
+    private List<Session> Sessions = new ArrayList<>();
+    private Session sessionOpen = null;
 
     public void openSession()
     {

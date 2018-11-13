@@ -22,6 +22,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -221,7 +222,11 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
                 notes = ((TextView) findViewById(R.id.edtNotes)).getText().toString();
                 course = (Course) ((Spinner) findViewById(R.id.spnCourse)).getSelectedItem();
                 dueDate = LocalDateTime.of(yearFinal, monthFinal, dayFinal, hourFinal, minuteFinal);
-                timeEst = calculateMinutesFromTimeInput(((EditText) findViewById(R.id.edtTimeEst)).getText().toString());
+                int timefromInput = calculateMinutesFromTimeInput(((EditText) findViewById(R.id.edtTimeEst)).getText().toString());
+                if (timefromInput >= 0)
+                    timeEst = calculateMinutesFromTimeInput(((EditText) findViewById(R.id.edtTimeEst)).getText().toString());
+                else
+                    throw new Exception();
                 highlight = ((CheckBox) findViewById(R.id.chkHighlight)).isChecked();
             } catch (Exception e)
             {
@@ -287,12 +292,13 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         {
             String[] parsedTime = xTime.split(":");
             hours = Integer.valueOf(parsedTime[0]);
-            minutes = Integer.valueOf(parsedTime[0]);
+            minutes = Integer.valueOf(parsedTime[1]);
+
+            return hours * 60 + minutes;
         } catch (Exception ignored)
         {
+            return -1;
         }
-
-        return hours * 60 + minutes;
     }
 
     // Implement method for setting date in a dialog window
@@ -304,10 +310,10 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         this.monthFinal = month + 1;
         this.dayFinal = dayOfMonth;
 
-        Calendar calc = Calendar.getInstance();
+        LocalTime timeNow = LocalTime.now();
 
-        this.hour = calc.get(Calendar.HOUR);
-        this.minute = calc.get(Calendar.MINUTE);
+        this.hour = timeNow.getHour();
+        this.minute = timeNow.getMinute();
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, this.hour, this.minute, true);
         timePickerDialog.show();

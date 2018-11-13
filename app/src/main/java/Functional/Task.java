@@ -1,8 +1,9 @@
 package Functional;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Task
+public class Task implements Serializable
 {
     private String taskName;
     private Course taskCourse;

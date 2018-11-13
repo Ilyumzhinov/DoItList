@@ -1,8 +1,9 @@
 package Functional;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Session
+public class Session implements Serializable
 {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
