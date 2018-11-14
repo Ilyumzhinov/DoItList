@@ -30,6 +30,7 @@
             android:name=".TaskActivity"
             android:theme="@style/AppTheme"></activity>
         <activity android:name=".SessionsHistoryActivity"></activity>
+        <activity android:name=".SaveTasks" />
     </application>
 
 </manifest>

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TasksControl implements Serializable
 {
-    private final static List<Task> Tasks = new ArrayList<>();
+    private List<Task> Tasks = new ArrayList<>();
 
     // Returns the added task if successful
     public Task addTask(String name, String detail, Course course, LocalDateTime deadline, Integer timeEst, Boolean highlight)
