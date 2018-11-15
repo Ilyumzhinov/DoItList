@@ -23,8 +23,11 @@ public class Globals
     public static final int NewCourseRequestCode = 1, ManageTaskRequestCode = 2, OpenTaskRequestCode = 3, SessionsHistoryRequestCode = 4;
 
     // Intent result codes
+    // Return when no data was changed
     public static final int RESULT_OK = Activity.RESULT_OK;
+    // ???
     public static final int RESULT_CANCELED = Activity.RESULT_CANCELED;
-    public static final int RESULT_REMOVE = 10;
+    // Return when data was changed, save it
+    public static final int RESULT_SAVE = 9;
     //
 }

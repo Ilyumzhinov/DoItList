@@ -73,55 +73,23 @@ public class TaskActivity extends AppCompatActivity
         startActivityForResult(i, Globals.SessionsHistoryRequestCode);
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        switch (requestCode)
-        {
-            // Receive Intent info from ManageTaskActivity
-            case (Globals.ManageTaskRequestCode):
-                switch (resultCode)
-                {
-                    case (Globals.RESULT_OK):
-                        // Receive object through Intent
-                        // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
-                        Bundle extras = data.getExtras();
-                        if (extras != null)
-                        {
-                            // Obtain data
-                            mTasks = (TasksControl) data.getSerializableExtra("tasks");
-                            mCourses = (CoursesControl) data.getSerializableExtra("courses");
-                        }
-
-                        populateViews();
-                        break;
-
-                    case (Globals.RESULT_REMOVE):
-                        // Send data back
-                        Intent i = new Intent();
-                        i.putExtra("tasks", mTasks);
-                        i.putExtra("courses", mCourses);
-                        setResult(Globals.RESULT_OK, i);
-
-                        finish();
-                        break;
-                }
-                break;
-        }
-    }
-
     private void populateViews()
     {
         CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
         col_toolbar.setTitle(currentTask.getName());
 
         // Populate views with data
+        // Set course
+        TextView txt = findViewById(R.id.txtTaskCourse);
+        txt.setText(currentTask.getCourse().getName());
+
         // Set deadline label
         // Reference: https://stackoverflow.com/questions/28177370/how-to-format-localdate-to-string
         LocalDateTime localDate = currentTask.getDeadline();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
         String formattedString = localDate.format(formatter);
 
-        TextView txt = findViewById(R.id.lblTaskDeadline);
+        txt = findViewById(R.id.lblTaskDeadline);
         txt.setText(formattedString);
 
         // Set time before deadline label
@@ -200,7 +168,7 @@ public class TaskActivity extends AppCompatActivity
             itemDone.setVisible(true);
     }
 
-    // Handle button activities
+    // Handle toolbar button activities
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -230,8 +198,12 @@ public class TaskActivity extends AppCompatActivity
                 i.putExtra("courses", mCourses);
                 i.putExtra("index", mTasks.getTaskIndexFor(currentTask));
 
-                startActivityForResult(i, Globals.ManageTaskRequestCode);
+                // Set result code from Third activity to first activity
+                // Reference: https://stackoverflow.com/questions/28944137/android-get-result-from-third-activity
+                i.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                startActivity(i);
 
+                finish();
                 break;
 
             case (R.id.btnDoneToolBar):
@@ -239,7 +211,7 @@ public class TaskActivity extends AppCompatActivity
                 Intent i2 = new Intent();
                 i2.putExtra("tasks", mTasks);
                 i2.putExtra("courses", mCourses);
-                setResult(Globals.RESULT_OK, i2);
+                setResult(Globals.RESULT_SAVE, i2);
 
                 finish();
                 break;

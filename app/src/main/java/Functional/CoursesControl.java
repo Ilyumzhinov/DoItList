@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CoursesControl implements Serializable
 {
-    private final static List<Course> Courses = new ArrayList<>();
+    private List<Course> Courses = new ArrayList<>();
 
     // Checks before adding a course
     // Returns the added course if successful
