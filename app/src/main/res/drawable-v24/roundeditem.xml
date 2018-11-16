@@ -1,11 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--Add ripple effect Reference: https://stackoverflow.com/questions/27006288/how-to-create-ripple-effect-in-simple-layout -->
-<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/colorPrimaryDark">
+<?xml version="1.0" encoding="utf-8"?><!--Add ripple effect Reference: https://stackoverflow.com/questions/27006288/how-to-create-ripple-effect-in-simple-layout -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorPrimaryDark">
     <item android:state_pressed="false">
         <shape android:shape="rectangle">
             <corners android:radius="10dp" />
             <solid android:color="@color/colorPrimary" />
-            <stroke android:id="@+id/stroke" android:layout_width="wrap_content" android:layout_height="wrap_content" android:width="1dip" android:color="@color/colorPrimaryDark" />
+            <stroke
+                android:id="@+id/stroke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="1dip"
+                android:color="@color/colorPrimaryDark" />
         </shape>
     </item>
 </ripple>
