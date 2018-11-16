@@ -1,9 +1,12 @@
 package cnit35500_group_whccai.doitlist;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -74,15 +77,6 @@ public class NewCourseActivity extends AppCompatActivity
         CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
         col_toolbar.setTitle("New Course");
         //
-
-        // Populate history layout
-        LinearLayout lytCourses = findViewById(R.id.lytCourses);
-        for (Course iCourse : mCourses.getCourses())
-        {
-            TextView tv = new TextView(this);
-            tv.setText(iCourse.getName());
-            lytCourses.addView(tv);
-        }
     }
 
     private void updateMenuVisibles(String mode)
@@ -126,16 +120,17 @@ public class NewCourseActivity extends AppCompatActivity
             // Try to save a course
             TextView txt = findViewById(R.id.txtInpCourseTitle);
 
-            if (null == mCourses.addCourse(txt.getText().toString()))
+            int xColor = ContextCompat.getColor(this, R.color.courseBlue);
+
+            Course courseTemp = mCourses.addCourse(txt.getText().toString(), xColor);
+
+            if (null == courseTemp)
             {
                 Toast.makeText(this, "Error: wrong input OR may exist already", Toast.LENGTH_SHORT).show();
                 return false;
             } else
             {
-                LinearLayout lytCourses = findViewById(R.id.lytCourses);
-                TextView tv = new TextView(this);
-                tv.setText(txt.getText().toString());
-                lytCourses.addView(tv);
+                Toast.makeText(this, "Course added as " + courseTemp.getFullScope(courseTemp), Toast.LENGTH_SHORT).show();
 
                 txt.setText("");
             }

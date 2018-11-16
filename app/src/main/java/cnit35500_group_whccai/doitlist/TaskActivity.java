@@ -82,6 +82,7 @@ public class TaskActivity extends AppCompatActivity
         // Set course
         TextView txt = findViewById(R.id.txtTaskCourse);
         txt.setText(currentTask.getCourse().getName());
+        txt.setBackgroundColor(currentTask.getCourse().getAssociatedColor());
 
         // Set deadline label
         // Reference: https://stackoverflow.com/questions/28177370/how-to-format-localdate-to-string

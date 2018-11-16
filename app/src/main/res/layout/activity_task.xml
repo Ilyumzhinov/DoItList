@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:divider="?android:attr/dividerHorizontal"
             android:orientation="vertical"
-            android:paddingTop="10dp"
             android:showDividers="middle">
 
             <LinearLayout
@@ -38,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/roundeditem_active"
+                    android:background="@color/colorPrimaryDark"
                     android:paddingStart="20dp"
                     android:paddingTop="5dp"
                     android:paddingEnd="20dp"

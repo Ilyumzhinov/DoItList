@@ -5,4 +5,13 @@
     <color name="colorAccent">#4caf50</color>
     <color name="colorAccentLight">#98ee99</color>
     <color name="colorAccentDark">#338a3e</color>
+    <!--Colors taken from material color tool. Reference: https://material.io/tools/color/#!/?view.left=0&view.right=0&secondary.color=c5c6c7&primary.color=D32F2F -->
+    <color name="courseRed">#ff1744</color>
+    <color name="courseOrange">#ff9100</color>
+    <color name="courseGreen">#64dd17</color>
+    <color name="courseLightBlue">#40c4ff</color>
+    <color name="courseBlue">#448aff</color>
+    <color name="coursePurple">#aa00ff</color>
+    <color name="coursePink">#ff4081</color>
+    <color name="courseBrown">#8d6e63</color>
 </resources>

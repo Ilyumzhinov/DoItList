@@ -1,5 +1,7 @@
 package Functional;
 
+import android.graphics.Color;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +12,15 @@ public class CoursesControl implements Serializable
 
     // Checks before adding a course
     // Returns the added course if successful
-    public Course addCourse(String xName)
+    public Course addCourse(String xName, Integer xAssociatedColor)
     {
         Course course = new Course();
 
         // Try to set the name
         if (!setNameCheck(course, xName))
             return null;
+
+        course.setAssociatedColor(xAssociatedColor);
 
         // Try to add to the list
         Courses.add(course);
@@ -64,7 +68,7 @@ public class CoursesControl implements Serializable
         return xCourse.setName(xName);
     }
 
-    public Course getTaskAt(Integer index)
+    public Course getCourseAt(Integer index)
     {
         return Courses.get(index);
     }

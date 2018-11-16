@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/nameTask"
+                android:id="@+id/lytNameRequired"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
@@ -42,27 +42,145 @@
                     android:id="@+id/txtInpCourseTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:hint="e.g. CNIT 35500"
                     android:inputType="text"
                     android:maxLines="1"
                     android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/lytCourses"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/nameTask"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
+                <LinearLayout
+                    android:id="@+id/lytDiscreteColorPick"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Saved Courses"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/roundeditem_colorpicker"
+                    android:clickable="true"
+                    android:divider="?android:attr/dividerHorizontal"
+                    android:focusable="auto"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="20dp"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="10dp"
+                        android:text="Pick color"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:textColor="@android:color/secondary_text_light" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:paddingStart="40dp"
+                        android:paddingTop="20dp"
+                        android:paddingEnd="40dp"
+                        android:paddingBottom="20dp">
+
+                        <RadioGroup
+                            android:id="@+id/lytColorsOne"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:autoText="false"
+                                android:buttonTint="@color/courseRed" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:autoText="false"
+                                android:buttonTint="@color/courseOrange" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:autoText="false"
+                                android:buttonTint="@color/courseGreen" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:autoText="false"
+                                android:buttonTint="@color/courseLightBlue" />
+                        </RadioGroup>
+
+                        <RadioGroup
+                            android:id="@+id/lytColorsTwo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lytColorsOne"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:autoText="false"
+                                android:buttonTint="@color/courseBlue" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:autoText="false"
+                                android:buttonTint="@color/coursePurple" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:autoText="false"
+                                android:buttonTint="@color/coursePink" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:autoText="false"
+                                android:buttonTint="@color/courseBrown" />
+                        </RadioGroup>
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
             </LinearLayout>
+
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 

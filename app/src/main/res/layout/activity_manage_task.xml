@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/nameTask"
+                android:id="@+id/lytNameRequired"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
@@ -55,6 +55,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lytDeadline"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/taskName"
@@ -108,18 +109,19 @@
                 android:id="@+id/taskDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/nameTask"
+                android:layout_below="@+id/lytNameRequired"
                 android:divider="?android:attr/dividerHorizontal"
                 android:orientation="vertical"
                 android:showDividers="middle|end">
 
                 <TableRow
+                    android:id="@+id/lytTaskCourse"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginVertical="20dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:gravity="center">
+                    android:gravity="top">
 
                     <ImageView
                         android:layout_width="30dp"
@@ -137,60 +139,70 @@
                         android:text="Course"
                         android:textSize="20sp" />
 
-                    <Spinner
-                        android:id="@+id/spnCourse"
+                    <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1">
 
-                    <ImageButton
-                        android:id="@+id/btnPlusCourse"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:onClick="NewCourse"
-                        android:tint="@color/colorAccent"
-                        app:srcCompat="@drawable/plus_circle_icon" />
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center">
 
-                </TableRow>
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
 
-                <TableRow
+                            <Spinner
+                                android:id="@+id/spnCourse"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
 
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:gravity="center">
+                            <ImageButton
+                                android:id="@+id/btnPlusCourse"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:onClick="NewCourse"
+                                android:tint="@color/colorAccent"
+                                app:srcCompat="@drawable/plus_circle_icon" />
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_weight="0"
-                        android:src="@drawable/type_icon" />
+                        </TableRow>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="0"
-                        android:text="Type"
-                        android:textSize="20sp" />
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginVertical="5dp"
+                            android:gravity="center">
 
-                    <Spinner
-                        android:id="@+id/sonType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0"
+                                android:src="@drawable/type_icon" />
 
-                    <ImageButton
-                        android:id="@+id/btnPlusType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:tint="@color/colorAccent"
-                        app:srcCompat="@drawable/plus_circle_icon" />
+                            <Spinner
+                                android:id="@+id/spnCourse2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <ImageButton
+                                android:id="@+id/btnPlusCourse2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:tint="@color/colorAccent"
+                                app:srcCompat="@drawable/plus_circle_icon" />
+
+                        </TableRow>
+
+                    </TableLayout>
 
                 </TableRow>
 
@@ -302,32 +314,44 @@
                     android:layout_height="match_parent"
                     android:layout_marginVertical="20dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:gravity="center">
+                    android:layout_marginEnd="20dp">
 
                     <ImageView
+                        android:id="@+id/imgTaskNotes"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
+                        android:layout_alignParentStart="true"
                         android:layout_marginEnd="10dp"
-                        android:layout_weight="0"
                         android:src="@drawable/note_icon" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="0"
-                        android:text="Notes"
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/edtNotes"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:hint="anything to remember?"
-                        android:inputType="textMultiLine" />
+                        android:layout_column="1"
+                        android:layout_span="2"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/lblTaskManageNotes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="Notes"
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/edtNotes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lblTaskManageNotes"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:ems="10"
+                            android:gravity="top"
+                            android:hint="anything to remember?"
+                            android:inputType="textMultiLine|textLongMessage" />
+                    </RelativeLayout>
 
                 </TableRow>
 
