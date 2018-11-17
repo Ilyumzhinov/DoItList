@@ -139,12 +139,12 @@
                         android:text="Course"
                         android:textSize="20sp" />
 
-                    <TableLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <TableRow
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginVertical="5dp"
@@ -170,10 +170,8 @@
                                 android:onClick="NewCourse"
                                 android:tint="@color/colorAccent"
                                 app:srcCompat="@drawable/plus_circle_icon" />
-
-                        </TableRow>
-
-                        <TableRow
+                        </LinearLayout>
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginVertical="5dp"
@@ -201,9 +199,8 @@
                                 android:tint="@color/colorAccent"
                                 app:srcCompat="@drawable/plus_circle_icon" />
 
-                        </TableRow>
-
-                    </TableLayout>
+                        </LinearLayout>
+                    </LinearLayout>
 
                 </TableRow>
 
