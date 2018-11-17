@@ -110,7 +110,7 @@ public class NewCourseActivity extends AppCompatActivity
         {
             TextView tv = new TextView(this);
 
-            tv.setText(iCourse.getFullScope());
+            tv.setText(iCourse.getName());
             lytCourses.addView(tv);
         }
     }
@@ -179,7 +179,7 @@ public class NewCourseActivity extends AppCompatActivity
 
                 LinearLayout lytCourses = findViewById(R.id.lytCourses);
                 TextView tv = new TextView(this);
-                tv.setText(courseTemp.getFullScope());
+                tv.setText(courseTemp.getName());
                 lytCourses.addView(tv);
 
                 txt.setText("");

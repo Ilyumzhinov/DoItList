@@ -81,7 +81,7 @@ public class TaskActivity extends AppCompatActivity
         // Populate views with data
         // Set course
         TextView txt = findViewById(R.id.txtTaskCourse);
-        txt.setText(currentTask.getCourse().getName());
+        txt.setText(currentTask.getCourse().getFullScope());
         txt.setBackgroundColor(currentTask.getCourse().getAssociatedColor());
 
         // Set deadline label
