@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +23,6 @@ public class NewCourseActivity extends AppCompatActivity
     private CoursesControl mCourses;
     private Course parent;
     private Menu menu;
-    private String viewMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,34 +41,25 @@ public class NewCourseActivity extends AppCompatActivity
         // Receive object through Intent
         // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
         Bundle extras = getIntent().getExtras();
-        viewMode = getIntent().getStringExtra(Globals.ExtraKey_ViewMode);
         if (extras != null)
         {
-            switch (viewMode)
+            // Obtain data
+            mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
+            parent = (Course) getIntent().getSerializableExtra(Globals.ExtraKey_Parent);
+
+            if (parent.isNull())
             {
-                case (Globals.ViewMode_New):
-                    // Obtain data
-                    mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
+                col_toolbar.setTitle("New Course");
+                txtEditInput.setHint("e.g. CNIT 35500");
+            } else
+            {
+                col_toolbar.setTitle("New Type");
+                txtEditInput.setHint("e.g. Homeworks");
 
-                    col_toolbar.setTitle("New Course");
-                    txtEditInput.setHint("e.g. CNIT 35500");
-
-                    break;
-
-                case (Globals.ViewMode_NewWithParent):
-                    // Obtain data
-                    mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
-                    parent = (Course) getIntent().getSerializableExtra(Globals.ExtraKey_Parent);
-
-                    col_toolbar.setTitle("New Type");
-                    txtEditInput.setHint("e.g. Homeworks");
-
-                    // Set up scope label
-                    TextView txt = findViewById(R.id.txtCourseScope);
-                    txt.setText(parent.getFullScope(parent));
-                    txt.setBackgroundColor(parent.getAssociatedColor());
-
-                    break;
+                // Set up scope label
+                TextView txt = findViewById(R.id.txtCourseScope);
+                txt.setText(parent.getFullScope());
+                txt.setBackgroundColor(parent.getAssociatedColor());
             }
         } else
         {
@@ -104,6 +95,24 @@ public class NewCourseActivity extends AppCompatActivity
                     updateMenuVisibles("d");
             }
         });
+
+        // Populate history layout
+        LinearLayout lytCourses = findViewById(R.id.lytCourses);
+
+        Course[] coursesLocal;
+
+        coursesLocal = mCourses.getCoursesAtScope(parent.getFullScope());
+
+        if (coursesLocal == null)
+            return;
+
+        for (Course iCourse : coursesLocal)
+        {
+            TextView tv = new TextView(this);
+
+            tv.setText(iCourse.getFullScope());
+            lytCourses.addView(tv);
+        }
     }
 
     private void updateMenuVisibles(String mode)
@@ -153,18 +162,12 @@ public class NewCourseActivity extends AppCompatActivity
             // Todo: change this hardcoded value
             int color = ContextCompat.getColor(this, R.color.courseBlue);
 
-            Course courseTemp = null;
-
+            Course courseTemp;
             // Try to add a course
-            switch (viewMode)
-            {
-                case (Globals.ViewMode_New):
-                    courseTemp = mCourses.addCourse(name, color);
-                    break;
-                case (Globals.ViewMode_NewWithParent):
-                    courseTemp = mCourses.addCourse(name, color, parent);
-                    break;
-            }
+            if (parent.isNull())
+                courseTemp = mCourses.addCourse(name, color);
+            else
+                courseTemp = mCourses.addCourse(name, color, parent);
 
             if (null == courseTemp)
             {
@@ -172,7 +175,12 @@ public class NewCourseActivity extends AppCompatActivity
                 return false;
             } else
             {
-                Toast.makeText(this, "Course added as " + courseTemp.getFullScope(courseTemp), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Added as " + courseTemp.getFullScope(), Toast.LENGTH_SHORT).show();
+
+                LinearLayout lytCourses = findViewById(R.id.lytCourses);
+                TextView tv = new TextView(this);
+                tv.setText(courseTemp.getFullScope());
+                lytCourses.addView(tv);
 
                 txt.setText("");
             }

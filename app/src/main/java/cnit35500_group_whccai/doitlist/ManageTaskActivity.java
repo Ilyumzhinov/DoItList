@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -66,6 +67,12 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     mTasks = (TasksControl) getIntent().getSerializableExtra(Globals.ExtraKey_Tasks);
                     mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
 
+                    //Todo: remove tests
+                    mCourses.addCourse("CNIT 35500", ContextCompat.getColor(this, R.color.courseBlue), null);
+                    mCourses.addCourse("CNIT 37200",ContextCompat.getColor(this, R.color.courseBlue), null);
+                    mCourses.addCourse("Homeworks", ContextCompat.getColor(this, R.color.courseBlue), mCourses.getCourses()[0]);
+                    mCourses.addCourse("Individual",ContextCompat.getColor(this, R.color.courseBlue),mCourses.getCourses()[2]);
+
                     // Set global values
                     dueDatePicked = LocalDateTime.now();
                     dueDatePicked = dueDatePicked.plusDays(7);
@@ -93,6 +100,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     // Populate views with data
                     DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
 
+                    // Todo: set spinner for saved course
                     ((TextView) findViewById(R.id.edtTaskName)).setText(currentTask.getName());
                     ((TextView) findViewById(R.id.txtDueDate)).setText(dueDatePicked.format(formatter2));
                     ((EditText) findViewById(R.id.edtTimeEstH)).setText(String.valueOf(Math.round(currentTask.getTimeEst() / 60)));
@@ -146,7 +154,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         // Pass an object to another activity
         // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
         i.putExtra(Globals.ExtraKey_Courses, mCourses);
-        i.putExtra(Globals.ExtraKey_ViewMode, Globals.ViewMode_New);
+        i.putExtra(Globals.ExtraKey_Parent, new Course());
 
         startActivityForResult(i, Globals.NewCourseRequestCode);
     }
@@ -159,10 +167,9 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         // Pass an object to another activity
         // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
         i.putExtra(Globals.ExtraKey_Courses, mCourses);
-        i.putExtra(Globals.ExtraKey_ViewMode, Globals.ViewMode_NewWithParent);
 
         // Todo: change the hardcoded value
-        i.putExtra(Globals.ExtraKey_Parent, mCourses.getCourseAt(0));
+        i.putExtra(Globals.ExtraKey_Parent, mCourses.getCourses()[0]);
 
         startActivityForResult(i, Globals.NewCourseRequestCode);
     }

@@ -12,7 +12,19 @@ public class CoursesControl implements Serializable
     // Return the added course if successful
     public Course addCourse(String xName, Integer xAssociatedColor)
     {
+        Course course = addCourse(xName, xAssociatedColor, null);
+
+        return course;
+    }
+
+    // Overload a method for adding a course to add parent as well
+    // Return the added course if successful
+    public Course addCourse(String xName, Integer xAssociatedColor, Course xParent)
+    {
         Course course = new Course();
+
+        if (xParent != null)
+            course.setParent(xParent);
 
         // Try to set the name
         if (!setNameCheck(course, xName))
@@ -22,20 +34,6 @@ public class CoursesControl implements Serializable
 
         // Try to add to the list
         Courses.add(course);
-
-        return course;
-    }
-
-    // Overload a method for adding a course to add parent as well
-    // Return the added course if successful
-    public Course addCourse(String xName, Integer xAssociatedColor, Course parent)
-    {
-        Course course = this.addCourse(xName, xAssociatedColor);
-
-        if (course == null)
-            return null;
-
-        course.setParent(parent);
 
         return course;
     }
@@ -67,10 +65,15 @@ public class CoursesControl implements Serializable
     }
 
     // True if successful set
-    public boolean setNameCheck(Course xCourse, String xName)
+    private boolean setNameCheck(Course xCourse, String xName)
     {
+        Course[] localCourses = getCoursesAtScope(xCourse.getScopeOfParent());
+
+        if (localCourses == null)
+            localCourses = getCourses();
+
         // Check if a course with the name already exists
-        for (Course iCourse : Courses)
+        for (Course iCourse : localCourses)
         {
             if (xName.equals(iCourse.getName()))
                 return false;
@@ -80,11 +83,6 @@ public class CoursesControl implements Serializable
         return xCourse.setName(xName);
     }
 
-    public Course getCourseAt(Integer index)
-    {
-        return Courses.get(index);
-    }
-
     public Course getCourseWithName(String name)
     {
         for (Course iCourse : Courses)
@@ -92,5 +90,19 @@ public class CoursesControl implements Serializable
                 return iCourse;
 
         return null;
+    }
+
+    public Course[] getCoursesAtScope(String scope)
+    {
+        List<Course> courses = new ArrayList<>();
+
+        for (Course iCourse : Courses)
+            if (iCourse.compareParentScopeWith(scope))
+                courses.add(iCourse);
+
+        if (courses.size() > 0)
+            return courses.toArray(new Course[0]);
+        else
+            return null;
     }
 }

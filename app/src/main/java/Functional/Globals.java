@@ -41,6 +41,5 @@ public class Globals
     // Intent extra values for viewMode key
     public static final String ViewMode_New = "new";
     public static final String ViewMode_Edit = "edit";
-    public static final String ViewMode_NewWithParent = "newWithParent";
     //
 }

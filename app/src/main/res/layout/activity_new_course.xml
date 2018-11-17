@@ -212,6 +212,21 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/lytCourses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/lytCourseData"
+                android:orientation="vertical"
+                android:padding="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Saved at scope"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                />
+            </LinearLayout>
+
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 

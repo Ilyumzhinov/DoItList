@@ -24,12 +24,11 @@ public class Course implements Serializable
     }
 
     // Check if we do not try to assign the course as its own parent
-    public void setParent(Course xParente)
+    public void setParent(Course xParent)
     {
-        if (!this.getFullScope(this).equals(xParente.getFullScope(xParente))
-                && !this.getName().equals(xParente.getName()))
-
-        this.parent = xParente;
+        if (!this.getFullScope().equals(xParent.getFullScope())
+                && !this.getName().equals(xParent.getName()))
+            this.parent = xParent;
     }
 
     public void setAssociatedColor(Integer xColor)
@@ -39,6 +38,9 @@ public class Course implements Serializable
 
     public String getName()
     {
+        if (this.name == null)
+            return "";
+
         return this.name;
     }
 
@@ -52,23 +54,54 @@ public class Course implements Serializable
         return this.parent;
     }
 
-    // A recursive function that browses through the hierarchy of parents and fetches their names into a single string
-    public String getFullScope(Course xCourse)
+    public String getFullScope()
     {
-        // Example:
-        // Individual < Homework < CNIT35500
-        // Homework < CNIT35500
-        // CNIT35500
+        return getFullScopeOf(this);
+    }
 
+    // A recursive function that browses through the hierarchy of parents and fetches their names into a single string
+    // Example:
+    // CNIT35500
+    // Homework < CNIT35500
+    // Individual < Homework < CNIT35500
+    private String getFullScopeOf(Course xCourse)
+    {
         if (xCourse.getParent() == null)
             return xCourse.getName();
 
-        return xCourse.getName() + " < " + getFullScope(xCourse.getParent());
+        return xCourse.getName() + " < " + getFullScopeOf(xCourse.getParent());
+    }
+
+    public String getScopeOfParent()
+    {
+        if (this.getParent() == null)
+            return "";
+
+        return getFullScopeOf(this.getParent());
+    }
+
+    public Boolean compareParentScopeWith(String xScope)
+    {
+        String parentScope = getScopeOfParent();
+
+        if (parentScope == xScope)
+            return true;
+        else if (parentScope == null)
+            return false;
+        else if (xScope == null)
+            return false;
+
+        return parentScope.equals(xScope);
+    }
+
+    public Boolean isNull()
+    {
+        return name == null;
     }
 
     @Override
     public String toString()
     {
-        return getFullScope(this);
+        return getFullScope();
     }
 }
