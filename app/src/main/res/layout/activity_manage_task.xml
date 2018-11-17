@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/lytNameRequired"
+                android:id="@+id/lytCourseData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
@@ -109,7 +109,7 @@
                 android:id="@+id/taskDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lytNameRequired"
+                android:layout_below="@+id/lytCourseData"
                 android:divider="?android:attr/dividerHorizontal"
                 android:orientation="vertical"
                 android:showDividers="middle|end">
@@ -197,6 +197,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0"
                                 android:background="?attr/selectableItemBackgroundBorderless"
+                                android:onClick="NewCourseWithScope"
                                 android:tint="@color/colorAccent"
                                 app:srcCompat="@drawable/plus_circle_icon" />
 

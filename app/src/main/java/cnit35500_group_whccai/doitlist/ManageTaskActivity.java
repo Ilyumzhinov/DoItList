@@ -22,10 +22,7 @@ import android.widget.Toast;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
 
 import Functional.Course;
 import Functional.CoursesControl;
@@ -59,15 +56,15 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         // Receive data through Intent
         // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
         Bundle extras = getIntent().getExtras();
-        viewMode = getIntent().getStringExtra("viewMode");
+        viewMode = getIntent().getStringExtra(Globals.ExtraKey_ViewMode);
         if (extras != null && viewMode != null)
         {
             switch (viewMode)
             {
-                case ("new"):
+                case (Globals.ViewMode_New):
                     // Obtain data
-                    mTasks = (TasksControl) getIntent().getSerializableExtra("tasks");
-                    mCourses = (CoursesControl) getIntent().getSerializableExtra("courses");
+                    mTasks = (TasksControl) getIntent().getSerializableExtra(Globals.ExtraKey_Tasks);
+                    mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
 
                     // Set global values
                     dueDatePicked = LocalDateTime.now();
@@ -81,11 +78,11 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
                     break;
 
-                case ("edit"):
+                case (Globals.ViewMode_Edit):
                     // Obtain data
-                    mTasks = (TasksControl) getIntent().getSerializableExtra("tasks");
-                    mCourses = (CoursesControl) getIntent().getSerializableExtra("courses");
-                    cTaskIndex = getIntent().getIntExtra("index", 0);
+                    mTasks = (TasksControl) getIntent().getSerializableExtra(Globals.ExtraKey_Tasks);
+                    mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
+                    cTaskIndex = getIntent().getIntExtra(Globals.ExtraKey_Index, 0);
 
                     // Set global values
                     currentTask = mTasks.getTaskAt(cTaskIndex);
@@ -141,13 +138,31 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         //
     }
 
+    // Open a NewCourse activity
     public void NewCourse(View view)
     {
         Intent i = new Intent(this, NewCourseActivity.class);
 
         // Pass an object to another activity
         // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
-        i.putExtra("courses", mCourses);
+        i.putExtra(Globals.ExtraKey_Courses, mCourses);
+        i.putExtra(Globals.ExtraKey_ViewMode, Globals.ViewMode_New);
+
+        startActivityForResult(i, Globals.NewCourseRequestCode);
+    }
+
+    // Open a NewCourse activity with scope
+    public void NewCourseWithScope(View view)
+    {
+        Intent i = new Intent(this, NewCourseActivity.class);
+
+        // Pass an object to another activity
+        // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
+        i.putExtra(Globals.ExtraKey_Courses, mCourses);
+        i.putExtra(Globals.ExtraKey_ViewMode, Globals.ViewMode_NewWithParent);
+
+        // Todo: change the hardcoded value
+        i.putExtra(Globals.ExtraKey_Parent, mCourses.getCourseAt(0));
 
         startActivityForResult(i, Globals.NewCourseRequestCode);
     }
@@ -166,7 +181,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     if (extras != null)
                     {
                         // Obtain data
-                        mCourses = (CoursesControl) data.getSerializableExtra("courses");
+                        mCourses = (CoursesControl) data.getSerializableExtra(Globals.ExtraKey_Courses);
                     }
 
                     // Populate spinner with courses values
@@ -233,11 +248,11 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         // Show and hide menu buttons
         switch (viewMode)
         {
-            case ("new"):
+            case (Globals.ViewMode_New):
                 updateMenuVisibles("sd");
                 break;
 
-            case("edit"):
+            case(Globals.ViewMode_Edit):
                 updateMenuVisibles("rsd");
                 break;
         }
@@ -259,8 +274,8 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                 Toast.makeText(this, "Task removed!", Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent();
-                i.putExtra("tasks", mTasks);
-                i.putExtra("courses", mCourses);
+                i.putExtra(Globals.ExtraKey_Tasks, mTasks);
+                i.putExtra(Globals.ExtraKey_Courses, mCourses);
 
                 setResult(Globals.RESULT_SAVE, i);
 
@@ -303,7 +318,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     switch (viewMode)
                     {
                         // Try to save a task
-                        case ("new"):
+                        case (Globals.ViewMode_New):
                             mTasks.addTask(name, notes, course, dueDate, timeEst, highlight);
                             Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
 
@@ -312,7 +327,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                             break;
 
                         // Try to update a task
-                        case ("edit"):
+                        case (Globals.ViewMode_Edit):
                             mTasks.updateTask(currentTask, name, notes, course, dueDate, timeEst, highlight);
                             Toast.makeText(this, "Task updated!", Toast.LENGTH_SHORT).show();
 
@@ -320,9 +335,9 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     }
 
                     // Show up the Task Activity
-                    i.putExtra("tasks", mTasks);
-                    i.putExtra("courses", mCourses);
-                    i.putExtra("index", cTaskIndex);
+                    i.putExtra(Globals.ExtraKey_Tasks, mTasks);
+                    i.putExtra(Globals.ExtraKey_Courses, mCourses);
+                    i.putExtra(Globals.ExtraKey_Index, cTaskIndex);
 
                     // Set result code from Third activity to first activity
                     // Reference: https://stackoverflow.com/questions/28944137/android-get-result-from-third-activity
@@ -343,10 +358,10 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
             case (R.id.btnDoneToolBar):
                 switch (viewMode)
                 {
-                    case ("new"):
+                    case (Globals.ViewMode_New):
                         Intent i2 = new Intent();
-                        i2.putExtra("courses", mCourses);
-                        i2.putExtra("tasks", mTasks);
+                        i2.putExtra(Globals.ExtraKey_Courses, mCourses);
+                        i2.putExtra(Globals.ExtraKey_Tasks, mTasks);
 
                         setResult(Globals.RESULT_SAVE, i2);
 
@@ -354,11 +369,11 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
                         break;
 
-                    case ("edit"):
+                    case (Globals.ViewMode_Edit):
                         Intent i3 = new Intent(this, TaskActivity.class);
-                        i3.putExtra("tasks", mTasks);
-                        i3.putExtra("courses", mCourses);
-                        i3.putExtra("index", cTaskIndex);
+                        i3.putExtra(Globals.ExtraKey_Tasks, mTasks);
+                        i3.putExtra(Globals.ExtraKey_Courses, mCourses);
+                        i3.putExtra(Globals.ExtraKey_Index, cTaskIndex);
                         // Set result code from Third activity to first activity
                         // Reference: https://stackoverflow.com/questions/28944137/android-get-result-from-third-activity
                         i3.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);

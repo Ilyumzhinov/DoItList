@@ -13,10 +13,8 @@ import android.widget.TextView;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import Functional.Course;
 import Functional.CoursesControl;
 import Functional.Globals;
-import Functional.Session;
 import Functional.Task;
 import Functional.TasksControl;
 
@@ -125,9 +123,9 @@ public class MainActivity extends AppCompatActivity
 
         // Pass an object to another activity
         // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
-        i.putExtra("viewMode","new");
-        i.putExtra("tasks", mTasks);
-        i.putExtra("courses", mCourses);
+        i.putExtra(Globals.ExtraKey_ViewMode,Globals.ViewMode_New);
+        i.putExtra(Globals.ExtraKey_Tasks, mTasks);
+        i.putExtra(Globals.ExtraKey_Courses, mCourses);
 
         startActivityForResult(i, Globals.ManageTaskRequestCode);
     }
@@ -138,18 +136,15 @@ public class MainActivity extends AppCompatActivity
 
         // Pass an object to another activity
         // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
-        i.putExtra("tasks", mTasks);
-        i.putExtra("courses", mCourses);
-        i.putExtra("index", 0);
+        i.putExtra(Globals.ExtraKey_Tasks, mTasks);
+        i.putExtra(Globals.ExtraKey_Courses, mCourses);
+        i.putExtra(Globals.ExtraKey_Index, 0);
 
         startActivityForResult(i, Globals.OpenTaskRequestCode);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        Task[] temp = mTasks.getTasks();
-        Course[] temp2 = mCourses.getCourses();
-
         switch (requestCode)
         {
             // Receive Intent info from ManageTaskActivity
@@ -162,8 +157,8 @@ public class MainActivity extends AppCompatActivity
                     if (extras != null)
                     {
                         // Obtain data
-                        mTasks = (TasksControl) data.getSerializableExtra("tasks");
-                        mCourses = (CoursesControl) data.getSerializableExtra("courses");
+                        mTasks = (TasksControl) data.getSerializableExtra(Globals.ExtraKey_Tasks);
+                        mCourses = (CoursesControl) data.getSerializableExtra(Globals.ExtraKey_Courses);
                     }
                 }
                 break;
@@ -175,8 +170,8 @@ public class MainActivity extends AppCompatActivity
                     if (extras != null)
                     {
                         // Obtain data
-                        mTasks = (TasksControl) data.getSerializableExtra("tasks");
-                        mCourses = (CoursesControl) data.getSerializableExtra("courses");
+                        mTasks = (TasksControl) data.getSerializableExtra(Globals.ExtraKey_Tasks);
+                        mCourses = (CoursesControl) data.getSerializableExtra(Globals.ExtraKey_Courses);
                     }
                 }
         }

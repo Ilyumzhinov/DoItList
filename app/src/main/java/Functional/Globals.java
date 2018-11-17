@@ -29,5 +29,18 @@ public class Globals
     public static final int RESULT_CANCELED = Activity.RESULT_CANCELED;
     // Return when data was changed, save it
     public static final int RESULT_SAVE = 9;
+
+    // Intent extra keys
+    public static final String ExtraKey_ViewMode = "viewMode";
+    public static final String ExtraKey_Parent = "parent";
+    public static final String ExtraKey_Courses = "courses";
+    public static final String ExtraKey_Tasks = "tasks";
+    public static final String ExtraKey_Index = "index";
+    public static final String ExtraKey_Sessions = "sessions";
+
+    // Intent extra values for viewMode key
+    public static final String ViewMode_New = "new";
+    public static final String ViewMode_Edit = "edit";
+    public static final String ViewMode_NewWithParent = "newWithParent";
     //
 }

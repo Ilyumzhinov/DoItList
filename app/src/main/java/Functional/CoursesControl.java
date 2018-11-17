@@ -1,7 +1,5 @@
 package Functional;
 
-import android.graphics.Color;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +8,8 @@ public class CoursesControl implements Serializable
 {
     private List<Course> Courses = new ArrayList<>();
 
-    // Checks before adding a course
-    // Returns the added course if successful
+    // Check before adding a course
+    // Return the added course if successful
     public Course addCourse(String xName, Integer xAssociatedColor)
     {
         Course course = new Course();
@@ -24,6 +22,20 @@ public class CoursesControl implements Serializable
 
         // Try to add to the list
         Courses.add(course);
+
+        return course;
+    }
+
+    // Overload a method for adding a course to add parent as well
+    // Return the added course if successful
+    public Course addCourse(String xName, Integer xAssociatedColor, Course parent)
+    {
+        Course course = this.addCourse(xName, xAssociatedColor);
+
+        if (course == null)
+            return null;
+
+        course.setParent(parent);
 
         return course;
     }

@@ -40,9 +40,9 @@ public class TaskActivity extends AppCompatActivity
         if (extras != null)
         {
             // Obtain data
-            mTasks = (TasksControl) getIntent().getSerializableExtra("tasks");
-            mCourses = (CoursesControl) getIntent().getSerializableExtra("courses");
-            Integer cIndex = getIntent().getIntExtra("index", 0);
+            mTasks = (TasksControl) getIntent().getSerializableExtra(Globals.ExtraKey_Tasks);
+            mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
+            Integer cIndex = getIntent().getIntExtra(Globals.ExtraKey_Index, 0);
 
             // Set global values
             currentTask = mTasks.getTaskAt(cIndex);
@@ -68,7 +68,7 @@ public class TaskActivity extends AppCompatActivity
 
         // Pass an object to another activity
         // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
-        i.putExtra("sessions", currentTask.getSessions());
+        i.putExtra(Globals.ExtraKey_Sessions, currentTask.getSessions());
 
         startActivityForResult(i, Globals.SessionsHistoryRequestCode);
     }
@@ -194,10 +194,10 @@ public class TaskActivity extends AppCompatActivity
 
                 // Pass an object to another activity
                 // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
-                i.putExtra("viewMode", "edit");
-                i.putExtra("tasks", mTasks);
-                i.putExtra("courses", mCourses);
-                i.putExtra("index", mTasks.getTaskIndexFor(currentTask));
+                i.putExtra(Globals.ExtraKey_ViewMode, Globals.ViewMode_Edit);
+                i.putExtra(Globals.ExtraKey_Tasks, mTasks);
+                i.putExtra(Globals.ExtraKey_Courses, mCourses);
+                i.putExtra(Globals.ExtraKey_Index, mTasks.getTaskIndexFor(currentTask));
 
                 // Set result code from Third activity to first activity
                 // Reference: https://stackoverflow.com/questions/28944137/android-get-result-from-third-activity
@@ -210,8 +210,8 @@ public class TaskActivity extends AppCompatActivity
             case (R.id.btnDoneToolBar):
                 // Send data back
                 Intent i2 = new Intent();
-                i2.putExtra("tasks", mTasks);
-                i2.putExtra("courses", mCourses);
+                i2.putExtra(Globals.ExtraKey_Tasks, mTasks);
+                i2.putExtra(Globals.ExtraKey_Courses, mCourses);
                 setResult(Globals.RESULT_SAVE, i2);
 
                 finish();

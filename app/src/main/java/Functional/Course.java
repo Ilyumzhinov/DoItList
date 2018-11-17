@@ -1,7 +1,5 @@
 package Functional;
 
-import android.graphics.Color;
-
 import java.io.Serializable;
 
 public class Course implements Serializable
@@ -26,7 +24,7 @@ public class Course implements Serializable
     }
 
     // Check if we do not try to assign the course as its own parent
-    public void setparent(Course xParente)
+    public void setParent(Course xParente)
     {
         if (!this.getFullScope(this).equals(xParente.getFullScope(xParente))
                 && !this.getName().equals(xParente.getName()))
@@ -58,14 +56,14 @@ public class Course implements Serializable
     public String getFullScope(Course xCourse)
     {
         // Example:
-        // Individual / Homework / CNIT35500
-        // Homework / CNIT35500
+        // Individual < Homework < CNIT35500
+        // Homework < CNIT35500
         // CNIT35500
 
         if (xCourse.getParent() == null)
             return xCourse.getName();
 
-        return xCourse.getName() + " / " + getFullScope(xCourse.getParent());
+        return xCourse.getName() + " < " + getFullScope(xCourse.getParent());
     }
 
     @Override

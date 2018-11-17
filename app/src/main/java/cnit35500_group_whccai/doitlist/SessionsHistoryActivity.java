@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
+import Functional.Globals;
 import Functional.Session;
 import Functional.SessionsControl;
 
@@ -31,7 +32,7 @@ public class SessionsHistoryActivity extends AppCompatActivity
         if (extras != null)
         {
             // Obtain data
-            mTaskSessions = (SessionsControl) getIntent().getSerializableExtra("sessions");
+            mTaskSessions = (SessionsControl) getIntent().getSerializableExtra(Globals.ExtraKey_Sessions);
 
             // Set up toolbar
             android.support.v7.widget.Toolbar toolbar = findViewById(R.id.ios_toolbar);

@@ -1,24 +1,17 @@
 package cnit35500_group_whccai.doitlist;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import Functional.Course;
 import Functional.CoursesControl;
@@ -27,7 +20,9 @@ import Functional.Globals;
 public class NewCourseActivity extends AppCompatActivity
 {
     private CoursesControl mCourses;
+    private Course parent;
     private Menu menu;
+    private String viewMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,17 +31,56 @@ public class NewCourseActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_new_course);
 
+        // Set up toolbar
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.ios_toolbar);
+        setSupportActionBar(toolbar);
+        CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
+
+        EditText txtEditInput = findViewById(R.id.txtInpCourseTitle);
+
         // Receive object through Intent
         // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
         Bundle extras = getIntent().getExtras();
+        viewMode = getIntent().getStringExtra(Globals.ExtraKey_ViewMode);
         if (extras != null)
         {
-            mCourses = (CoursesControl) getIntent().getSerializableExtra("courses"); //Obtaining data
+            switch (viewMode)
+            {
+                case (Globals.ViewMode_New):
+                    // Obtain data
+                    mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
+
+                    col_toolbar.setTitle("New Course");
+                    txtEditInput.setHint("e.g. CNIT 35500");
+
+                    break;
+
+                case (Globals.ViewMode_NewWithParent):
+                    // Obtain data
+                    mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
+                    parent = (Course) getIntent().getSerializableExtra(Globals.ExtraKey_Parent);
+
+                    col_toolbar.setTitle("New Type");
+                    txtEditInput.setHint("e.g. Homeworks");
+
+                    // Set up scope label
+                    TextView txt = findViewById(R.id.txtCourseScope);
+                    txt.setText(parent.getFullScope(parent));
+                    txt.setBackgroundColor(parent.getAssociatedColor());
+
+                    break;
+            }
+        } else
+        {
+            Toast.makeText(this, "Failed to receive data", Toast.LENGTH_SHORT).show();
+
+            finish();
+            return;
         }
+        //
 
         // Set listener for the Input edit text
         // Reference: EditTextChangeTest
-        final EditText txtEditInput = findViewById(R.id.txtInpCourseTitle);
         txtEditInput.addTextChangedListener(new TextWatcher()
         {
 
@@ -70,13 +104,6 @@ public class NewCourseActivity extends AppCompatActivity
                     updateMenuVisibles("d");
             }
         });
-
-        // Set up toolbar
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.ios_toolbar);
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
-        col_toolbar.setTitle("New Course");
-        //
     }
 
     private void updateMenuVisibles(String mode)
@@ -117,12 +144,27 @@ public class NewCourseActivity extends AppCompatActivity
 
         if (id == R.id.btnSaveToolBar)
         {
-            // Try to save a course
             TextView txt = findViewById(R.id.txtInpCourseTitle);
 
-            int xColor = ContextCompat.getColor(this, R.color.courseBlue);
+            // Get name value
+            String name = txt.getText().toString();
 
-            Course courseTemp = mCourses.addCourse(txt.getText().toString(), xColor);
+            // Get color value
+            // Todo: change this hardcoded value
+            int color = ContextCompat.getColor(this, R.color.courseBlue);
+
+            Course courseTemp = null;
+
+            // Try to add a course
+            switch (viewMode)
+            {
+                case (Globals.ViewMode_New):
+                    courseTemp = mCourses.addCourse(name, color);
+                    break;
+                case (Globals.ViewMode_NewWithParent):
+                    courseTemp = mCourses.addCourse(name, color, parent);
+                    break;
+            }
 
             if (null == courseTemp)
             {
@@ -139,7 +181,7 @@ public class NewCourseActivity extends AppCompatActivity
         {
             // Send data back
             Intent i = new Intent();
-            i.putExtra("courses", mCourses);
+            i.putExtra(Globals.ExtraKey_Courses, mCourses);
             setResult(Globals.RESULT_SAVE, i);
 
             finish();
