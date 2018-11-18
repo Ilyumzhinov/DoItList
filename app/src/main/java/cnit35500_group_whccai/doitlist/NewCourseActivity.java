@@ -61,7 +61,7 @@ public class NewCourseActivity extends AppCompatActivity
                     parent = (Course) getIntent().getSerializableExtra(Globals.ExtraKey_Parent);
 
                     col_toolbar.setTitle("New Type");
-                    txtEditInput.setHint("e.g. Homework");
+                    txtEditInput.setHint("e.g. Homeworks");
 
                     // Set up scope label
                     TextView txt = findViewById(R.id.txtCourseScope);
