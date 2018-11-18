@@ -19,6 +19,7 @@ import android.widget.Toolbar;
 
 import Functional.Course;
 import Functional.CoursesControl;
+import Functional.Globals;
 
 public class NewCourseActivity extends AppCompatActivity
 {
@@ -88,16 +89,9 @@ public class NewCourseActivity extends AppCompatActivity
     {
         MenuItem itemSave = menu.findItem(R.id.btnSaveToolBar);
         MenuItem itemDone = menu.findItem(R.id.btnDoneToolBar);
-        MenuItem itemEdit = menu.findItem(R.id.btnEditToolBar);
-        MenuItem itemRemove = menu.findItem(R.id.btnRemoveToolBar);
 
         itemSave.setVisible(false);
         itemDone.setVisible(false);
-        itemEdit.setVisible(false);
-        itemRemove.setVisible(false);
-
-        if (mode.contains("r"))
-            itemRemove.setVisible(true);
 
         if (mode.contains("d"))
             itemDone.setVisible(true);
@@ -127,21 +121,7 @@ public class NewCourseActivity extends AppCompatActivity
     {
         int id = item.getItemId();
 
-        if (id == R.id.btnRemoveToolBar)
-        {
-            // Try to save a course
-            TextView txt = findViewById(R.id.txtInpCourseTitle);
-            if (!mCourses.removeCourse(txt.getText().toString()))
-            {
-                Toast.makeText(this, "Something is wrong", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        } else if (id == R.id.btnEditToolBar)
-        {
-            updateMenuVisibles("rs");
-            Toast.makeText(this, "Does nothing", Toast.LENGTH_SHORT).show();
-
-        } else if (id == R.id.btnSaveToolBar)
+        if (id == R.id.btnSaveToolBar)
         {
             // Try to save a course
             TextView txt = findViewById(R.id.txtInpCourseTitle);
@@ -165,7 +145,7 @@ public class NewCourseActivity extends AppCompatActivity
             // Send data back
             Intent i = new Intent();
             i.putExtra("courses", mCourses);
-            setResult(RESULT_OK, i);
+            setResult(Globals.RESULT_SAVE, i);
 
             finish();
         }

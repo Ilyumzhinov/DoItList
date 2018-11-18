@@ -193,14 +193,17 @@ public class MainActivity extends AppCompatActivity
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        Task[] temp = mTasks.getTasks();
+        Course[] temp2 = mCourses.getCourses();
+
         switch (requestCode)
         {
             // Receive Intent info from ManageTaskActivity
             case (Globals.ManageTaskRequestCode):
-                if (resultCode == Globals.RESULT_OK)
+                if (resultCode == Globals.RESULT_SAVE)
                 {
-                    // Receive object through Intent
                     // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
+                    // Receive object through Intent
                     Bundle extras = data.getExtras();
                     if (extras != null)
                     {
@@ -210,6 +213,18 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
                 break;
+
+            case (Globals.OpenTaskRequestCode):
+                if (resultCode == Globals.RESULT_SAVE)
+                {
+                    Bundle extras = data.getExtras();
+                    if (extras != null)
+                    {
+                        // Obtain data
+                        mTasks = (TasksControl) data.getSerializableExtra("tasks");
+                        mCourses = (CoursesControl) data.getSerializableExtra("courses");
+                    }
+                }
         }
         // @TODO this won't work until we actually ADD courses or tasks via the add methods
         saveTasks.saveFile(mTasks);
