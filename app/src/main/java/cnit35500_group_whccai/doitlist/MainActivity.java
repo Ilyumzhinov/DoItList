@@ -12,9 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 
 import Functional.CoursesControl;
 import Functional.Globals;
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity
 {
     private CoursesControl mCourses;
     private TasksControl mTasks;
+    private SaveTasks saveTasks;
 
     Thread thUpdateViews = new Thread()
     {
@@ -115,8 +119,32 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         // Initialise data
-        mCourses = new CoursesControl();
-        mTasks = new TasksControl();
+        saveTasks = new SaveTasks();
+        saveTasks.createSaveTasks(this);
+
+        // Try to load saved courses
+        try {
+            mCourses = saveTasks.openCoursesFile();
+            if (mCourses == null) {
+                throw new Exception("bad");
+            }
+        } catch (Exception e) {
+            // This should only get hit if this is the first run and nothing has been saved
+            Toast.makeText(this, "Error loading Courses", Toast.LENGTH_SHORT).show();
+            mCourses = new CoursesControl();
+        }
+
+        // Try to load saved tasks
+        try {
+            mTasks = saveTasks.openTasksFile();
+            if (mTasks == null) {
+                throw new Exception("bad");
+            }
+        } catch (Exception e) {
+            // This should only get hit if this is the first run and nothing has been saved
+            Toast.makeText(this, "Error loading Tasks", Toast.LENGTH_SHORT).show();
+            mTasks = new TasksControl();
+        }
 
         thUpdateViews.start();
 
@@ -185,7 +213,11 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
         }
+        // @TODO this won't work until we actually ADD courses or tasks via the add methods
+        saveTasks.saveFile(mTasks);
+        saveTasks.saveFile(mCourses);
     }
+
 
     public void populateTaskItemView(Task xtask)
     {
