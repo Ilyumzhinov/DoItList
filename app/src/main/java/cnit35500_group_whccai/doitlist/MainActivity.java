@@ -2,11 +2,15 @@ package cnit35500_group_whccai.doitlist;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -115,6 +119,18 @@ public class MainActivity extends AppCompatActivity
         mTasks = new TasksControl();
 
         thUpdateViews.start();
+
+        // TOdo: remove this
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View theInflatedView = inflater.inflate(R.layout.bubble_item, null);
+        TextView tv = theInflatedView.findViewById(R.id.txtCourseLabel);
+
+        tv.setText("CNIT 35500");
+        Drawable dr = tv.getBackground();
+        dr.setTint(Color.RED);
+
+        LinearLayout lytTemp = findViewById(R.id.lytTest);
+        lytTemp.addView(theInflatedView);
     }
 
     public void NewTask(View view)
