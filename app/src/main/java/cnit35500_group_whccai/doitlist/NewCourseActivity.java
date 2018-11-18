@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import Functional.Course;
 import Functional.CoursesControl;
 import Functional.Globals;
+import Functional.MyRecyclerViewAdapter;
 
 public class NewCourseActivity extends AppCompatActivity
 {
@@ -54,16 +57,22 @@ public class NewCourseActivity extends AppCompatActivity
             } else
             {
                 col_toolbar.setTitle("New Type");
-                txtEditInput.setHint("e.g. Homeworks");
+                txtEditInput.setHint("e.g. Homework");
 
-                // Set up scope label
-                TextView txt = findViewById(R.id.txtCourseScope);
-                txt.setText(parent.getFullScope());
-                txt.setBackgroundColor(parent.getAssociatedColor());
+                // Set up scope view
+                // RelativeLayout item = (RelativeLayout) view.findViewById(R.id.item);
+                RecyclerView recyclerView = findViewById(R.id.rvCourses);
+                LinearLayoutManager horizontalLayoutManager
+                        = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+                recyclerView.setLayoutManager(horizontalLayoutManager);
+                MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, parent.getScopeArrayOf(false), parent.getColorAsArray(false), " < ");
+                //adapter.setClickListener(this);
+                recyclerView.setAdapter(adapter);
+                //
             }
         } else
         {
-            Toast.makeText(this, "Failed to receive data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Failed to receive data", Toast.LENGTH_LONG).show();
 
             finish();
             return;
@@ -101,7 +110,7 @@ public class NewCourseActivity extends AppCompatActivity
 
         Course[] coursesLocal;
 
-        coursesLocal = mCourses.getCoursesAtScope(parent.getFullScope());
+        coursesLocal = mCourses.getCoursesAtScope(parent.getScopeArrayOf(false));
 
         if (coursesLocal == null)
             return;
@@ -171,11 +180,11 @@ public class NewCourseActivity extends AppCompatActivity
 
             if (null == courseTemp)
             {
-                Toast.makeText(this, "Error: wrong input OR may exist already", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error: wrong input OR may exist already", Toast.LENGTH_LONG).show();
                 return false;
             } else
             {
-                Toast.makeText(this, "Added as " + courseTemp.getFullScope(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Added as " + courseTemp.getScopeStrOf(false), Toast.LENGTH_LONG).show();
 
                 LinearLayout lytCourses = findViewById(R.id.lytCourses);
                 TextView tv = new TextView(this);

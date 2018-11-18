@@ -2,15 +2,14 @@ package cnit35500_group_whccai.doitlist;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,6 +18,7 @@ import java.time.temporal.ChronoUnit;
 
 import Functional.CoursesControl;
 import Functional.Globals;
+import Functional.MyRecyclerViewAdapter;
 import Functional.Task;
 import Functional.TasksControl;
 
@@ -120,17 +120,11 @@ public class MainActivity extends AppCompatActivity
 
         thUpdateViews.start();
 
-        // TOdo: remove this
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View theInflatedView = inflater.inflate(R.layout.bubble_item, null);
-        TextView tv = theInflatedView.findViewById(R.id.txtCourseLabel);
-
-        tv.setText("CNIT 35500");
-        Drawable dr = tv.getBackground();
-        dr.setTint(Color.RED);
-
-        LinearLayout lytTemp = findViewById(R.id.lytTest);
-        lytTemp.addView(theInflatedView);
+        //Todo: remove tests
+        mCourses.addCourse("CNIT 35500", ContextCompat.getColor(this, R.color.courseBlue), null);
+        mCourses.addCourse("CNIT 37200",ContextCompat.getColor(this, R.color.courseLightBlue), null);
+        mCourses.addCourse("Homework", ContextCompat.getColor(this, R.color.courseRed), mCourses.getCourses()[0]);
+        mCourses.addCourse("Individual",ContextCompat.getColor(this, R.color.courseGreen),mCourses.getCourses()[2]);
     }
 
     public void NewTask(View view)

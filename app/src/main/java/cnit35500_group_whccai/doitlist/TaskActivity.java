@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,7 @@ import java.time.temporal.ChronoUnit;
 
 import Functional.CoursesControl;
 import Functional.Globals;
+import Functional.MyRecyclerViewAdapter;
 import Functional.Task;
 import Functional.TasksControl;
 
@@ -53,7 +56,7 @@ public class TaskActivity extends AppCompatActivity
             //
         } else
         {
-            Toast.makeText(this, "Failed to open a task", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Failed to open a task", Toast.LENGTH_LONG).show();
 
             finish();
         }
@@ -79,10 +82,16 @@ public class TaskActivity extends AppCompatActivity
         col_toolbar.setTitle(currentTask.getName());
 
         // Populate views with data
-        // Set course
-        TextView txt = findViewById(R.id.txtTaskCourse);
-        txt.setText(currentTask.getCourse().getFullScope());
-        txt.setBackgroundColor(currentTask.getCourse().getAssociatedColor());
+        // Set up scope view
+        // RelativeLayout item = (RelativeLayout) view.findViewById(R.id.item);
+        RecyclerView recyclerView = findViewById(R.id.rvCourses);
+        LinearLayoutManager horizontalLayoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
+        MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, currentTask.getCourse().getScopeArrayOf(false), currentTask.getCourse().getColorAsArray(false), " < ");
+        //adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
+        //
 
         // Set deadline label
         // Reference: https://stackoverflow.com/questions/28177370/how-to-format-localdate-to-string
@@ -90,7 +99,7 @@ public class TaskActivity extends AppCompatActivity
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
         String formattedString = localDate.format(formatter);
 
-        txt = findViewById(R.id.lblTaskDeadline);
+        TextView txt = findViewById(R.id.lblTaskDeadline);
         txt.setText(formattedString);
 
         // Set time before deadline label

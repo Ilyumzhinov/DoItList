@@ -74,10 +74,14 @@
             <LinearLayout
                 android:id="@+id/lytTest"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/CardTest"
                 android:orientation="vertical">
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvCourses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

@@ -45,7 +45,7 @@ public class SessionsHistoryActivity extends AppCompatActivity
             //
         } else
         {
-            Toast.makeText(this, "Failed to load Saved sessions", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Failed to load Saved sessions", Toast.LENGTH_LONG).show();
 
             finish();
         }

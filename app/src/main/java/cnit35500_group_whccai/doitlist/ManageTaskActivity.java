@@ -67,12 +67,6 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     mTasks = (TasksControl) getIntent().getSerializableExtra(Globals.ExtraKey_Tasks);
                     mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
 
-                    //Todo: remove tests
-                    mCourses.addCourse("CNIT 35500", ContextCompat.getColor(this, R.color.courseBlue), null);
-                    mCourses.addCourse("CNIT 37200",ContextCompat.getColor(this, R.color.courseBlue), null);
-                    mCourses.addCourse("Homeworks", ContextCompat.getColor(this, R.color.courseBlue), mCourses.getCourses()[0]);
-                    mCourses.addCourse("Individual",ContextCompat.getColor(this, R.color.courseBlue),mCourses.getCourses()[2]);
-
                     // Set global values
                     dueDatePicked = LocalDateTime.now();
                     dueDatePicked = dueDatePicked.plusDays(7);
@@ -113,7 +107,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
         } else
         {
-            Toast.makeText(this, "Failed to receive data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Failed to receive data", Toast.LENGTH_LONG).show();
 
             finish();
             return;
@@ -169,7 +163,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         i.putExtra(Globals.ExtraKey_Courses, mCourses);
 
         // Todo: change the hardcoded value
-        i.putExtra(Globals.ExtraKey_Parent, mCourses.getCourses()[0]);
+        i.putExtra(Globals.ExtraKey_Parent, mCourses.getCourses()[3]);
 
         startActivityForResult(i, Globals.NewCourseRequestCode);
     }
@@ -278,7 +272,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
             case (R.id.btnRemoveToolBar):
                 mTasks.removeTask(currentTask);
 
-                Toast.makeText(this, "Task removed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Task removed!", Toast.LENGTH_LONG).show();
 
                 Intent i = new Intent();
                 i.putExtra(Globals.ExtraKey_Tasks, mTasks);
@@ -313,7 +307,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                         throw new Exception();
                 } catch (Exception e)
                 {
-                    Toast.makeText(this, "Check input values!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Check input values!", Toast.LENGTH_LONG).show();
                     return false;
                 }
                 //
@@ -327,7 +321,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                         // Try to save a task
                         case (Globals.ViewMode_New):
                             mTasks.addTask(name, notes, course, dueDate, timeEst, highlight);
-                            Toast.makeText(this, "Task added!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Task added!", Toast.LENGTH_LONG).show();
 
                             cTaskIndex = mTasks.getTasks().length - 1;
 
@@ -336,7 +330,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                         // Try to update a task
                         case (Globals.ViewMode_Edit):
                             mTasks.updateTask(currentTask, name, notes, course, dueDate, timeEst, highlight);
-                            Toast.makeText(this, "Task updated!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Task updated!", Toast.LENGTH_LONG).show();
 
                             break;
                     }
@@ -355,7 +349,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
                 } catch (Exception e)
                 {
-                    Toast.makeText(this, "Failed to add!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Failed to add!", Toast.LENGTH_LONG).show();
                     return false;
                 }
                 //
