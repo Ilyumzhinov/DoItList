@@ -11,7 +11,6 @@ public class Task implements Serializable
     private LocalDateTime taskDeadline;
     private Integer taskTimeEst;
     private String taskDetail;
-    private Boolean taskHighlight;
     private SessionsControl taskSessions;
     private Boolean taskStatusFinished;
 
@@ -56,11 +55,6 @@ public class Task implements Serializable
     public String getDetail()
     {
         return taskDetail;
-    }
-
-    public Boolean getHighlight()
-    {
-        return taskHighlight;
     }
 
     public Boolean getStatusFinished()
@@ -115,11 +109,6 @@ public class Task implements Serializable
     public void setDetail(String taskDetail)
     {
         this.taskDetail = taskDetail;
-    }
-
-    public void setHighlight(Boolean taskHighlight)
-    {
-        this.taskHighlight = taskHighlight;
     }
 
     public void setStatusFinished(Boolean taskStatusFinished)

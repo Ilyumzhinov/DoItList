@@ -26,9 +26,9 @@
                 android:id="@+id/lytCourseScope"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingStart="20dp"
                 android:visibility="visible">
 
                 <TextView
@@ -53,14 +53,14 @@
                 android:layout_below="@+id/lytCourseScope"
                 android:background="@color/colorPrimary"
                 android:orientation="vertical"
-                android:padding="30dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Title"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                     android:textColor="@color/colorAccentLight"
-                    android:textSize="25sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -68,9 +68,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
+                    android:hint="Enter title"
                     android:inputType="text"
-                    android:maxLines="1"
-                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
+                    android:maxLines="1" />
 
                 <LinearLayout
                     android:id="@+id/lytDiscreteColorPick"
@@ -112,10 +112,12 @@
                             android:orientation="horizontal">
 
                             <RadioButton
+                                android:id="@+id/rdColorRed"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:autoText="false"
-                                android:buttonTint="@color/courseRed" />
+                                android:buttonTint="@color/courseRed"
+                                android:tag="@color/courseRed" />
 
                             <Space
                                 android:layout_width="wrap_content"
@@ -123,10 +125,12 @@
                                 android:layout_weight="1" />
 
                             <RadioButton
+                                android:id="@+id/rdColorOrange"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:autoText="false"
-                                android:buttonTint="@color/courseOrange" />
+                                android:buttonTint="@color/courseOrange"
+                                android:tag="@color/courseOrange" />
 
                             <Space
                                 android:layout_width="wrap_content"
@@ -134,10 +138,12 @@
                                 android:layout_weight="1" />
 
                             <RadioButton
+                                android:id="@+id/rdColorGreen"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:autoText="false"
-                                android:buttonTint="@color/courseGreen" />
+                                android:buttonTint="@color/courseGreen"
+                                android:tag="@color/courseGreen" />
 
                             <Space
                                 android:layout_width="wrap_content"
@@ -145,10 +151,12 @@
                                 android:layout_weight="1" />
 
                             <RadioButton
+                                android:id="@+id/rdColorLightBlue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:autoText="false"
-                                android:buttonTint="@color/courseLightBlue" />
+                                android:buttonTint="@color/courseLightBlue"
+                                android:tag="@color/courseLightBlue" />
                         </RadioGroup>
 
                         <RadioGroup
@@ -159,10 +167,12 @@
                             android:orientation="horizontal">
 
                             <RadioButton
+                                android:id="@+id/rdColorBlue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:autoText="false"
-                                android:buttonTint="@color/courseBlue" />
+                                android:buttonTint="@color/courseBlue"
+                                android:tag="@color/courseBlue" />
 
                             <Space
                                 android:layout_width="wrap_content"
@@ -170,10 +180,12 @@
                                 android:layout_weight="1" />
 
                             <RadioButton
+                                android:id="@+id/rdColorPurple"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:autoText="false"
-                                android:buttonTint="@color/coursePurple" />
+                                android:buttonTint="@color/coursePurple"
+                                android:tag="@color/coursePurple" />
 
                             <Space
                                 android:layout_width="wrap_content"
@@ -181,10 +193,12 @@
                                 android:layout_weight="1" />
 
                             <RadioButton
+                                android:id="@+id/rdColorPink"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:autoText="false"
-                                android:buttonTint="@color/coursePink" />
+                                android:buttonTint="@color/coursePink"
+                                android:tag="@color/coursePink" />
 
                             <Space
                                 android:layout_width="wrap_content"
@@ -192,12 +206,14 @@
                                 android:layout_weight="1" />
 
                             <RadioButton
+                                android:id="@+id/rdColorBrown"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:autoText="false"
-                                android:buttonTint="@color/courseBrown" />
+                                android:buttonTint="@color/courseBrown"
+                                android:tag="@color/courseBrown" />
+
                         </RadioGroup>
-
                     </RelativeLayout>
 
 

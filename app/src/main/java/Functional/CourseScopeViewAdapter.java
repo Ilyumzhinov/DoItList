@@ -15,7 +15,7 @@ import cnit35500_group_whccai.doitlist.R;
 
 // Reference: https://stackoverflow.com/questions/28460300/how-to-build-a-horizontal-listview-with-recyclerview
 // Reference: 4 - Advanced User Interface I
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>
+public class CourseScopeViewAdapter extends RecyclerView.Adapter<CourseScopeViewAdapter.ViewHolder>
 {
     private List<Integer> ViewColors;
     private List<String> ViewLabels;
@@ -23,7 +23,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private ItemClickListener mClickListener;
     private String cDivider;
 
-    public MyRecyclerViewAdapter(Context context, List<String> xLabels, List<Integer> xColors, String xDivider)
+    public CourseScopeViewAdapter(Context context, List<String> xLabels, List<Integer> xColors, String xDivider)
     {
         this.mInflater = LayoutInflater.from(context);
         this.ViewLabels = xLabels;

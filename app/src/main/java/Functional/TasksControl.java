@@ -10,7 +10,7 @@ public class TasksControl implements Serializable
     private List<Task> Tasks = new ArrayList<>();
 
     // Returns the added task if successful
-    public Task addTask(String name, String detail, Course course, LocalDateTime deadline, Integer timeEst, Boolean highlight)
+    public Task addTask(String name, String detail, Course course, LocalDateTime deadline, Integer timeEst)
     {
         // Try to set the values
         Task task = new Task();
@@ -21,7 +21,6 @@ public class TasksControl implements Serializable
         task.setDeadline(deadline);
         task.setDateAdded(LocalDateTime.now());
         task.setTimeEst(timeEst);
-        task.setHighlight(highlight);
         task.setStatusFinished(false);
 
         // Try to add to the list
@@ -30,7 +29,7 @@ public class TasksControl implements Serializable
         return task;
     }
 
-    public Task updateTask(Task xTask, String name, String detail, Course course, LocalDateTime deadline, Integer timeEst, Boolean highlight)
+    public Task updateTask(Task xTask, String name, String detail, Course course, LocalDateTime deadline, Integer timeEst)
     {
         // Try to set the values
         xTask.setName(name);
@@ -38,7 +37,6 @@ public class TasksControl implements Serializable
         xTask.setCourse(course);
         xTask.setDeadline(deadline);
         xTask.setTimeEst(timeEst);
-        xTask.setHighlight(highlight);
 
         return xTask;
     }

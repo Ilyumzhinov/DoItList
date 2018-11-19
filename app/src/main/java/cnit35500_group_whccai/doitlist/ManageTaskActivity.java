@@ -5,14 +5,12 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -99,7 +97,6 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     ((TextView) findViewById(R.id.txtDueDate)).setText(dueDatePicked.format(formatter2));
                     ((EditText) findViewById(R.id.edtTimeEstH)).setText(String.valueOf(Math.round(currentTask.getTimeEst() / 60)));
                     ((EditText) findViewById(R.id.edtTimeEstM)).setText(String.valueOf(currentTask.getTimeEst() % 60));
-                    ((CheckBox) findViewById(R.id.chkHighlight)).setChecked(currentTask.getHighlight());
                     ((TextView) findViewById(R.id.edtNotes)).setText(currentTask.getDetail());
 
                     break;
@@ -163,7 +160,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         i.putExtra(Globals.ExtraKey_Courses, mCourses);
 
         // Todo: change the hardcoded value
-        i.putExtra(Globals.ExtraKey_Parent, mCourses.getCourses()[3]);
+        i.putExtra(Globals.ExtraKey_Parent, mCourses.getCourses()[0]);
 
         startActivityForResult(i, Globals.NewCourseRequestCode);
     }
@@ -289,7 +286,6 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                 Course course;
                 LocalDateTime dueDate;
                 Integer timeEst;
-                Boolean highlight;
 
                 // Try to get input values
                 try
@@ -298,7 +294,6 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     notes = ((TextView) findViewById(R.id.edtNotes)).getText().toString();
                     course = (Course) ((Spinner) findViewById(R.id.spnCourse)).getSelectedItem();
                     dueDate = dueDatePicked;
-                    highlight = ((CheckBox) findViewById(R.id.chkHighlight)).isChecked();
 
                     int timefromInput = calculateMinutesFromTimeInput(((TextView) findViewById(R.id.edtTimeEstH)).getText().toString(), ((TextView) findViewById(R.id.edtTimeEstM)).getText().toString());
                     if (timefromInput >= 0)
@@ -320,7 +315,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     {
                         // Try to save a task
                         case (Globals.ViewMode_New):
-                            mTasks.addTask(name, notes, course, dueDate, timeEst, highlight);
+                            mTasks.addTask(name, notes, course, dueDate, timeEst);
                             Toast.makeText(this, "Task added!", Toast.LENGTH_LONG).show();
 
                             cTaskIndex = mTasks.getTasks().length - 1;
@@ -329,7 +324,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
                         // Try to update a task
                         case (Globals.ViewMode_Edit):
-                            mTasks.updateTask(currentTask, name, notes, course, dueDate, timeEst, highlight);
+                            mTasks.updateTask(currentTask, name, notes, course, dueDate, timeEst);
                             Toast.makeText(this, "Task updated!", Toast.LENGTH_LONG).show();
 
                             break;

@@ -7,21 +7,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 
 import Functional.CoursesControl;
 import Functional.Globals;
-import Functional.MyRecyclerViewAdapter;
 import Functional.Task;
 import Functional.TasksControl;
 
@@ -147,12 +142,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         thUpdateViews.start();
-
-        //Todo: remove tests
-        mCourses.addCourse("CNIT 35500", ContextCompat.getColor(this, R.color.courseBlue), null);
-        mCourses.addCourse("CNIT 37200",ContextCompat.getColor(this, R.color.courseLightBlue), null);
-        mCourses.addCourse("Homework", ContextCompat.getColor(this, R.color.courseRed), mCourses.getCourses()[0]);
-        mCourses.addCourse("Individual",ContextCompat.getColor(this, R.color.courseGreen),mCourses.getCourses()[2]);
     }
 
     public void NewTask(View view)

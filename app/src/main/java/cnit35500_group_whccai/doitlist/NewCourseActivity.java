@@ -1,9 +1,9 @@
 package cnit35500_group_whccai.doitlist;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,19 +13,82 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import Functional.Course;
+import Functional.CourseScopeViewAdapter;
 import Functional.CoursesControl;
 import Functional.Globals;
-import Functional.MyRecyclerViewAdapter;
 
 public class NewCourseActivity extends AppCompatActivity
 {
     private CoursesControl mCourses;
     private Course parent;
     private Menu menu;
+    private RadioGroup rgOne, rgTwo;
+    // Handle radio group clicks
+    // Reference: https://stackoverflow.com/questions/10425569/radiogroup-with-two-columns-which-have-ten-radiobuttons
+    private RadioGroup.OnCheckedChangeListener rgOne_Listener = new RadioGroup.OnCheckedChangeListener()
+    {
+
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId)
+        {
+            if (checkedId != -1)
+            {
+                rgTwo.setOnCheckedChangeListener(null);
+                rgTwo.clearCheck();
+                rgTwo.setOnCheckedChangeListener(rgTwo_Listener);
+            }
+        }
+    };
+    private RadioGroup.OnCheckedChangeListener rgTwo_Listener = new RadioGroup.OnCheckedChangeListener()
+    {
+
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId)
+        {
+            if (checkedId != -1)
+            {
+                rgOne.setOnCheckedChangeListener(null);
+                rgOne.clearCheck();
+                rgOne.setOnCheckedChangeListener(rgOne_Listener);
+            }
+        }
+    };
+
+    private void updateMenuVisibles(String mode)
+    {
+        MenuItem itemSave = menu.findItem(R.id.btnSaveToolBar);
+        MenuItem itemDone = menu.findItem(R.id.btnDoneToolBar);
+
+        itemSave.setVisible(false);
+        itemDone.setVisible(false);
+
+        if (mode.contains("d"))
+            itemDone.setVisible(true);
+
+        if (mode.contains("s"))
+            itemSave.setVisible(true);
+    }
+
+    // Add ToolBar buttons
+    // Reference: https://stackoverflow.com/questions/38158953/how-to-create-button-in-action-bar-in-android
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.toolbar_buttons, menu);
+
+        this.menu = menu;
+
+        // Show and hide menu buttons
+        updateMenuVisibles("d");
+
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,6 +101,14 @@ public class NewCourseActivity extends AppCompatActivity
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.ios_toolbar);
         setSupportActionBar(toolbar);
         CollapsingToolbarLayout col_toolbar = findViewById(R.id.ios_col_toolbar);
+        //
+
+        // Set up radio groups
+        rgOne = findViewById(R.id.lytColorsOne);
+        rgTwo = findViewById(R.id.lytColorsTwo);
+        rgOne.setOnCheckedChangeListener(rgOne_Listener);
+        rgTwo.setOnCheckedChangeListener(rgTwo_Listener);
+        //
 
         EditText txtEditInput = findViewById(R.id.txtInpCourseTitle);
 
@@ -65,7 +136,7 @@ public class NewCourseActivity extends AppCompatActivity
                 LinearLayoutManager horizontalLayoutManager
                         = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(horizontalLayoutManager);
-                MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(this, parent.getScopeArrayOf(false), parent.getColorAsArray(false), " < ");
+                CourseScopeViewAdapter adapter = new CourseScopeViewAdapter(this, parent.getScopeArrayOf(false), parent.getColorAsArray(false), " < ");
                 //adapter.setClickListener(this);
                 recyclerView.setAdapter(adapter);
                 //
@@ -124,36 +195,6 @@ public class NewCourseActivity extends AppCompatActivity
         }
     }
 
-    private void updateMenuVisibles(String mode)
-    {
-        MenuItem itemSave = menu.findItem(R.id.btnSaveToolBar);
-        MenuItem itemDone = menu.findItem(R.id.btnDoneToolBar);
-
-        itemSave.setVisible(false);
-        itemDone.setVisible(false);
-
-        if (mode.contains("d"))
-            itemDone.setVisible(true);
-
-        if (mode.contains("s"))
-            itemSave.setVisible(true);
-    }
-
-    // Add ToolBar buttons
-    // Reference: https://stackoverflow.com/questions/38158953/how-to-create-button-in-action-bar-in-android
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.toolbar_buttons, menu);
-
-        this.menu = menu;
-
-        // Show and hide menu buttons
-        updateMenuVisibles("d");
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
     // Handle button activities
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -168,8 +209,7 @@ public class NewCourseActivity extends AppCompatActivity
             String name = txt.getText().toString();
 
             // Get color value
-            // Todo: change this hardcoded value
-            int color = ContextCompat.getColor(this, R.color.courseBlue);
+            int color = getSelectedColor();
 
             Course courseTemp;
             // Try to add a course
@@ -204,5 +244,26 @@ public class NewCourseActivity extends AppCompatActivity
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private Integer getSelectedColor()
+    {
+        int valID;
+
+        if ((valID = rgOne.getCheckedRadioButtonId()) == -1)
+            if ((valID = rgTwo.getCheckedRadioButtonId()) == -1)
+            {
+                return -1;
+            }
+
+        try
+        {
+            RadioButton rb = findViewById(valID);
+
+            return Color.parseColor((String) rb.getTag());
+        } catch (Exception c)
+        {
+            return -1;
+        }
     }
 }
