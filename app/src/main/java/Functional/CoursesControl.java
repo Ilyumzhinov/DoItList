@@ -30,7 +30,8 @@ public class CoursesControl implements Serializable
         if (!setNameCheck(course, xName))
             return null;
 
-        course.setAssociatedColor(xAssociatedColor);
+        if (course.setAssociatedColor(xAssociatedColor) == null)
+            return null;
 
         // Try to add to the list
         Courses.add(course);

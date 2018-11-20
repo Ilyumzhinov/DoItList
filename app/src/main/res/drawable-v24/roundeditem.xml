@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><!--Add ripple effect Reference: https://stackoverflow.com/questions/27006288/how-to-create-ripple-effect-in-simple-layout -->
+<?xml version="1.0" encoding="utf-8"?>
+<!--Add ripple effect
+Reference: https://stackoverflow.com/questions/27006288/how-to-create-ripple-effect-in-simple-layout -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="@color/colorPrimaryDark">
     <item android:state_pressed="false">

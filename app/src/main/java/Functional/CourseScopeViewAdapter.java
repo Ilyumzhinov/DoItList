@@ -22,6 +22,7 @@ public class CourseScopeViewAdapter extends RecyclerView.Adapter<CourseScopeView
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private String cDivider;
+    private int mSelected_position = 0;
 
     public CourseScopeViewAdapter(Context context, List<String> xLabels, List<Integer> xColors, String xDivider)
     {
@@ -44,14 +45,12 @@ public class CourseScopeViewAdapter extends RecyclerView.Adapter<CourseScopeView
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
+        holder.itemView.setSelected(mSelected_position == position);
+
         int color = ViewColors.get(position);
         String label = ViewLabels.get(position);
         holder.txtItemLabel.setText(label);
         Drawable dr = holder.txtItemLabel.getBackground();
-        dr.setTint(color);
-
-        if (position == ViewLabels.size() - 1)
-            holder.lblDivider.setVisibility(View.INVISIBLE);
 
         holder.lblDivider.setText(cDivider);
     }
@@ -92,13 +91,21 @@ public class CourseScopeViewAdapter extends RecyclerView.Adapter<CourseScopeView
             txtItemLabel = itemView.findViewById(R.id.txtLabel);
             lblDivider = itemView.findViewById(R.id.lblDivider);
 
-            itemView.setOnClickListener(this);
+            if (1 == 1)
+                txtItemLabel.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view)
         {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (mClickListener != null)
+                mClickListener.onItemClick(view, getAdapterPosition());
+
+            // Set activated item
+            // Reference: https://stackoverflow.com/questions/27194044/how-to-properly-highlight-selected-item-on-recyclerview
+            notifyItemChanged(mSelected_position);
+            mSelected_position = getAdapterPosition();
+            notifyItemChanged(mSelected_position);
         }
     }
 }

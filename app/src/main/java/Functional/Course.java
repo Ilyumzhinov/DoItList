@@ -33,9 +33,12 @@ public class Course implements Serializable
             this.parent = xParent;
     }
 
-    public void setAssociatedColor(Integer xColor)
+    public Integer setAssociatedColor(Integer xColor)
     {
-        this.associatedColor = xColor;
+        if (xColor == -1)
+            return null;
+
+        return this.associatedColor = xColor;
     }
 
     public String getName()

@@ -1,5 +1,6 @@
 package cnit35500_group_whccai.doitlist;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -224,6 +227,14 @@ public class NewCourseActivity extends AppCompatActivity
                 return false;
             } else
             {
+                // Close keyboard programmatically
+                // Reference: https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
+                View view = this.getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+
                 Toast.makeText(this, "Added as " + courseTemp.getScopeStrOf(false), Toast.LENGTH_LONG).show();
 
                 LinearLayout lytCourses = findViewById(R.id.lytCourses);
