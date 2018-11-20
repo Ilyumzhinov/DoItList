@@ -232,6 +232,8 @@ public class NewCourseActivity extends AppCompatActivity
                 lytCourses.addView(tv);
 
                 txt.setText("");
+                rgOne.clearCheck();
+                rgTwo.clearCheck();
             }
             //
         } else if (id == R.id.btnDoneToolBar)

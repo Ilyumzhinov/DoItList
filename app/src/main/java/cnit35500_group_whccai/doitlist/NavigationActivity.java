@@ -102,8 +102,6 @@ public class NavigationActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.nav_class:
                 break;
-            case R.id.nav_category:
-                break;
             case R.id.nav_about:
                 break;
             case R.id.nav_main:
