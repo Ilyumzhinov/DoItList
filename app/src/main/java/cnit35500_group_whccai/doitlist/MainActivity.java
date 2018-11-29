@@ -208,9 +208,6 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
         }
-        // @TODO this won't work until we actually ADD courses or tasks via the add methods
-        saveTasks.saveFile(mTasks);
-        saveTasks.saveFile(mCourses);
     }
 
 
@@ -279,5 +276,13 @@ public class MainActivity extends AppCompatActivity
     public void openTaskList(View view) {
         Intent intent = new Intent(this, NavigationActivity.class);
         startActivity(intent);
+    }
+
+    // Save mTasks and mCourses prior to stopping
+    @Override
+    protected void onStop() {
+        saveTasks.saveFile(mTasks);
+        saveTasks.saveFile(mCourses);
+        super.onStop();
     }
 }

@@ -13,24 +13,41 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ManageTaskActivity" />
-        <activity android:name=".NewCourseActivity" />
+        <activity
+            android:name=".ManageTaskActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".NewCourseActivity"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".NavigationActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
         <activity
             android:name=".TaskActivity"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".SessionsHistoryActivity"></activity>
-        <activity android:name=".SaveTasks" />
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".SessionsHistoryActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".SaveTasks"
+            android:screenOrientation="portrait">
+    </activity>
     </application>
 
 </manifest>
