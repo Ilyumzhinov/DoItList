@@ -295,14 +295,25 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     course = (Course) ((Spinner) findViewById(R.id.spnCourse)).getSelectedItem();
                     dueDate = dueDatePicked;
 
+                    // Check time input in minutes
                     int timefromInput = calculateMinutesFromTimeInput(((TextView) findViewById(R.id.edtTimeEstH)).getText().toString(), ((TextView) findViewById(R.id.edtTimeEstM)).getText().toString());
                     if (timefromInput >= 0)
                         timeEst = timefromInput;
                     else
-                        throw new Exception();
+                        throw new Exception("Check time input!");
+
+                    // Check that there is a name
+                    if (name.length() == 0)
+                        throw new Exception("Task must have a name!");
+                    // Check that there is a course selected
+                    if (course == null)
+                        throw new Exception("Task must have a Course!");
+                    // Check that we have a due date
+                    if (dueDate == null)
+                        throw new Exception("Task must have a due date!");
                 } catch (Exception e)
                 {
-                    Toast.makeText(this, "Check input values!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, (e.toString()).replaceAll("java.lang.Exception: ", ""), Toast.LENGTH_LONG).show();
                     return false;
                 }
                 //
