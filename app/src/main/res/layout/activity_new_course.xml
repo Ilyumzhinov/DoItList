@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true"
+        android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
@@ -24,7 +25,7 @@
 
             <LinearLayout
                 android:id="@+id/lytCourseScope"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -37,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="0"
-                    android:text="At scope" />
+                    android:text="scope:" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvCourses"
@@ -60,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:text="Title"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:textColor="@color/colorAccentLight"
+                    android:textColor="@color/colorAccent"
                     android:textStyle="bold" />
 
                 <EditText
@@ -226,14 +227,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/lytCourseData"
-                android:orientation="vertical"
-                android:padding="20dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Saved at scope"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="5dp"
+                    android:text="Saved at scope"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvCoursesAtScope"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="20dp" />
             </LinearLayout>
 
         </RelativeLayout>

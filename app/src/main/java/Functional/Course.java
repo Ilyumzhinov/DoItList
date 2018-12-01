@@ -60,14 +60,17 @@ public class Course implements Serializable
     }
 
     // Get arrays
-    public List<String> getScopeArrayOf(Boolean ofParent)
+    public List<String> getScopeStrArrayOf(Boolean ofParent)
     {
         List<String> scope;
 
         if (ofParent)
-            scope = getScopeArrayOfParent();
+            if (this.getParent() == null)
+                scope = new ArrayList<>();
+            else
+                scope = getFullScopeStrArray(this.getParent());
         else
-            scope = getFullScopeArray(this);
+            scope = getFullScopeStrArray(this);
 
         return scope;
     }
@@ -77,7 +80,7 @@ public class Course implements Serializable
     // CNIT35500
     // Homework < CNIT35500
     // Individual < Homework < CNIT35500
-    private List<String> getFullScopeArray(Course xCourse)
+    private List<String> getFullScopeStrArray(Course xCourse)
     {
         final List<String> list = new ArrayList<>();
 
@@ -91,6 +94,41 @@ public class Course implements Serializable
         }
 
         list.add(xCourse.getName());
+
+        list.addAll(getFullScopeStrArray(xCourse.getParent()));
+
+        return list;
+    }
+
+    public List<Course> getScopeArrayOf(Boolean ofParent)
+    {
+        List<Course> scope;
+
+        if (ofParent)
+            if (this.getParent() == null)
+                scope = new ArrayList<>();
+            else
+                scope = getFullScopeArray(this.getParent());
+        else
+            scope = getFullScopeArray(this);
+
+        return scope;
+    }
+
+    private List<Course> getFullScopeArray(Course xCourse)
+    {
+        final List<Course> list = new ArrayList<>();
+
+        if (xCourse.getParent() == null)
+        {
+            if (xCourse.isNull())
+                return new ArrayList<>();
+
+            list.add(xCourse);
+            return list;
+        }
+
+        list.add(xCourse);
 
         list.addAll(getFullScopeArray(xCourse.getParent()));
 
@@ -115,17 +153,11 @@ public class Course implements Serializable
 
     private String getFullScopeStrOf(Course xCourse)
     {
-//        Quicker way
-//        if (xCourse.getParent() == null)
-//            return xCourse.getName();
-//
-//        return xCourse.getName() + " < " + getFullScopeOf(xCourse.getParent());
-
         final String dividerStr = " < ";
         final StringBuilder fullScope = new StringBuilder();
         String finalStr;
 
-        for (String iName : getFullScopeArray(xCourse))
+        for (String iName : getFullScopeStrArray(xCourse))
         {
             fullScope.append(iName);
             fullScope.append(dividerStr);
@@ -144,14 +176,6 @@ public class Course implements Serializable
     //
 
     // Get parent
-    private List<String> getScopeArrayOfParent()
-    {
-        if (this.getParent() == null)
-            return new ArrayList<>();
-
-        return getFullScopeArray(this.getParent());
-    }
-
     private String getScopeStrOfParent()
     {
         if (this.getParent() == null)
@@ -162,7 +186,7 @@ public class Course implements Serializable
 
     public Boolean compareParentScopeWith(List<String> xScope)
     {
-        List<String> parentScope = getScopeArrayOfParent();
+        List<String> parentScope = getScopeStrArrayOf(true);
 
         if (parentScope == null && xScope == null)
             return true;
@@ -183,45 +207,6 @@ public class Course implements Serializable
         }
 
         return true;
-    }
-    //
-
-    // Get Colors
-    public List<Integer> getColorAsArray(Boolean ofParent)
-    {
-        List<Integer> scope;
-
-        if (ofParent)
-            scope = getColorArrayOfParent();
-        else
-            scope = getAllColorsArrayOf(this);
-
-        return scope;
-    }
-
-    private List<Integer> getAllColorsArrayOf(Course xCourse)
-    {
-        final List<Integer> list = new ArrayList<>();
-
-        if (xCourse.getParent() == null)
-        {
-            list.add(xCourse.getAssociatedColor());
-            return list;
-        }
-
-        list.add(xCourse.getAssociatedColor());
-
-        list.addAll(getAllColorsArrayOf(xCourse.getParent()));
-
-        return list;
-    }
-
-    private List<Integer> getColorArrayOfParent()
-    {
-        if (this.getParent() == null)
-            return null;
-
-        return getAllColorsArrayOf(this.getParent());
     }
     //
 

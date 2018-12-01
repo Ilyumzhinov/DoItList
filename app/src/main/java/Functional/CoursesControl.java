@@ -68,10 +68,10 @@ public class CoursesControl implements Serializable
     // True if successful set
     private boolean setNameCheck(Course xCourse, String xName)
     {
-        Course[] localCourses = getCoursesAtScope(xCourse.getScopeArrayOf(true));
+        List<Course> localCourses = getCoursesAtScope(xCourse.getScopeStrArrayOf(true));
 
         if (localCourses == null)
-        localCourses = new Course[0];
+            localCourses = new ArrayList<>();
 
         // Check if a course with the name already exists
         for (Course iCourse : localCourses)
@@ -93,7 +93,8 @@ public class CoursesControl implements Serializable
         return null;
     }
 
-    public Course[] getCoursesAtScope(List<String> scope)
+    // Return an array of all courses that are located at the same scope
+    public List<Course> getCoursesAtScope(List<String> scope)
     {
         List<Course> courses = new ArrayList<>();
 
@@ -102,7 +103,7 @@ public class CoursesControl implements Serializable
                 courses.add(iCourse);
 
         if (courses.size() > 0)
-            return courses.toArray(new Course[0]);
+            return courses;
         else
             return null;
     }

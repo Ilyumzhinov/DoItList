@@ -17,19 +17,27 @@ import cnit35500_group_whccai.doitlist.R;
 // Reference: 4 - Advanced User Interface I
 public class CourseScopeViewAdapter extends RecyclerView.Adapter<CourseScopeViewAdapter.ViewHolder>
 {
-    private List<Integer> ViewColors;
-    private List<String> ViewLabels;
+    private List<Course> mCoursesAtScope;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
-    private String cDivider;
     private int mSelected_position = 0;
 
-    public CourseScopeViewAdapter(Context context, List<String> xLabels, List<Integer> xColors, String xDivider)
+    public CourseScopeViewAdapter(Context context, List<Course> xCourses)
+    {
+        uglyFunc(context, xCourses);
+    }
+
+    public CourseScopeViewAdapter(Context context, Course xCourse)
+    {
+        List<Course> xCourses = xCourse.getScopeArrayOf(false);
+
+        uglyFunc(context, xCourses);
+    }
+
+    private void uglyFunc(Context context, List<Course> xCourses)
     {
         this.mInflater = LayoutInflater.from(context);
-        this.ViewLabels = xLabels;
-        this.ViewColors = xColors;
-        this.cDivider = xDivider;
+        this.mCoursesAtScope = xCourses;
     }
 
     // Inflate the row layout from xml
@@ -37,7 +45,7 @@ public class CourseScopeViewAdapter extends RecyclerView.Adapter<CourseScopeView
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        View view = mInflater.inflate(R.layout.bubble_item, parent, false);
+        View view = mInflater.inflate(R.layout.course_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -47,25 +55,25 @@ public class CourseScopeViewAdapter extends RecyclerView.Adapter<CourseScopeView
     {
         holder.itemView.setSelected(mSelected_position == position);
 
-        int color = ViewColors.get(position);
-        String label = ViewLabels.get(position);
+        int color = mCoursesAtScope.get(position).getAssociatedColor();
+        String label = mCoursesAtScope.get(position).getName();
+
         holder.txtItemLabel.setText(label);
         Drawable dr = holder.txtItemLabel.getBackground();
-
-        holder.lblDivider.setText(cDivider);
+        dr.setTint(color);
     }
 
     // Receive number of items
     @Override
     public int getItemCount()
     {
-        return ViewLabels.size();
+        return mCoursesAtScope.size();
     }
 
     // Get item at click position
-    public String getItem(int id)
+    public Course getItem(int id)
     {
-        return ViewLabels.get(id);
+        return mCoursesAtScope.get(id);
     }
 
     // Get click events
@@ -83,16 +91,14 @@ public class CourseScopeViewAdapter extends RecyclerView.Adapter<CourseScopeView
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         TextView txtItemLabel;
-        TextView lblDivider;
 
         ViewHolder(View itemView)
         {
             super(itemView);
             txtItemLabel = itemView.findViewById(R.id.txtLabel);
-            lblDivider = itemView.findViewById(R.id.lblDivider);
 
-            if (1 == 1)
-                txtItemLabel.setOnClickListener(this);
+//            if (1 == 1)
+//                txtItemLabel.setOnClickListener(this);
         }
 
         @Override

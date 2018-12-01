@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -15,11 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import Functional.Course;
 import Functional.CourseScopeViewAdapter;
@@ -29,8 +32,11 @@ import Functional.Globals;
 public class NewCourseActivity extends AppCompatActivity
 {
     private CoursesControl mCourses;
+    private List<Course> mCoursesAtScope;
+
     private Course parent;
     private Menu menu;
+    CourseScopeViewAdapter courseScopeViewAdapter;
     private RadioGroup rgOne, rgTwo;
     // Handle radio group clicks
     // Reference: https://stackoverflow.com/questions/10425569/radiogroup-with-two-columns-which-have-ten-radiobuttons
@@ -130,17 +136,16 @@ public class NewCourseActivity extends AppCompatActivity
                 txtEditInput.setHint("e.g. CNIT 35500");
             } else
             {
-                col_toolbar.setTitle("New Type");
+                col_toolbar.setTitle("New Category");
                 txtEditInput.setHint("e.g. Homework");
 
                 // Set up scope view
-                // RelativeLayout item = (RelativeLayout) view.findViewById(R.id.item);
                 RecyclerView recyclerView = findViewById(R.id.rvCourses);
                 LinearLayoutManager horizontalLayoutManager
                         = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(horizontalLayoutManager);
-                CourseScopeViewAdapter adapter = new CourseScopeViewAdapter(this, parent.getScopeArrayOf(false), parent.getColorAsArray(false), " < ");
-                //adapter.setClickListener(this);
+                CourseScopeViewAdapter adapter = new CourseScopeViewAdapter(this, parent);
+                //courseScopeViewAdapter.setClickListener(this);
                 recyclerView.setAdapter(adapter);
                 //
             }
@@ -179,23 +184,20 @@ public class NewCourseActivity extends AppCompatActivity
             }
         });
 
-        // Populate history layout
-        LinearLayout lytCourses = findViewById(R.id.lytCourses);
+        // Populate Saved at scope RecyclerView
+        // Get courses at scope
+        mCoursesAtScope = mCourses.getCoursesAtScope(parent.getScopeStrArrayOf(false));
 
-        Course[] coursesLocal;
+        if (mCoursesAtScope == null)
+            mCoursesAtScope = new ArrayList<>();
 
-        coursesLocal = mCourses.getCoursesAtScope(parent.getScopeArrayOf(false));
+        RecyclerView recyclerView = findViewById(R.id.rvCoursesAtScope);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        courseScopeViewAdapter = new CourseScopeViewAdapter(this, mCoursesAtScope);
 
-        if (coursesLocal == null)
-            return;
-
-        for (Course iCourse : coursesLocal)
-        {
-            TextView tv = new TextView(this);
-
-            tv.setText(iCourse.getName());
-            lytCourses.addView(tv);
-        }
+        recyclerView.setAdapter(courseScopeViewAdapter);
     }
 
     // Handle button activities
@@ -237,10 +239,13 @@ public class NewCourseActivity extends AppCompatActivity
 
                 Toast.makeText(this, "Added as " + courseTemp.getScopeStrOf(false), Toast.LENGTH_LONG).show();
 
-                LinearLayout lytCourses = findViewById(R.id.lytCourses);
-                TextView tv = new TextView(this);
-                tv.setText(courseTemp.getName());
-                lytCourses.addView(tv);
+                // Add to Saved at scope RecyclerView
+                // Todo: This is ugly
+                List<Course> cs = mCourses.getCoursesAtScope(parent.getScopeStrArrayOf(false));
+
+                mCoursesAtScope.add(cs.get(cs.size() - 1));
+                courseScopeViewAdapter.notifyDataSetChanged();
+                //
 
                 txt.setText("");
                 rgOne.clearCheck();

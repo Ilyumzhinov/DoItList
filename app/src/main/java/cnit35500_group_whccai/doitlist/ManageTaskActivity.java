@@ -160,7 +160,8 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         i.putExtra(Globals.ExtraKey_Courses, mCourses);
 
         // Todo: change the hardcoded value
-        i.putExtra(Globals.ExtraKey_Parent, mCourses.getCourses()[0]);
+        Spinner spinner = findViewById(R.id.spnCourse);
+        i.putExtra(Globals.ExtraKey_Parent, (Course)spinner.getSelectedItem());
 
         startActivityForResult(i, Globals.NewCourseRequestCode);
     }

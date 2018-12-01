@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -88,9 +89,12 @@ public class TaskActivity extends AppCompatActivity
         LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
-        CourseScopeViewAdapter adapter = new CourseScopeViewAdapter(this, currentTask.getCourse().getScopeArrayOf(false), currentTask.getCourse().getColorAsArray(false), " < ");
-        //adapter.setClickListener(this);
+        CourseScopeViewAdapter adapter = new CourseScopeViewAdapter(this, currentTask.getCourse());
+        //courseScopeViewAdapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+        // todo: remove it
+//        recyclerView.addItemDecoration(
+//                new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
         //
 
         // Set deadline label

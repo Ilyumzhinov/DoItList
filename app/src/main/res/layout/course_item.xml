@@ -3,27 +3,19 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="10dp"
+    android:gravity="center_vertical">
 
     <TextView
         android:id="@+id/txtLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bubble_drawable"
+        android:layout_marginEnd="6dp"
+        android:background="@drawable/course_item_drawable"
         android:paddingStart="10dp"
         android:paddingTop="4dp"
         android:paddingEnd="10dp"
         android:paddingBottom="4dp"
         android:textColor="@android:color/white" />
-
-    <TextView
-        android:id="@+id/lblDivider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:paddingStart="5dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="5dp"
-        android:paddingBottom="5dp" />
 
 </LinearLayout>
