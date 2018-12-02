@@ -244,8 +244,7 @@ public class NewCourseActivity extends AppCompatActivity
                 List<Course> cs = mCourses.getCoursesAtScope(parent.getScopeStrArrayOf(false));
 
                 mCoursesAtScope.add(cs.get(cs.size() - 1));
-                courseScopeViewAdapter.notifyDataSetChanged();
-                //
+                courseScopeViewAdapter.notifyItemInserted(mCoursesAtScope.size() - 1);
 
                 txt.setText("");
                 rgOne.clearCheck();

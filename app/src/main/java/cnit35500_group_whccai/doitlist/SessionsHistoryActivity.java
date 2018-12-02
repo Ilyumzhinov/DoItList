@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 import Functional.Globals;
 import Functional.Session;
@@ -51,9 +54,9 @@ public class SessionsHistoryActivity extends AppCompatActivity
         }
         //
 
-        LinearLayout lytCourses = findViewById(R.id.lytSessionsHistory);
-
+        // Populate the ListView
         int i = 1;
+        List<String> sessionStrs = new ArrayList<>();
         String sessionStr;
         LocalDateTime startDate, endDate;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
@@ -64,12 +67,12 @@ public class SessionsHistoryActivity extends AppCompatActivity
             startDate = iSession.getStartDate();
 
             sessionStr = String.valueOf(i) + ": ";
-            sessionStr += " from " + startDate.format(formatter);
+            sessionStr += startDate.format(formatter);
 
             if (iSession.getEndDate() != null)
             {
                 endDate = iSession.getEndDate();
-                sessionStr += " to " + endDate.format(formatter);
+                sessionStr += " - " + endDate.format(formatter);
                 sessionStr += " (" + ChronoUnit.MINUTES.between(startDate, endDate) + " min)";
             }
             else
@@ -78,11 +81,15 @@ public class SessionsHistoryActivity extends AppCompatActivity
                 sessionStr += " (??)";
             }
 
-            tv.setText(sessionStr);
-            lytCourses.addView(tv);
+            sessionStrs.add(sessionStr);
 
             i++;
         }
+
+        ListView lvSessions = findViewById(R.id.lvSessions);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, sessionStrs);
+        lvSessions.setAdapter(adapter);
     }
 
     @Override
