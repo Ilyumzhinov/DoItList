@@ -86,7 +86,7 @@
                 android:id="@+id/txtTaskName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Task Name"
+                android:text="Lab 13"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                 android:textStyle="bold" />
 
@@ -101,7 +101,7 @@
                     android:id="@+id/txtTaskCourse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="course"
+                    android:text="@string/course_default"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
             </RelativeLayout>

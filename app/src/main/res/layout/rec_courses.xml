@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:clickable="true"
+    android:focusable="auto"
+    android:gravity="center_vertical"
+    android:onClick="RecordTask"
+    android:orientation="horizontal"
+    android:scrollbars="none">>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtLabel2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="6dp"
+            android:layout_weight="0"
+            android:background="@drawable/recommendation_item_drawable_cnit355"
+            android:paddingStart="12dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="4dp"
+            android:text="CNIT 35500"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/txtLabel3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="6dp"
+            android:layout_weight="0"
+            android:background="@drawable/recommendation_item_drawable_cnit372"
+            android:elevation="2.5dp"
+            android:paddingStart="12dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="4dp"
+            android:text="CNIT 37200"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/txtLabel4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="6dp"
+            android:layout_weight="0"
+            android:background="@drawable/recommendation_item_drawable_cnit270"
+            android:elevation="2.5dp"
+            android:paddingStart="12dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="4dp"
+            android:text="CNIT 27000"
+            android:textColor="@android:color/black" />
+
+    </LinearLayout>
+</HorizontalScrollView>

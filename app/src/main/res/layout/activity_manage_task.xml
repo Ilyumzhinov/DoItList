@@ -131,39 +131,72 @@
                         android:src="@drawable/course_icon"
                         android:tint="@android:color/darker_gray" />
 
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:layout_weight="0"
-                        android:text="Course"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="0"
+                            android:text="Course"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                            <Space
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                            <Spinner
-                                android:id="@+id/spnCourse"
+                            <include
+                                android:id="@+id/CardTest2"
+                                layout="@layout/rec_courses"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_below="@+id/CardTest"
+                                android:layout_centerHorizontal="true"
                                 android:layout_weight="1" />
 
                             <ImageButton
                                 android:id="@+id/btnPlusCourse"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="0"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:onClick="NewCourseWithScope"
+                                android:tint="@color/colorAccent"
+                                app:srcCompat="@drawable/plus_circle_icon" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="14dp"
+                            android:tint="@color/colorPrimaryDark"
+                            app:srcCompat="@drawable/sublevel_icon" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <include
+                                android:id="@+id/CardTest2"
+                                layout="@layout/rec_categories"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/CardTest"
+                                android:layout_centerHorizontal="true"
+                                android:layout_weight="1" />
+
+                            <ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:layout_weight="0"
                                 android:background="?attr/selectableItemBackgroundBorderless"
                                 android:onClick="NewCourseWithScope"
@@ -180,8 +213,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:gravity="center">
+                    android:layout_marginEnd="20dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -203,44 +235,60 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/edtTimeEstH"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_weight="1"
-                            android:hint="1"
-                            android:inputType="time"
-                            android:textAlignment="viewEnd" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="20dp"
+                            <EditText
+                                android:id="@+id/edtTimeEstH"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_weight="1"
+                                android:hint="1"
+                                android:inputType="time"
+                                android:textAlignment="viewEnd" />
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="false"
+                                android:layout_alignParentBottom="false"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:layout_weight="0"
+                                android:text="h" />
+
+                            <EditText
+                                android:id="@+id/edtTimeEstM"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="0"
+                                android:inputType="time"
+                                android:textAlignment="viewEnd" />
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0"
+                                android:text="m" />
+
+                        </LinearLayout>
+
+                        <include
+                            android:id="@+id/CardTest2"
+                            layout="@layout/recommendation_timest"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="false"
-                            android:layout_alignParentBottom="false"
+                            android:layout_below="@+id/CardTest"
                             android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:layout_weight="0"
-                            android:text="h" />
-
-                        <EditText
-                            android:id="@+id/edtTimeEstM"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="0"
-                            android:inputType="time"
-                            android:textAlignment="viewEnd" />
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0"
-                            android:text="m" />
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -293,6 +341,13 @@
                 </TableRow>
 
             </TableLayout>
+
+            <Spinner
+                android:id="@+id/spnCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/taskDetail"
+                android:layout_weight="1" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 

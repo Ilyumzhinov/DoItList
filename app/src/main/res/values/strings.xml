@@ -17,5 +17,6 @@
     <string name="default_time_spent_label">00 h, 00 min</string>
     <string name="divider_label"><![CDATA[<]]></string>
     <string name="recommendation_item_separator">,</string>
+    <string name="course_default"><![CDATA[Labs < CNIT 35500]]></string>
 
 </resources>

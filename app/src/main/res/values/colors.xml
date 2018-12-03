@@ -14,4 +14,12 @@
     <color name="coursePurple">#aa00ff</color>
     <color name="coursePink">#ff4081</color>
     <color name="courseBrown">#8d6e63</color>
+
+    <!--Light versions of colors-->
+    <color name="courseRedLight">#ff949d</color>
+    <color name="courseOrangeLight">#ffc578</color>
+    <color name="courseGreenLight">#d2ff8a</color>
+    <color name="courseLightBlueLight">#ecffff</color>
+    <color name="courseBlueLight">#b7ebff</color>
+    <color name="coursePurpleLight">#ffbcff</color>
 </resources>
