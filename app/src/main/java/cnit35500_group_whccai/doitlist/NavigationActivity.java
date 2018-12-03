@@ -6,46 +6,83 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
 
-public class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import Functional.CoursesControl;
+import Functional.Globals;
+import Functional.TasksControl;
+
+public class NavigationActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Fragment fragment = null;
-    Class fragmentClass = null;
+    private CoursesControl mCourses;
+    private TasksControl mTasks;
+    private SaveTasks saveTasks;
+    ListView listTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fragmentClass = TaskListFragment.class;
+        // Initialise data
+        saveTasks = new SaveTasks();
+        saveTasks.createSaveTasks(this);
+
+        // Try to load saved courses
         try {
-            fragment = (Fragment) fragmentClass.newInstance();
+            mCourses = saveTasks.openCoursesFile();
+            if (mCourses == null) {
+                throw new Exception("bad");
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            // This should only get hit if this is the first run and nothing has been saved
+            Toast.makeText(this, "Error loading Courses", Toast.LENGTH_SHORT).show();
+            mCourses = new CoursesControl();
         }
+
+        // Try to load saved tasks
+        try {
+            mTasks = saveTasks.openTasksFile();
+            if (mTasks == null) {
+                throw new Exception("bad");
+            }
+        } catch (Exception e) {
+            // This should only get hit if this is the first run and nothing has been saved
+            Toast.makeText(this, "Error loading Tasks", Toast.LENGTH_SHORT).show();
+            mTasks = new TasksControl();
+        }
+
+
+        fragment = new TaskListFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.navContent, fragment).commit();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                Intent i = new Intent(NavigationActivity.this,ManageTaskActivity.class);
-                startActivity(i);
+
+                Intent i = new Intent(NavigationActivity.this, ManageTaskActivity.class);
+
+// Pass an object to another activity
+// Reference: https://stackoverflow.com/questions/2736389/
+                i.putExtra(Globals.ExtraKey_ViewMode,Globals.ViewMode_New);
+                i.putExtra(Globals.ExtraKey_Tasks, mTasks);
+                i.putExtra(Globals.ExtraKey_Courses, mCourses);
+
+                startActivityForResult(i, Globals.ManageTaskRequestCode);
 
             }
         });
@@ -70,58 +107,25 @@ public class NavigationActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.navigation, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.action_view:
-                return true;
-            case R.id.action_delete:
-                return true;
-            case R.id.action_hide:
-                return true;
-            case R.id.action_modify:
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
+            case R.id.nav_list:
+                fragment = new TaskListFragment();
+                break;
             case R.id.nav_class:
                 break;
             case R.id.nav_about:
-                fragmentClass = AboutFragment.class;
-                try {
-                    fragment = (Fragment) fragmentClass.newInstance();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                }
+                fragment = new AboutFragment();
+                break;
             case R.id.nav_main:
                 finish();
         }
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-
-            DrawerLayout drawer = findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.navContent,fragment).commit();
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
