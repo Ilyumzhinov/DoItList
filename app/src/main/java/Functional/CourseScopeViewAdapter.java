@@ -34,10 +34,16 @@ public class CourseScopeViewAdapter extends RecyclerView.Adapter<CourseScopeView
         uglyFunc(context, xCourses);
     }
 
+    // A common logic for both constructors to call
     private void uglyFunc(Context context, List<Course> xCourses)
     {
         this.mInflater = LayoutInflater.from(context);
         this.mCoursesAtScope = xCourses;
+    }
+
+    public List<Course> getmCoursesAtScope()
+    {
+        return mCoursesAtScope;
     }
 
     // Inflate the row layout from xml

@@ -52,6 +52,11 @@ public class Task implements Serializable
         return taskSessions.getGrandTotal();
     }
 
+    public Integer getAvgSessionLength()
+    {
+        return taskSessions.getAvgLength();
+    }
+
     public String getDetail()
     {
         return taskDetail;

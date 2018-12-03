@@ -110,12 +110,20 @@ public class TaskActivity extends AppCompatActivity
 
         txt = findViewById(R.id.lblTaskDeadlineTimeRemaining);
         txt.setText(String.valueOf(timBeforeDeadline) + " min");
+        //
 
         // Set time remaining
         long timeGoal = currentTask.getTimeEst();
         long timeSpentMin = currentTask.getTimeSpent();
+        long remain = timeGoal - timeSpentMin;
 
         txt = findViewById(R.id.lblTaskProgressRemaining);
+        // Todo: shows minutes only
+        txt.setText(String.valueOf(remain) + " min");
+
+        // Set time spent
+        txt = findViewById(R.id.lblTaskProgressMade);
+        // Todo: shows minutes only
         txt.setText(String.valueOf(timeSpentMin) + " min / " + String.valueOf(timeGoal) + " min");
 
         // Set progress bar
@@ -123,21 +131,28 @@ public class TaskActivity extends AppCompatActivity
         timeSpent.setIndeterminate(false);
         timeSpent.setMax(currentTask.getTimeEst());
         timeSpent.setProgress(currentTask.getTimeSpent());
+        //
 
-        // Set time before deadline label
+        // Set Sessions info
         long sessionsCount = currentTask.getSessions().getSessions().length;
 
         txt = findViewById(R.id.lblTaskSessionsCount);
         txt.setText(String.valueOf(sessionsCount));
 
+        // Set session avg length
+        Integer avgLength = currentTask.getAvgSessionLength();
+
+        // Todo: shows minutes only
+        txt = findViewById(R.id.lblTaskSessionsAvgTime);
+        txt.setText(String.valueOf(avgLength) + " min");
+        //
+
         // Set notes
         txt = findViewById(R.id.lblTaskNotes);
-
         txt.setText(currentTask.getDetail());
 
         // Set record floating button
         FloatingActionButton fab = findViewById(R.id.btnFloatTaskRecord);
-
         if (currentTask.getStatusFinished())
             fab.hide();
         else

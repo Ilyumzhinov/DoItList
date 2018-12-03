@@ -116,8 +116,13 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         Spinner spinner = findViewById(R.id.spnCourse);
 
         // Create an ArrayAdapter
+        // Add am empty course
+        CoursesControl cc = mCourses;
+
+        cc.addEmptyCourse();
+
         ArrayAdapter<Course> adapter = new ArrayAdapter<>
-                (this, android.R.layout.simple_spinner_item, mCourses.getCourses());
+                (this, android.R.layout.simple_spinner_item, cc.getCourses());
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -137,30 +142,16 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         //
     }
 
-    // Open a NewCourse activity
-    public void NewCourse(View view)
-    {
-        Intent i = new Intent(this, NewCourseActivity.class);
-
-        // Pass an object to another activity
-        // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
-        i.putExtra(Globals.ExtraKey_Courses, mCourses);
-        i.putExtra(Globals.ExtraKey_Parent, new Course());
-
-        startActivityForResult(i, Globals.NewCourseRequestCode);
-    }
-
     // Open a NewCourse activity with scope
     public void NewCourseWithScope(View view)
     {
+        Spinner spinner = findViewById(R.id.spnCourse);
+
         Intent i = new Intent(this, NewCourseActivity.class);
 
         // Pass an object to another activity
         // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
         i.putExtra(Globals.ExtraKey_Courses, mCourses);
-
-        // Todo: change the hardcoded value
-        Spinner spinner = findViewById(R.id.spnCourse);
         i.putExtra(Globals.ExtraKey_Parent, (Course)spinner.getSelectedItem());
 
         startActivityForResult(i, Globals.NewCourseRequestCode);
@@ -304,17 +295,17 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                         throw new Exception("Check time input!");
 
                     // Check that there is a name
-                    if (name.length() == 0)
+                    if (name.trim().length() == 0)
                         throw new Exception("Task must have a name!");
                     // Check that there is a course selected
-                    if (course == null)
+                    if (course.equals(mCourses.getEmptyCourse()))
                         throw new Exception("Task must have a Course!");
                     // Check that we have a due date
                     if (dueDate == null)
                         throw new Exception("Task must have a due date!");
                 } catch (Exception e)
                 {
-                    Toast.makeText(this, (e.toString()).replaceAll("java.lang.Exception: ", ""), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
                     return false;
                 }
                 //
@@ -341,6 +332,9 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
                             break;
                     }
+
+                    // Clean up courses
+                    mCourses.removeEmptyCourse();
 
                     // Show up the Task Activity
                     i.putExtra(Globals.ExtraKey_Tasks, mTasks);

@@ -166,46 +166,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0"
                                 android:background="?attr/selectableItemBackgroundBorderless"
-                                android:onClick="NewCourse"
-                                android:tint="@color/colorAccent"
-                                app:srcCompat="@drawable/plus_circle_icon" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <ImageButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="?attr/selectableItemBackgroundBorderless"
-                                android:clickable="false"
-                                android:tint="@color/colorPrimaryDark"
-                                app:srcCompat="@drawable/sublevel_icon" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <Spinner
-                                android:id="@+id/spnCourse2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" />
-
-                            <ImageButton
-                                android:id="@+id/btnPlusCourse2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0"
-                                android:background="?attr/selectableItemBackgroundBorderless"
                                 android:onClick="NewCourseWithScope"
                                 android:tint="@color/colorAccent"
                                 app:srcCompat="@drawable/plus_circle_icon" />
-
                         </LinearLayout>
+
                     </LinearLayout>
 
                 </TableRow>

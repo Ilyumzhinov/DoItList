@@ -138,17 +138,24 @@ public class NewCourseActivity extends AppCompatActivity
             {
                 col_toolbar.setTitle("New Category");
                 txtEditInput.setHint("e.g. Homework");
-
-                // Set up scope view
-                RecyclerView recyclerView = findViewById(R.id.rvCourses);
-                LinearLayoutManager horizontalLayoutManager
-                        = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-                recyclerView.setLayoutManager(horizontalLayoutManager);
-                CourseScopeViewAdapter adapter = new CourseScopeViewAdapter(this, parent);
-                //courseScopeViewAdapter.setClickListener(this);
-                recyclerView.setAdapter(adapter);
-                //
             }
+
+            // Set up scope view
+            RecyclerView recyclerView = findViewById(R.id.rvCourses);
+            LinearLayoutManager horizontalLayoutManager
+                    = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            recyclerView.setLayoutManager(horizontalLayoutManager);
+            CourseScopeViewAdapter adapter = new CourseScopeViewAdapter(this, parent);
+            //courseScopeViewAdapter.setClickListener(this);
+
+            if (adapter.getmCoursesAtScope().isEmpty())
+            {
+                View vw = findViewById(R.id.lytCourseScope);
+                vw.setVisibility(View.GONE);
+            }
+            recyclerView.setAdapter(adapter);
+            //
+
         } else
         {
             Toast.makeText(this, "Failed to receive data", Toast.LENGTH_LONG).show();
@@ -218,38 +225,39 @@ public class NewCourseActivity extends AppCompatActivity
 
             Course courseTemp;
             // Try to add a course
-            if (parent.isNull())
-                courseTemp = mCourses.addCourse(name, color);
-            else
-                courseTemp = mCourses.addCourse(name, color, parent);
-
-            if (null == courseTemp)
+            try
             {
-                Toast.makeText(this, "Error: wrong input OR may exist already", Toast.LENGTH_LONG).show();
+                if (parent.isNull())
+                    courseTemp = mCourses.addCourse(name, color);
+                else
+                    courseTemp = mCourses.addCourse(name, color, parent);
+            } catch (Exception c)
+            {
+                Toast.makeText(this, c.getMessage(), Toast.LENGTH_LONG).show();
                 return false;
-            } else
-            {
-                // Close keyboard programmatically
-                // Reference: https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
-                View view = this.getCurrentFocus();
-                if (view != null) {
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
-
-                Toast.makeText(this, "Added as " + courseTemp.getScopeStrOf(false), Toast.LENGTH_LONG).show();
-
-                // Add to Saved at scope RecyclerView
-                // Todo: This is ugly
-                List<Course> cs = mCourses.getCoursesAtScope(parent.getScopeStrArrayOf(false));
-
-                mCoursesAtScope.add(cs.get(cs.size() - 1));
-                courseScopeViewAdapter.notifyItemInserted(mCoursesAtScope.size() - 1);
-
-                txt.setText("");
-                rgOne.clearCheck();
-                rgTwo.clearCheck();
             }
+
+            // Close keyboard programmatically
+            // Reference: https://stackoverflow.com/questions/1109022/close-hide-the-android-soft-keyboard
+            View view = this.getCurrentFocus();
+            if (view != null)
+            {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+
+            Toast.makeText(this, "Added as " + courseTemp.getScopeStrOf(false), Toast.LENGTH_LONG).show();
+
+            // Add to Saved at scope RecyclerView
+            // Todo: This is ugly
+            List<Course> cs = mCourses.getCoursesAtScope(parent.getScopeStrArrayOf(false));
+
+            mCoursesAtScope.add(cs.get(cs.size() - 1));
+            courseScopeViewAdapter.notifyItemInserted(mCoursesAtScope.size() - 1);
+
+            txt.setText("");
+            rgOne.clearCheck();
+            rgTwo.clearCheck();
             //
         } else if (id == R.id.btnDoneToolBar)
         {

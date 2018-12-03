@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -142,12 +141,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         thUpdateViews.start();
-
-        //Todo: remove tests
-        mCourses.addCourse("CNIT 35500", ContextCompat.getColor(this, R.color.courseBlue), null);
-        mCourses.addCourse("CNIT 37200",ContextCompat.getColor(this, R.color.courseLightBlue), null);
-        mCourses.addCourse("Homework", ContextCompat.getColor(this, R.color.courseRed), mCourses.getCourses()[0]);
-        mCourses.addCourse("Individual",ContextCompat.getColor(this, R.color.courseGreen),mCourses.getCourses()[2]);
     }
 
     public void NewTask(View view)

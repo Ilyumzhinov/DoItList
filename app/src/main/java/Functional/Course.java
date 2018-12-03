@@ -1,5 +1,7 @@
 package Functional;
 
+import android.graphics.Color;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,19 +12,28 @@ public class Course implements Serializable
     private Integer associatedColor;
     private Course parent;
 
+    private static final String cBaseName = "Main";
+
+    public Course()
+    {
+        // Default values
+        associatedColor = Color.parseColor("#c5c6c7");
+    }
+
     // Name should be smaller than 50 characters long
     // Returns true if set was successful
-    public boolean setName(String xName)
+    public void setName(String xName) throws Exception
     {
         if (xName.trim().equals(""))
-            return false;
+            throw new Exception("Enter name!");
 
         if (xName.length() > 50)
-            return false;
+            throw new Exception("Name exceeds max length of 50");
+
+        if (xName.equals(cBaseName) && getScopeStrOf(false).equals(cBaseName))
+            throw new Exception("Name matches system name at this scope");
 
         this.name = xName;
-
-        return true;
     }
 
     // Check if we do not try to assign the course as its own parent
@@ -33,18 +44,18 @@ public class Course implements Serializable
             this.parent = xParent;
     }
 
-    public Integer setAssociatedColor(Integer xColor)
+    public void setAssociatedColor(Integer xColor) throws Exception
     {
         if (xColor == -1)
-            return null;
+            throw new Exception("Invalid color");
 
-        return this.associatedColor = xColor;
+        this.associatedColor = xColor;
     }
 
     public String getName()
     {
-        if (this.name == null)
-            return "";
+        if (this.isNull())
+            return cBaseName;
 
         return this.name;
     }
@@ -77,9 +88,9 @@ public class Course implements Serializable
 
     // A recursive function that surfaces through the hierarchy of parents and fetches their names into an array of strings
     // Example:
-    // CNIT35500
-    // Homework < CNIT35500
-    // Individual < Homework < CNIT35500
+    // CNIT 35500
+    // Homework < CNIT 35500
+    // Individual < Homework < CNIT 35500
     private List<String> getFullScopeStrArray(Course xCourse)
     {
         final List<String> list = new ArrayList<>();
@@ -122,7 +133,7 @@ public class Course implements Serializable
         if (xCourse.getParent() == null)
         {
             if (xCourse.isNull())
-                return new ArrayList<>();
+                return list;
 
             list.add(xCourse);
             return list;
@@ -144,7 +155,6 @@ public class Course implements Serializable
         if (ofParent)
             scope = getScopeStrOfParent();
         else
-
             scope = getFullScopeStrOf(this);
 
 
@@ -168,7 +178,7 @@ public class Course implements Serializable
             finalStr = fullScope.substring(0, fullScope.length() - dividerStr.length());
         } catch (Exception c)
         {
-            return "";
+            return cBaseName;
         }
 
         return finalStr;
@@ -188,9 +198,10 @@ public class Course implements Serializable
     {
         List<String> parentScope = getScopeStrArrayOf(true);
 
-        if (parentScope == null && xScope == null)
-            return true;
-        else if (parentScope == null || xScope == null)
+        if (xScope == null)
+            return false;
+
+        if (parentScope.isEmpty() && this.isNull())
             return false;
         else if (parentScope.isEmpty() && xScope.isEmpty())
             return true;

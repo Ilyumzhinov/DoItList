@@ -10,16 +10,14 @@ public class CoursesControl implements Serializable
 
     // Check before adding a course
     // Return the added course if successful
-    public Course addCourse(String xName, Integer xAssociatedColor)
+    public Course addCourse(String xName, Integer xAssociatedColor) throws Exception
     {
-        Course course = addCourse(xName, xAssociatedColor, null);
-
-        return course;
+        return addCourse(xName, xAssociatedColor, null);
     }
 
     // Overload a method for adding a course to add parent as well
     // Return the added course if successful
-    public Course addCourse(String xName, Integer xAssociatedColor, Course xParent)
+    public Course addCourse(String xName, Integer xAssociatedColor, Course xParent) throws Exception
     {
         Course course = new Course();
 
@@ -27,11 +25,9 @@ public class CoursesControl implements Serializable
             course.setParent(xParent);
 
         // Try to set the name
-        if (!setNameCheck(course, xName))
-            return null;
+        setNameCheck(course, xName);
 
-        if (course.setAssociatedColor(xAssociatedColor) == null)
-            return null;
+        course.setAssociatedColor(xAssociatedColor);
 
         // Try to add to the list
         Courses.add(course);
@@ -59,6 +55,29 @@ public class CoursesControl implements Serializable
             return Courses.remove(course);
     }
 
+    private Course emptyCourse;
+
+    public void addEmptyCourse()
+    {
+        if (emptyCourse == null)
+        {
+            emptyCourse = new Course();
+            Courses.add(0, emptyCourse);
+        }
+    }
+
+    public Course getEmptyCourse()
+    {
+        return this.emptyCourse;
+    }
+
+    public void removeEmptyCourse()
+    {
+        Courses.remove(emptyCourse);
+
+        emptyCourse = null;
+    }
+
     // Get an array of all courses
     public Course[] getCourses()
     {
@@ -66,7 +85,7 @@ public class CoursesControl implements Serializable
     }
 
     // True if successful set
-    private boolean setNameCheck(Course xCourse, String xName)
+    private void setNameCheck(Course xCourse, String xName) throws Exception
     {
         List<Course> localCourses = getCoursesAtScope(xCourse.getScopeStrArrayOf(true));
 
@@ -77,20 +96,11 @@ public class CoursesControl implements Serializable
         for (Course iCourse : localCourses)
         {
             if (xName.equals(iCourse.getName()))
-                return false;
+                throw new Error("Name already exists!");
         }
 
         // Check if name satisfies other Set requirements
-        return xCourse.setName(xName);
-    }
-
-    public Course getCourseWithName(String name)
-    {
-        for (Course iCourse : Courses)
-            if (iCourse.getName().equals(name))
-                return iCourse;
-
-        return null;
+        xCourse.setName(xName);
     }
 
     // Return an array of all courses that are located at the same scope
