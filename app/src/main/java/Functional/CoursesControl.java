@@ -84,6 +84,25 @@ public class CoursesControl implements Serializable
         return Courses.toArray(new Course[0]);
     }
 
+    // Get index of course
+    // Match is based on scope match
+    public Integer getIndexOfCourse(Course xCourse)
+    {
+        int i = -1;
+
+        if (xCourse == null)
+            return i;
+
+        for (Course iCourse : Courses)
+        {
+            i++;
+            if (iCourse.getScopeStrOf(false).equals(xCourse.getScopeStrOf(false)))
+                return i;
+        }
+
+        return -1;
+    }
+
     // True if successful set
     private void setNameCheck(Course xCourse, String xName) throws Exception
     {
@@ -96,7 +115,7 @@ public class CoursesControl implements Serializable
         for (Course iCourse : localCourses)
         {
             if (xName.equals(iCourse.getName()))
-                throw new Error("Name already exists!");
+                throw new Exception("Name already exists");
         }
 
         // Check if name satisfies other Set requirements
@@ -112,7 +131,7 @@ public class CoursesControl implements Serializable
             if (iCourse.compareParentScopeWith(scope))
                 courses.add(iCourse);
 
-        if (courses.size() > 0)
+        if (!courses.isEmpty())
             return courses;
         else
             return null;

@@ -119,8 +119,6 @@ public class NewCourseActivity extends AppCompatActivity
         rgTwo.setOnCheckedChangeListener(rgTwo_Listener);
         //
 
-        EditText txtEditInput = findViewById(R.id.txtInpCourseTitle);
-
         // Receive object through Intent
         // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
         Bundle extras = getIntent().getExtras();
@@ -133,11 +131,9 @@ public class NewCourseActivity extends AppCompatActivity
             if (parent.isNull())
             {
                 col_toolbar.setTitle("New Course");
-                txtEditInput.setHint("e.g. CNIT 35500");
             } else
             {
                 col_toolbar.setTitle("New Category");
-                txtEditInput.setHint("e.g. Homework");
             }
 
             // Set up scope view
@@ -167,6 +163,7 @@ public class NewCourseActivity extends AppCompatActivity
 
         // Set listener for the Input edit text
         // Reference: EditTextChangeTest
+        EditText txtEditInput = findViewById(R.id.txtInpCourseTitle);
         txtEditInput.addTextChangedListener(new TextWatcher()
         {
 

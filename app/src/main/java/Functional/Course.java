@@ -31,7 +31,7 @@ public class Course implements Serializable
             throw new Exception("Name exceeds max length of 50");
 
         if (xName.equals(cBaseName) && getScopeStrOf(false).equals(cBaseName))
-            throw new Exception("Name matches system name at this scope");
+            throw new Exception("Name matches system name");
 
         this.name = xName;
     }
