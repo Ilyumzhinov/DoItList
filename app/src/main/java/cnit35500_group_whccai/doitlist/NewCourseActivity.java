@@ -128,6 +128,13 @@ public class NewCourseActivity extends AppCompatActivity
             mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
             parent = (Course) getIntent().getSerializableExtra(Globals.ExtraKey_Parent);
 
+            // Add an empty course if nothing was passed
+            if (parent == null)
+            {
+                mCourses.addEmptyCourse();
+                parent = mCourses.getEmptyCourse();
+            }
+
             if (parent.isNull())
             {
                 col_toolbar.setTitle("New Course");
@@ -258,6 +265,8 @@ public class NewCourseActivity extends AppCompatActivity
             //
         } else if (id == R.id.btnDoneToolBar)
         {
+            doCleanup();
+
             // Send data back
             Intent i = new Intent();
             i.putExtra(Globals.ExtraKey_Courses, mCourses);
@@ -266,6 +275,12 @@ public class NewCourseActivity extends AppCompatActivity
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Do the cleanup
+    public void doCleanup()
+    {
+        mCourses.removeEmptyCourse();
     }
 
     private Integer getSelectedColor()
