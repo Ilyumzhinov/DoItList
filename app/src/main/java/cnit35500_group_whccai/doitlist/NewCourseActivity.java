@@ -42,7 +42,6 @@ public class NewCourseActivity extends AppCompatActivity
     // Reference: https://stackoverflow.com/questions/10425569/radiogroup-with-two-columns-which-have-ten-radiobuttons
     private RadioGroup.OnCheckedChangeListener rgOne_Listener = new RadioGroup.OnCheckedChangeListener()
     {
-
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId)
         {
@@ -119,8 +118,6 @@ public class NewCourseActivity extends AppCompatActivity
         rgTwo.setOnCheckedChangeListener(rgTwo_Listener);
         //
 
-        EditText txtEditInput = findViewById(R.id.txtInpCourseTitle);
-
         // Receive object through Intent
         // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
         Bundle extras = getIntent().getExtras();
@@ -130,14 +127,19 @@ public class NewCourseActivity extends AppCompatActivity
             mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
             parent = (Course) getIntent().getSerializableExtra(Globals.ExtraKey_Parent);
 
+            // Add an empty course if nothing was passed
+            if (parent == null)
+            {
+                mCourses.addEmptyCourse();
+                parent = mCourses.getEmptyCourse();
+            }
+
             if (parent.isNull())
             {
                 col_toolbar.setTitle("New Course");
-                txtEditInput.setHint("e.g. CNIT 35500");
             } else
             {
                 col_toolbar.setTitle("New Category");
-                txtEditInput.setHint("e.g. Homework");
             }
 
             // Set up scope view
@@ -167,6 +169,7 @@ public class NewCourseActivity extends AppCompatActivity
 
         // Set listener for the Input edit text
         // Reference: EditTextChangeTest
+        EditText txtEditInput = findViewById(R.id.txtInpCourseTitle);
         txtEditInput.addTextChangedListener(new TextWatcher()
         {
 
@@ -261,6 +264,8 @@ public class NewCourseActivity extends AppCompatActivity
             //
         } else if (id == R.id.btnDoneToolBar)
         {
+            doCleanup();
+
             // Send data back
             Intent i = new Intent();
             i.putExtra(Globals.ExtraKey_Courses, mCourses);
@@ -269,6 +274,12 @@ public class NewCourseActivity extends AppCompatActivity
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Do the cleanup
+    public void doCleanup()
+    {
+        mCourses.removeEmptyCourse();
     }
 
     private Integer getSelectedColor()
