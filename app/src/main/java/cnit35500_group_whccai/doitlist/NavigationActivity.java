@@ -22,11 +22,10 @@ import Functional.TasksControl;
 
 public class NavigationActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    Fragment fragment = null;
+    private Fragment fragment;
     private CoursesControl mCourses;
     private TasksControl mTasks;
-    private SaveTasks saveTasks;
-    ListView listTasks;
+    private ListView listTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,34 +35,21 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Initialise data
-        saveTasks = new SaveTasks();
-        saveTasks.createSaveTasks(this);
+        // Receive data through Intent
+        // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+        {
+            // Obtain data
+            mTasks = (TasksControl) getIntent().getSerializableExtra(Globals.ExtraKey_Tasks);
+            mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
+        } else
+        {
+            Toast.makeText(this, "Failed to receive data", Toast.LENGTH_LONG).show();
 
-        // Try to load saved courses
-        try {
-            mCourses = saveTasks.openCoursesFile();
-            if (mCourses == null) {
-                throw new Exception("bad");
-            }
-        } catch (Exception e) {
-            // This should only get hit if this is the first run and nothing has been saved
-            Toast.makeText(this, "Error loading Courses", Toast.LENGTH_SHORT).show();
-            mCourses = new CoursesControl();
+            finish();
         }
-
-        // Try to load saved tasks
-        try {
-            mTasks = saveTasks.openTasksFile();
-            if (mTasks == null) {
-                throw new Exception("bad");
-            }
-        } catch (Exception e) {
-            // This should only get hit if this is the first run and nothing has been saved
-            Toast.makeText(this, "Error loading Tasks", Toast.LENGTH_SHORT).show();
-            mTasks = new TasksControl();
-        }
-
+        //
 
         fragment = new TaskListFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -76,8 +62,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
 
                 Intent i = new Intent(NavigationActivity.this, ManageTaskActivity.class);
 
-// Pass an object to another activity
-// Reference: https://stackoverflow.com/questions/2736389/
+                // Pass an object to another activity
+                // Reference: https://stackoverflow.com/questions/2736389/
                 i.putExtra(Globals.ExtraKey_ViewMode,Globals.ViewMode_New);
                 i.putExtra(Globals.ExtraKey_Tasks, mTasks);
                 i.putExtra(Globals.ExtraKey_Courses, mCourses);
@@ -99,7 +85,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationV
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {

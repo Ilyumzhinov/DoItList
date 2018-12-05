@@ -1,7 +1,6 @@
 package cnit35500_group_whccai.doitlist;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,14 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import Functional.Course;
-import Functional.CourseScopeViewAdapter;
 import Functional.CoursesControl;
 import Functional.Globals;
 import Functional.Task;
@@ -34,9 +32,7 @@ public class TaskListFragment extends Fragment{
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private TasksControl mTaskControl;
-    private List<Task> mTasksAtScope;
-    private Task mTasks;
-    TaskListAdapter taskListAdapter;
+    private CoursesControl mCourses;
 
     @Nullable
     @Override
@@ -60,22 +56,7 @@ public class TaskListFragment extends Fragment{
         {
             // Obtain data
             mTaskControl = (TasksControl) getActivity().getIntent().getSerializableExtra(Globals.ExtraKey_Tasks);
-            mTasks = (Task) getActivity().getIntent().getSerializableExtra(Globals.ExtraKey_Parent);
-
-            // Set up scope view
-            RecyclerView recyclerView = view.findViewById(R.id.listTasks);
-            LinearLayoutManager linearLayoutManager
-                    = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
-            recyclerView.setLayoutManager(linearLayoutManager);
-            TaskListAdapter adapter = new TaskListAdapter(view.getContext(), mTasksAtScope);
-
-//            if (adapter.getmCoursesAtScope().isEmpty())
-//            {
-//                View vw = view.findViewById(R.id.lytCourseScope);
-//                vw.setVisibility(View.GONE);
-//            }
-            recyclerView.setAdapter(adapter);
-            //
+            mCourses = (CoursesControl) getActivity().getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
 
         } else
         {
@@ -84,17 +65,16 @@ public class TaskListFragment extends Fragment{
             return;
         }
 
+        List<Task> tasksList = Arrays.asList(mTaskControl.getTasks());
 
-        if (mTasksAtScope == null)
-            mTasksAtScope = new ArrayList<>();
-
+        // Set up tasks view
         RecyclerView recyclerView = view.findViewById(R.id.listTasks);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(
-                new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        taskListAdapter = new TaskListAdapter(getContext(), mTasksAtScope);
+        LinearLayoutManager linearLayoutManager
+                = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-        recyclerView.setAdapter(taskListAdapter);
+        TaskListAdapter adapter = new TaskListAdapter(view.getContext(), tasksList);
+        recyclerView.setAdapter(adapter);
 
 
         //set Calendar onClickListener

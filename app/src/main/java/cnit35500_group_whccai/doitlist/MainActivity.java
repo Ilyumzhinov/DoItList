@@ -170,6 +170,18 @@ public class MainActivity extends AppCompatActivity
         startActivityForResult(i, Globals.OpenTaskRequestCode);
     }
 
+    public void openTaskList(View view)
+    {
+        Intent i = new Intent(this, NavigationActivity.class);
+
+        // Pass an object to another activity
+        // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
+        i.putExtra(Globals.ExtraKey_Tasks, mTasks);
+        i.putExtra(Globals.ExtraKey_Courses, mCourses);
+
+        startActivityForResult(i, Globals.OpenTaskRequestCode);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         switch (requestCode)
@@ -265,11 +277,6 @@ public class MainActivity extends AppCompatActivity
         Boolean taskStatusFinished = mTasks.getTaskAt(0).getStatusFinished();
 
         mTasks.getTaskAt(0).setStatusFinished(!taskStatusFinished);
-    }
-
-    public void openTaskList(View view) {
-        Intent intent = new Intent(this, NavigationActivity.class);
-        startActivity(intent);
     }
 
     // Save mTasks and mCourses prior to stopping
