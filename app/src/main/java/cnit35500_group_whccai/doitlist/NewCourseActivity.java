@@ -70,8 +70,8 @@ public class NewCourseActivity extends AppCompatActivity
 
     private void updateMenuVisibles(String mode)
     {
-        MenuItem itemSave = menu.findItem(R.id.btnSaveToolBar);
-        MenuItem itemDone = menu.findItem(R.id.btnDoneToolBar);
+        MenuItem itemSave = menu.findItem(R.id.btnToolBarSave);
+        MenuItem itemDone = menu.findItem(R.id.btnToolBarDone);
 
         itemSave.setVisible(false);
         itemDone.setVisible(false);
@@ -216,7 +216,7 @@ public class NewCourseActivity extends AppCompatActivity
     {
         int id = item.getItemId();
 
-        if (id == R.id.btnSaveToolBar)
+        if (id == R.id.btnToolBarSave)
         {
             TextView txt = findViewById(R.id.txtInpCourseTitle);
 
@@ -262,7 +262,7 @@ public class NewCourseActivity extends AppCompatActivity
             rgOne.clearCheck();
             rgTwo.clearCheck();
             //
-        } else if (id == R.id.btnDoneToolBar)
+        } else if (id == R.id.btnToolBarDone)
         {
             doCleanup();
 

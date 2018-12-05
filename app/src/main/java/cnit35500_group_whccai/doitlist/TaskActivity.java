@@ -177,9 +177,9 @@ public class TaskActivity extends AppCompatActivity
     private void updateMenuVisibles(String mode)
     {
         MenuItem itemFinish = menu.findItem(R.id.btnToolBarFinish);
-        MenuItem itemDone = menu.findItem(R.id.btnDoneToolBar);
-        MenuItem itemEdit = menu.findItem(R.id.btnEditToolBar);
-        MenuItem itemRemove = menu.findItem(R.id.btnRemoveToolBar);
+        MenuItem itemDone = menu.findItem(R.id.btnToolBarDone);
+        MenuItem itemEdit = menu.findItem(R.id.btnToolBarEdit);
+        MenuItem itemRemove = menu.findItem(R.id.btnToolBarRemove);
 
         itemFinish.setVisible(false);
         itemEdit.setVisible(false);
@@ -216,7 +216,7 @@ public class TaskActivity extends AppCompatActivity
 
                 break;
 
-            case (R.id.btnEditToolBar):
+            case (R.id.btnToolBarEdit):
                 Intent i = new Intent(this, ManageTaskActivity.class);
 
                 // Pass an object to another activity
@@ -234,7 +234,7 @@ public class TaskActivity extends AppCompatActivity
                 finish();
                 break;
 
-            case (R.id.btnDoneToolBar):
+            case (R.id.btnToolBarDone):
                 // Send data back
                 Intent i2 = new Intent();
                 i2.putExtra(Globals.ExtraKey_Tasks, mTasks);

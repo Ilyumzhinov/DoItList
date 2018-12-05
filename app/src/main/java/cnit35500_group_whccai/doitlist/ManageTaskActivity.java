@@ -169,10 +169,10 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
     private void updateMenuVisibles(String mode)
     {
-        MenuItem itemSave = menu.findItem(R.id.btnSaveToolBar);
-        MenuItem itemDone = menu.findItem(R.id.btnDoneToolBar);
-        MenuItem itemEdit = menu.findItem(R.id.btnEditToolBar);
-        MenuItem itemRemove = menu.findItem(R.id.btnRemoveToolBar);
+        MenuItem itemSave = menu.findItem(R.id.btnToolBarSave);
+        MenuItem itemDone = menu.findItem(R.id.btnToolBarDone);
+        MenuItem itemEdit = menu.findItem(R.id.btnToolBarEdit);
+        MenuItem itemRemove = menu.findItem(R.id.btnToolBarRemove);
 
         itemSave.setVisible(false);
         itemDone.setVisible(false);
@@ -235,7 +235,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
         switch (id)
         {
-            case (R.id.btnRemoveToolBar):
+            case (R.id.btnToolBarRemove):
                 mTasks.removeTask(currentTask);
 
                 Toast.makeText(this, "Task removed!", Toast.LENGTH_LONG).show();
@@ -250,7 +250,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
                 break;
 
-            case (R.id.btnSaveToolBar):
+            case (R.id.btnToolBarSave):
                 String name, notes;
                 Course course;
                 LocalDateTime dueDate;
@@ -331,7 +331,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
                 break;
 
-            case (R.id.btnDoneToolBar):
+            case (R.id.btnToolBarDone):
                 switch (viewMode)
                 {
                     case (Globals.ViewMode_New):
@@ -350,6 +350,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                         i3.putExtra(Globals.ExtraKey_Tasks, mTasks);
                         i3.putExtra(Globals.ExtraKey_Courses, mCourses);
                         i3.putExtra(Globals.ExtraKey_Index, cTaskIndex);
+
                         // Set result code from Third activity to first activity
                         // Reference: https://stackoverflow.com/questions/28944137/android-get-result-from-third-activity
                         i3.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
@@ -372,12 +373,12 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         try
         {
             if (xHours.isEmpty())
-                hours = 1;
+                hours = 0;
             else
                 hours = Integer.valueOf(xHours);
 
             if (xMinutes.isEmpty())
-                minutes = 0;
+                minutes = 30;
             else
                 minutes = Integer.valueOf(xMinutes);
 

@@ -136,14 +136,13 @@
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/rvCourses"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1" />
 
                             <ImageButton
                                 android:id="@+id/btnPlusCourse"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
                                 android:layout_weight="0"
                                 android:background="?attr/selectableItemBackgroundBorderless"
                                 android:onClick="NewCourseWithScope"
@@ -189,13 +188,12 @@
                                 <android.support.v7.widget.RecyclerView
                                     android:id="@+id/rvCategories"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_weight="1" />
 
                                 <ImageButton
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
                                     android:layout_weight="0"
                                     android:background="?attr/selectableItemBackgroundBorderless"
                                     android:onClick="NewCourseWithScope"
@@ -250,7 +248,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
                                 android:layout_weight="1"
-                                android:hint="1"
+                                android:hint="0"
                                 android:inputType="time"
                                 android:textAlignment="viewEnd" />
 
@@ -270,7 +268,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:hint="0"
+                                android:hint="30"
                                 android:inputType="time"
                                 android:textAlignment="viewEnd" />
 

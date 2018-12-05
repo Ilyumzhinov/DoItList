@@ -18,5 +18,9 @@
     <string name="divider_label"><![CDATA[<]]></string>
     <string name="recommendation_item_separator">,</string>
     <string name="course_default"><![CDATA[Labs < CNIT 35500]]></string>
+    <string name="task_name_default">Task Name</string>
+    <string name="task_info_button_desc">Click to open details about a task</string>
+    <string name="task_finish_button_desc">Click to mark a task as completed</string>
+    <string name="status_label_default">status</string>
 
 </resources>
