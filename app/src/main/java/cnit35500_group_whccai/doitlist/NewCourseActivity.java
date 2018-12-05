@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Functional.Course;
-import Functional.CourseScopeViewAdapter;
+import Functional.ViewAdapterCourseScope;
 import Functional.CoursesControl;
 import Functional.Globals;
 
@@ -36,7 +36,7 @@ public class NewCourseActivity extends AppCompatActivity
 
     private Course parent;
     private Menu menu;
-    CourseScopeViewAdapter courseScopeViewAdapter;
+    ViewAdapterCourseScope viewAdapterCourseScope;
     private RadioGroup rgOne, rgTwo;
     // Handle radio group clicks
     // Reference: https://stackoverflow.com/questions/10425569/radiogroup-with-two-columns-which-have-ten-radiobuttons
@@ -147,8 +147,8 @@ public class NewCourseActivity extends AppCompatActivity
             LinearLayoutManager horizontalLayoutManager
                     = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
             recyclerView.setLayoutManager(horizontalLayoutManager);
-            CourseScopeViewAdapter adapter = new CourseScopeViewAdapter(this, parent);
-            //courseScopeViewAdapter.setClickListener(this);
+            ViewAdapterCourseScope adapter = new ViewAdapterCourseScope(this, parent);
+            //viewAdapterCourseScope.setClickListener(this);
 
             if (adapter.getmCoursesAtScope().isEmpty())
             {
@@ -205,9 +205,9 @@ public class NewCourseActivity extends AppCompatActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        courseScopeViewAdapter = new CourseScopeViewAdapter(this, mCoursesAtScope);
+        viewAdapterCourseScope = new ViewAdapterCourseScope(this, mCoursesAtScope);
 
-        recyclerView.setAdapter(courseScopeViewAdapter);
+        recyclerView.setAdapter(viewAdapterCourseScope);
     }
 
     // Handle button activities
@@ -256,7 +256,7 @@ public class NewCourseActivity extends AppCompatActivity
             List<Course> cs = mCourses.getCoursesAtScope(parent.getScopeStrArrayOf(false));
 
             mCoursesAtScope.add(cs.get(cs.size() - 1));
-            courseScopeViewAdapter.notifyItemInserted(mCoursesAtScope.size() - 1);
+            viewAdapterCourseScope.notifyItemInserted(mCoursesAtScope.size() - 1);
 
             txt.setText("");
             rgOne.clearCheck();

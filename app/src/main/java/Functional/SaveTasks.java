@@ -1,4 +1,4 @@
-package cnit35500_group_whccai.doitlist;
+package Functional;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;

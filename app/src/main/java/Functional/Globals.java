@@ -42,4 +42,21 @@ public class Globals
     public static final String ViewMode_New = "new";
     public static final String ViewMode_Edit = "edit";
     //
+
+    // Receive minutes as integer and parse them into a string of # days, # hours, # minutes.
+    // E.g.: 110 -> “1 h, 50 min”
+    public static String formatTimeTotal(Integer xMinutes)
+    {
+        // PLACEHOLDER LOGIC
+        return String.valueOf(xMinutes) + " min";
+    }
+
+    // Receive minutes as long and parse them into a string of a date or one of special cases, like “Today”, “Tomorrow”, “Yesterday”.
+    // E.g. 1440 -> “Tomorrow at 23:59”.
+    // E.g. 2: 10080 -> “12-11-2018, 23:59”.
+    public static String formatDate(Long xMinutes)
+    {
+        // PLACEHOLDER LOGIC
+        return String.valueOf(xMinutes) + " min";
+    }
 }

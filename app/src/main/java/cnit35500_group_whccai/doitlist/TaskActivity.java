@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-import Functional.CourseScopeViewAdapter;
+import Functional.ViewAdapterCourseScope;
 import Functional.CoursesControl;
 import Functional.Globals;
 import Functional.Task;
@@ -88,8 +88,8 @@ public class TaskActivity extends AppCompatActivity
         LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
-        CourseScopeViewAdapter adapter = new CourseScopeViewAdapter(this, currentTask.getCourse());
-        //courseScopeViewAdapter.setClickListener(this);
+        ViewAdapterCourseScope adapter = new ViewAdapterCourseScope(this, currentTask.getCourse());
+        //viewAdapterCourseScope.setClickListener(this);
         recyclerView.setAdapter(adapter);
         // todo: remove it
 //        recyclerView.addItemDecoration(

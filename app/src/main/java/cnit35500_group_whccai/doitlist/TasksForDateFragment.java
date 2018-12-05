@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,20 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import Functional.CoursesControl;
 import Functional.Globals;
 import Functional.Task;
-import Functional.TaskListAdapter;
 import Functional.TasksControl;
+import Functional.ViewAdapterTasks;
 
 
-public class TaskListFragment extends Fragment{
-
+public class TasksForDateFragment extends Fragment
+{
     private View mainView;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -38,7 +35,7 @@ public class TaskListFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mainView = inflater.inflate(R.layout.fragment_task_list, null);
+        mainView = inflater.inflate(R.layout.fragment_tasks_for_date, null);
         return mainView;
     }
 
@@ -65,17 +62,17 @@ public class TaskListFragment extends Fragment{
             return;
         }
 
+        // Set up tasks RecyclerView
         List<Task> tasksList = Arrays.asList(mTaskControl.getTasks());
 
-        // Set up tasks view
         RecyclerView recyclerView = view.findViewById(R.id.listTasks);
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        TaskListAdapter adapter = new TaskListAdapter(view.getContext(), tasksList);
+        ViewAdapterTasks adapter = new ViewAdapterTasks(view.getContext(), tasksList, getActivity());
         recyclerView.setAdapter(adapter);
-
+        //
 
         //set Calendar onClickListener
         /*
@@ -112,5 +109,4 @@ public class TaskListFragment extends Fragment{
         ViewGroup rootView = (ViewGroup) getView();
         rootView.addView(mainView);
     }
-
 }

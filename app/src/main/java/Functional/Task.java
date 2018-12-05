@@ -67,6 +67,25 @@ public class Task implements Serializable
         return taskStatusFinished;
     }
 
+    public String getStatusStr()
+    {
+        String status;
+
+        if (getStatusFinished())
+            status = "Finished";
+        else
+        {
+            if (getSessions().getSessions().length == 0)
+                status = "Not started";
+            else if (getSessions().checkOpenSession())
+                status = "Active";
+            else
+                status = "Not finished";
+        }
+
+        return status;
+    }
+
     public SessionsControl getSessions()
     {
         return taskSessions;
