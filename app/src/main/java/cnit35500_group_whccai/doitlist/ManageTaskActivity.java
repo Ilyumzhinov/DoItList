@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -65,15 +64,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     mTasks = (TasksControl) getIntent().getSerializableExtra(Globals.ExtraKey_Tasks);
                     mCourses = (CoursesControl) getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
 
-                    // Set global values
-                    dueDatePicked = LocalDateTime.now();
-                    dueDatePicked = dueDatePicked.plusDays(7);
-
                     col_toolbar.setTitle("New Task");
-
-                    // Populate views with data
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
-                    ((TextView) findViewById(R.id.txtDueDate)).setText(dueDatePicked.format(formatter));
 
                     break;
 
@@ -92,7 +83,6 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     // Populate views with data
                     DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
 
-                    // Todo: set spinner for saved course
                     ((TextView) findViewById(R.id.edtTaskName)).setText(currentTask.getName());
                     ((TextView) findViewById(R.id.txtDueDate)).setText(dueDatePicked.format(formatter2));
                     ((EditText) findViewById(R.id.edtTimeEstH)).setText(String.valueOf(Math.round(currentTask.getTimeEst() / 60)));
@@ -116,29 +106,14 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         Spinner spinner = findViewById(R.id.spnCourse);
 
         // Create an ArrayAdapter
-        // Add am empty course
-        CoursesControl cc = mCourses;
-
-        cc.addEmptyCourse();
-
         ArrayAdapter<Course> adapter = new ArrayAdapter<>
-                (this, android.R.layout.simple_spinner_item, cc.getCourses());
+                (this, android.R.layout.simple_spinner_item, mCourses.getCourses());
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-            }
-        });
+        if (viewMode.equals(Globals.ViewMode_Edit))
+            spinner.setSelection(mCourses.getIndexOfCourse(currentTask.getCourse()));
         //
     }
 
@@ -177,6 +152,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     // Populate spinner with courses values
                     // Reference: SpinnerTest1
                     Spinner spinner = findViewById(R.id.spnCourse);
+                    Course courseSelected = (Course) spinner.getSelectedItem();
 
                     // Create an ArrayAdapter
                     ArrayAdapter<Course> adapter = new ArrayAdapter<>
@@ -185,6 +161,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     // Specify the layout to use when the list of choices appears
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(adapter);
+                    spinner.setSelection(mCourses.getIndexOfCourse(courseSelected));
                 }
                 break;
         }
@@ -222,7 +199,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         this.month = calc.get(Calendar.MONTH);
         this.day = calc.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, dueDatePicked.getYear(), (dueDatePicked.getMonthValue() -1), dueDatePicked.getDayOfMonth());
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, LocalDateTime.now().getYear(), (LocalDateTime.now().getMonthValue() - 1), LocalDateTime.now().getDayOfMonth());
         datePickerDialog.show();
     }
 
@@ -297,12 +274,12 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     // Check that there is a name
                     if (name.trim().length() == 0)
                         throw new Exception("Task must have a name!");
-                    // Check that there is a course selected
-                    if (course.equals(mCourses.getEmptyCourse()))
-                        throw new Exception("Task must have a Course!");
                     // Check that we have a due date
                     if (dueDate == null)
                         throw new Exception("Task must have a due date!");
+                    // Check that there is a course selected
+                    if (course.equals(mCourses.getEmptyCourse()))
+                        throw new Exception("Task must have a Course!");
                 } catch (Exception e)
                 {
                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -332,9 +309,6 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
                             break;
                     }
-
-                    // Clean up courses
-                    mCourses.removeEmptyCourse();
 
                     // Show up the Task Activity
                     i.putExtra(Globals.ExtraKey_Tasks, mTasks);
@@ -428,7 +402,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         this.hour = timeNow.getHour();
         this.minute = timeNow.getMinute();
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, dueDatePicked.getHour(), dueDatePicked.getMinute(), true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, LocalDateTime.now().getHour(), LocalDateTime.now().getMinute(), true);
         timePickerDialog.show();
     }
 

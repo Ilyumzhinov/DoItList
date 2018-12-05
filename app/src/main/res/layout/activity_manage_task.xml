@@ -37,20 +37,24 @@
                     android:orientation="vertical"
                     android:paddingBottom="10dp">
 
-                    <TextView
-                        android:id="@+id/lblNewTask"
+                    <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Task Name"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                        android:textColor="@color/colorAccent" />
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_marginVertical="20dp"
+                        android:gravity="center">
 
-                    <EditText
-                        android:id="@+id/edtTaskName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter task name"
-                        android:inputType="textPersonName" />
+                        <EditText
+                            android:id="@+id/edtTaskName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Task name"
+                            android:inputType="textPersonName"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                            android:textStyle="bold" />
+
+                    </TableRow>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -60,14 +64,6 @@
                     android:layout_below="@+id/taskName"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/lblNote"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Deadline"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                        android:textColor="@color/colorAccent" />
-
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -75,30 +71,15 @@
                         android:layout_marginVertical="20dp"
                         android:gravity="center">
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_marginEnd="20dp"
-                            android:layout_weight="0"
-                            android:src="@drawable/deadline_icon"
-                            android:tint="@android:color/darker_gray" />
-
-                        <TextView
-                            android:id="@+id/txtDueDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:hint="Set date/time first"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
-
                         <Button
-                            android:id="@+id/btnDateTimePick"
+                            android:id="@+id/txtDueDate"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:onClick="PickDate"
-                            android:text="Pick" />
+                            android:text="Set deadline"
+                            android:textAlignment="textStart"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
                     </TableRow>
 
