@@ -95,7 +95,7 @@ public class TasksForDateFragment extends Fragment
                 ManageTaskActivity manageTaskActivity = new ManageTaskActivity();
                 for (Task task : manageTaskActivity.mTasks.getTasks()) {
                     if (task.getDeadline().getYear() == year && task.getDeadline().getMonthValue() == month && task.getDeadline().getDayOfMonth() == dayOfMonth ) {
-                        tasksControl.addTask(task.getName(),task.getDetail(),task.getCourse(),task.getDeadline(),task.getTimeEst());
+                        tasksControl.addTask(task.getName(),task.getDetail(),task.getCourse(),task.getDeadline(),task.getTimeGoal());
                     }
                 }
             }

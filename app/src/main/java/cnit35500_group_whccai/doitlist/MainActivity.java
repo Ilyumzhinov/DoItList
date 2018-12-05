@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
 //            //
 //
 //            //
-//            Integer remain = xtask.getTimeEst() - xtask.getTimeSpent();
+//            Integer remain = xtask.getTimeGoal() - xtask.getTimeSpent();
 //
 //            txt = findViewById(R.id.txtTimePrg);
 //            txt.setText(String.valueOf(remain) + " min");

@@ -2,6 +2,9 @@ package Functional;
 
 import android.app.Activity;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Globals
 {
     // Single instance with global constant values and funcitons
@@ -45,18 +48,22 @@ public class Globals
 
     // Receive minutes as integer and parse them into a string of # days, # hours, # minutes.
     // E.g.: 110 -> “1 h, 50 min”
-    public static String formatTimeTotal(Integer xMinutes)
+    public static String formatTimeTotal(Long xMinutes)
     {
         // PLACEHOLDER LOGIC
         return String.valueOf(xMinutes) + " min";
     }
 
-    // Receive minutes as long and parse them into a string of a date or one of special cases, like “Today”, “Tomorrow”, “Yesterday”.
-    // E.g. 1440 -> “Tomorrow at 23:59”.
-    // E.g. 2: 10080 -> “12-11-2018, 23:59”.
-    public static String formatDate(Long xMinutes)
+    // Receive a date and parse it into a string of that date or one of special cases, like “Today”, “Tomorrow”, “Yesterday”.
+    // E.g. (input) -> “Tomorrow, 23:59”.
+    // E.g. (input) -> “12-11-2018, 23:59”.
+    public static String formatDate(LocalDateTime xLocalDate)
     {
+        // Reference: https://stackoverflow.com/questions/28177370/how-to-format-localdate-to-string
         // PLACEHOLDER LOGIC
-        return String.valueOf(xMinutes) + " min";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
+        String formattedString = xLocalDate.format(formatter);
+
+        return formattedString;
     }
 }

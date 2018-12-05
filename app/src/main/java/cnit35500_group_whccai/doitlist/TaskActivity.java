@@ -14,15 +14,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-
-import Functional.ViewAdapterCourseScope;
 import Functional.CoursesControl;
 import Functional.Globals;
 import Functional.Task;
 import Functional.TasksControl;
+import Functional.ViewAdapterCourseScope;
 
 public class TaskActivity extends AppCompatActivity
 {
@@ -91,46 +87,40 @@ public class TaskActivity extends AppCompatActivity
         ViewAdapterCourseScope adapter = new ViewAdapterCourseScope(this, currentTask.getCourse());
         //viewAdapterCourseScope.setClickListener(this);
         recyclerView.setAdapter(adapter);
-        // todo: remove it
-//        recyclerView.addItemDecoration(
-//                new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL));
-        //
 
-        // Set deadline label
-        // Reference: https://stackoverflow.com/questions/28177370/how-to-format-localdate-to-string
-        LocalDateTime localDate = currentTask.getDeadline();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
-        String formattedString = localDate.format(formatter);
+        String formattedString = Globals.formatDate(currentTask.getDeadline());
 
         TextView txt = findViewById(R.id.lblTaskDeadline);
         txt.setText(formattedString);
 
         // Set time before deadline label
-        long timBeforeDeadline = ChronoUnit.MINUTES.between(LocalDateTime.now(), currentTask.getDeadline());
+        Long timeBeforeDeadline = currentTask.getTimeBeforeDeadline();
 
-        txt = findViewById(R.id.lblTaskDeadlineTimeRemaining);
-        txt.setText(String.valueOf(timBeforeDeadline) + " min");
+        txt = findViewById(R.id.txtTaskDeadlineTimeRemaining);
+        txt.setText(Globals.formatTimeTotal(timeBeforeDeadline));
         //
 
         // Set time remaining
-        long timeGoal = currentTask.getTimeEst();
-        long timeSpentMin = currentTask.getTimeSpent();
-        long remain = timeGoal - timeSpentMin;
+        Long taskGoalTime = currentTask.getTimeGoal(),
+                taskSpentTime = currentTask.getTimeSpent(),
+                taskRemainTime = currentTask.getTimeRemainEst();
 
         txt = findViewById(R.id.lblTaskProgressRemaining);
-        // Todo: shows minutes only
-        txt.setText(String.valueOf(remain) + " min");
+        txt.setText(Globals.formatTimeTotal(taskRemainTime));
 
         // Set time spent
-        txt = findViewById(R.id.lblTaskProgressMade);
-        // Todo: shows minutes only
-        txt.setText(String.valueOf(timeSpentMin) + " min / " + String.valueOf(timeGoal) + " min");
+        txt = findViewById(R.id.txtTaskProgressMade);
+        txt.setText(Globals.formatTimeTotal(taskSpentTime));
+
+        // Set time goal
+        txt = findViewById(R.id.txtTaskProgressTotal);
+        txt.setText(Globals.formatTimeTotal(taskGoalTime));
 
         // Set progress bar
         ProgressBar timeSpent = findViewById(R.id.prgTaskSpent);
         timeSpent.setIndeterminate(false);
-        timeSpent.setMax(currentTask.getTimeEst());
-        timeSpent.setProgress(currentTask.getTimeSpent());
+        timeSpent.setMax(Math.toIntExact(currentTask.getTimeGoal()));
+        timeSpent.setProgress(Math.toIntExact(currentTask.getTimeSpent()));
         //
 
         // Set Sessions info
@@ -140,11 +130,10 @@ public class TaskActivity extends AppCompatActivity
         txt.setText(String.valueOf(sessionsCount));
 
         // Set session avg length
-        Integer avgLength = currentTask.getAvgSessionLength();
+        Long avgLength = currentTask.getAvgSessionLength();
 
-        // Todo: shows minutes only
         txt = findViewById(R.id.lblTaskSessionsAvgTime);
-        txt.setText(String.valueOf(avgLength) + " min");
+        txt.setText(Globals.formatTimeTotal(avgLength));
         //
 
         // Set notes

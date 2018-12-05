@@ -12,8 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import cnit35500_group_whccai.doitlist.NavigationActivity;
@@ -106,22 +104,21 @@ public class ViewAdapterTasks extends RecyclerView.Adapter<ViewAdapterTasks.View
                 taskName = iTask.getName(),
                 courseName = iTask.getCourse().getScopeStrOf(false);
 
-        Integer remain = (iTask.getTimeEst() - iTask.getTimeSpent()),
-                timeEst = iTask.getTimeEst(),
-                timeSpent = iTask.getTimeSpent();
-
-        Long timeBefore = ChronoUnit.MINUTES.between(LocalDateTime.now(), iTask.getDeadline());
+        Long timeEst = iTask.getTimeGoal(),
+                timeSpent = iTask.getTimeSpent(),
+                timeRemain = iTask.getTimeRemainEst(),
+                timeBeforeDeadline = iTask.getTimeBeforeDeadline();
 
         // Set values
         xVH.txtTaskStatus.setText(status);
         xVH.txtTaskName.setText(taskName);
         xVH.txtTaskCourse.setText(courseName);
-        xVH.txtTimePrg.setText(Globals.formatTimeTotal(remain));
-        xVH.txtTaskBeforeDeadline.setText(Globals.formatDate(timeBefore));
+        xVH.txtTimePrg.setText(Globals.formatTimeTotal(timeRemain));
+        xVH.txtTaskBeforeDeadline.setText(Globals.formatTimeTotal(timeBeforeDeadline));
 
         xVH.prgSpent.setIndeterminate(false);
-        xVH.prgSpent.setMax(timeEst);
-        xVH.prgSpent.setProgress(timeSpent);
+        xVH.prgSpent.setMax(Math.toIntExact(timeEst));
+        xVH.prgSpent.setProgress(Math.toIntExact(timeSpent));
 
         // Set button actions
         xVH.btnTaskOpenDetails.setOnClickListener(new View.OnClickListener()

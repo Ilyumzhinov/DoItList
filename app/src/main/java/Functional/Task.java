@@ -2,6 +2,7 @@ package Functional;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class Task implements Serializable
 {
@@ -9,7 +10,7 @@ public class Task implements Serializable
     private Course taskCourse;
     private LocalDateTime taskDateAdded;
     private LocalDateTime taskDeadline;
-    private Integer taskTimeEst;
+    private Long taskTimeGoal;
     private String taskDetail;
     private SessionsControl taskSessions;
     private Boolean taskStatusFinished;
@@ -37,22 +38,22 @@ public class Task implements Serializable
         return taskDeadline;
     }
 
-    public LocalDateTime getDateAdded()
+    public LocalDateTime set()
     {
         return taskDateAdded;
     }
 
-    public Integer getTimeEst()
+    public Long getTimeGoal()
     {
-        return taskTimeEst;
+        return taskTimeGoal;
     }
 
-    public Integer getTimeSpent()
+    public Long getTimeSpent()
     {
         return taskSessions.getGrandTotal();
     }
 
-    public Integer getAvgSessionLength()
+    public Long getAvgSessionLength()
     {
         return taskSessions.getAvgLength();
     }
@@ -86,6 +87,19 @@ public class Task implements Serializable
         return status;
     }
 
+    public Long getTimeRemainEst()
+    {
+        Long timeSpent = getTimeSpent();
+
+        return taskTimeGoal - timeSpent;
+    }
+
+    // Calculate time from now until deadline
+    public Long getTimeBeforeDeadline()
+    {
+        return ChronoUnit.MINUTES.between(LocalDateTime.now(), taskDeadline);
+    }
+
     public SessionsControl getSessions()
     {
         return taskSessions;
@@ -112,9 +126,9 @@ public class Task implements Serializable
         this.taskDateAdded = taskDateAdded;
     }
 
-    public void setTimeEst(Integer timeEst)
+    public void setTimeGoal(Long timeEst)
     {
-        this.taskTimeEst = timeEst;
+        this.taskTimeGoal = timeEst;
     }
 
     public void updateRecordingTime()

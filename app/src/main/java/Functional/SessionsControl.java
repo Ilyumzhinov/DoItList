@@ -28,9 +28,9 @@ public class SessionsControl implements Serializable
         }
     }
 
-    public Integer getGrandTotal()
+    public Long getGrandTotal()
     {
-        int iTotal = 0;
+        Long iTotal = 0L;
 
         if (sessionOpen == null)
             for (Session iSession : Sessions)
@@ -49,10 +49,10 @@ public class SessionsControl implements Serializable
         return iTotal;
     }
 
-    public Integer getAvgLength()
+    public Long getAvgLength()
     {
         if (Sessions.size() == 0)
-            return 0;
+            return 0L;
 
         return getGrandTotal() / Sessions.size();
     }

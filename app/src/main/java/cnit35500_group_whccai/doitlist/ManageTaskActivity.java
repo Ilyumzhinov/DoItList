@@ -85,13 +85,12 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
                     ((TextView) findViewById(R.id.edtTaskName)).setText(currentTask.getName());
                     ((TextView) findViewById(R.id.txtDueDate)).setText(dueDatePicked.format(formatter2));
-                    ((EditText) findViewById(R.id.edtTimeEstH)).setText(String.valueOf(Math.round(currentTask.getTimeEst() / 60)));
-                    ((EditText) findViewById(R.id.edtTimeEstM)).setText(String.valueOf(currentTask.getTimeEst() % 60));
+                    ((EditText) findViewById(R.id.edtTimeEstH)).setText(String.valueOf(Math.round(currentTask.getTimeGoal() / 60)));
+                    ((EditText) findViewById(R.id.edtTimeEstM)).setText(String.valueOf(currentTask.getTimeGoal() % 60));
                     ((TextView) findViewById(R.id.edtNotes)).setText(currentTask.getDetail());
 
                     break;
             }
-
         } else
         {
             Toast.makeText(this, "Failed to receive data", Toast.LENGTH_LONG).show();
@@ -251,10 +250,11 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                 break;
 
             case (R.id.btnToolBarSave):
-                String name, notes;
+                String name,
+                        notes;
                 Course course;
                 LocalDateTime dueDate;
-                Integer timeEst;
+                Long timeEst;
 
                 // Try to get input values
                 try
@@ -265,7 +265,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     dueDate = dueDatePicked;
 
                     // Check time input in minutes
-                    int timefromInput = calculateMinutesFromTimeInput(((TextView) findViewById(R.id.edtTimeEstH)).getText().toString(), ((TextView) findViewById(R.id.edtTimeEstM)).getText().toString());
+                    Long timefromInput = calculateMinutesFromTimeInput(((TextView) findViewById(R.id.edtTimeEstH)).getText().toString(), ((TextView) findViewById(R.id.edtTimeEstM)).getText().toString());
                     if (timefromInput >= 0)
                         timeEst = timefromInput;
                     else
@@ -366,26 +366,26 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         return super.onOptionsItemSelected(item);
     }
 
-    public Integer calculateMinutesFromTimeInput(String xHours, String xMinutes)
+    public Long calculateMinutesFromTimeInput(String xHours, String xMinutes)
     {
-        Integer hours, minutes;
+        Long hours, minutes;
 
         try
         {
             if (xHours.isEmpty())
-                hours = 0;
+                hours = 0L;
             else
-                hours = Integer.valueOf(xHours);
+                hours = Long.valueOf(xHours);
 
             if (xMinutes.isEmpty())
-                minutes = 30;
+                minutes = 30L;
             else
-                minutes = Integer.valueOf(xMinutes);
+                minutes = Long.valueOf(xMinutes);
 
             return hours * 60 + minutes;
         } catch (Exception ignored)
         {
-            return -1;
+            return -1L;
         }
     }
 
@@ -414,12 +414,11 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         this.hour = hourOfDay;
         this.minute = minute;
 
+        dueDatePicked =  LocalDateTime.of(this.year, this.month, this.day, this.hour, this.minute);
+
+        String date = Globals.formatDate(dueDatePicked);
         TextView txtView = findViewById(R.id.txtDueDate);
 
-        String date = String.valueOf(this.month) + "-" + String.valueOf(this.day) + "-" + String.valueOf(this.year) + " " + String.valueOf(this.hour) + ":" + String.valueOf(this.minute);
-
         txtView.setText(date);
-
-        dueDatePicked =  LocalDateTime.of(this.year, this.month, this.day, this.hour, this.minute);
     }
 }
