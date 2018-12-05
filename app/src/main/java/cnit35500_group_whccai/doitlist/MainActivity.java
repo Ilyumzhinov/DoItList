@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
     private TasksControl mTasks;
     private SaveTasks saveTasks;
 
+
     Thread thUpdateViews = new Thread()
     {
         @Override

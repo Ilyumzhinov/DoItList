@@ -31,7 +31,7 @@ import Functional.TasksControl;
 
 public class ManageTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener
 {
-    private TasksControl mTasks;
+    public TasksControl mTasks;
     private CoursesControl mCourses;
     private Integer cTaskIndex;
 

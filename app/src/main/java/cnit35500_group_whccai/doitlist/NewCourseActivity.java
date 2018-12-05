@@ -42,7 +42,6 @@ public class NewCourseActivity extends AppCompatActivity
     // Reference: https://stackoverflow.com/questions/10425569/radiogroup-with-two-columns-which-have-ten-radiobuttons
     private RadioGroup.OnCheckedChangeListener rgOne_Listener = new RadioGroup.OnCheckedChangeListener()
     {
-
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId)
         {
