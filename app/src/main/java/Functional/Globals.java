@@ -86,13 +86,13 @@ public class Globals
         // compare dates to see if its today, tomorrow, or yesterday
         if (xLocalDate.getDayOfYear()-1 == localCurrentTime.getDayOfYear()) {
             formatter = DateTimeFormatter.ofPattern("HH:mm");
-            formattedString = "Tomorrow, " + xLocalDate.format(formatter);
+            formattedString = "Tomorrow at " + xLocalDate.format(formatter);
         } else if (xLocalDate.getDayOfYear() == localCurrentTime.getDayOfYear()) {
             formatter = DateTimeFormatter.ofPattern("HH:mm");
-            formattedString = "Today, " + xLocalDate.format(formatter);
+            formattedString = "Today at " + xLocalDate.format(formatter);
         } else if (xLocalDate.getDayOfYear()+1 == localCurrentTime.getDayOfYear()) {
             formatter = DateTimeFormatter.ofPattern("HH:mm");
-            formattedString = "Yesterday, " + xLocalDate.format(formatter);
+            formattedString = "Yesterday at " + xLocalDate.format(formatter);
         } else {
             formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
             formattedString = xLocalDate.format(formatter);
