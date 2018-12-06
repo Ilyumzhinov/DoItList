@@ -161,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="deadline in "
+            android:text="deadline: "
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:textColor="@android:color/secondary_text_light" />
 
