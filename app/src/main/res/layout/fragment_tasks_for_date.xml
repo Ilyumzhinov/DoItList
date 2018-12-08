@@ -74,7 +74,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0"
                     android:gravity="center"
-                    android:text=" remain: "
+                    android:text=" remaining: "
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:textColor="@android:color/darker_gray" />
 

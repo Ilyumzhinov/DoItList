@@ -100,10 +100,26 @@ public class Globals
 
     // Receive a date and parse it into a string of form DayofWeek, Month day, year
     public static String formatDate(LocalDateTime xLocalDate) {
-        String formattedString;
+        // Grab local time
+        Date currentTime = Calendar.getInstance().getTime();
+        // Convert it to localdatetime so everything is the same
+        LocalDateTime localCurrentTime = currentTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         DateTimeFormatter formatter;
-        formatter = DateTimeFormatter.ofPattern("EEEE, MMM d, YYYY");
-        formattedString = xLocalDate.format(formatter);
+        String formattedString;
+        // compare dates to see if its today, tomorrow, or yesterday
+        if (xLocalDate.getDayOfYear()-1 == localCurrentTime.getDayOfYear()) {
+            formatter = DateTimeFormatter.ofPattern("MMM d, YYYY");
+            formattedString = "Tomorrow, " + xLocalDate.format(formatter);
+        } else if (xLocalDate.getDayOfYear() == localCurrentTime.getDayOfYear()) {
+            formatter = DateTimeFormatter.ofPattern("MMM d, YYYY");
+            formattedString = "Today, " + xLocalDate.format(formatter);
+        } else if (xLocalDate.getDayOfYear()+1 == localCurrentTime.getDayOfYear()) {
+            formatter = DateTimeFormatter.ofPattern("MMM d, YYYY");
+            formattedString = "Yesterday, " + xLocalDate.format(formatter);
+        } else {
+            formatter = DateTimeFormatter.ofPattern("EEEE, MMM d, YYYY");
+            formattedString = xLocalDate.format(formatter);
+        }
         return formattedString;
     }
 }
