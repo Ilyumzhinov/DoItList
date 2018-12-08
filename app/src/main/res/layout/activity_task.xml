@@ -27,6 +27,7 @@
             android:showDividers="middle">
 
             <LinearLayout
+                android:id="@+id/lytTaskCourse"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimary"
@@ -79,7 +80,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/date_default"
+                        android:text="@string/date_full_default"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
                     <TextView
@@ -103,7 +104,7 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp">
+                    android:layout_marginBottom="10dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -111,6 +112,21 @@
                         android:layout_weight="1"
                         android:text="Task progress"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+                    <TextView
+                        android:id="@+id/txtTaskStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:background="@drawable/course_item_drawable"
+                        android:paddingStart="10dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="4dp"
+                        android:text="@string/status_label_default"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+                        android:textColor="@android:color/secondary_text_light" />
 
                 </TableRow>
 
@@ -205,7 +221,8 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp">
 
                     <TextView
                         android:id="@+id/lblTaskSessionsCount"
@@ -228,7 +245,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:onClick="OpenSessionsHistory"
+                        android:onClick="openSessionsHistory"
                         android:padding="0dp"
                         android:text="View All >"
                         android:textAlignment="viewEnd" />
@@ -294,7 +311,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
-        android:onClick="RecordTask"
+        android:onClick="recordTaskTime"
         android:src="@drawable/time_est_icon"
         android:tint="@android:color/white" />
 

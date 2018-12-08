@@ -25,10 +25,21 @@
             android:id="@+id/txtTaskStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
+            android:background="@drawable/course_item_drawable"
+            android:paddingStart="10dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="4dp"
             android:text="@string/status_label_default"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
             android:textColor="@android:color/secondary_text_light" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <RelativeLayout
             android:id="@+id/lytTaskActions"
@@ -70,8 +81,8 @@
         android:baselineAligned="false"
         android:minHeight="100dp"
         android:orientation="horizontal"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:paddingBottom="20dp">
 
         <RelativeLayout

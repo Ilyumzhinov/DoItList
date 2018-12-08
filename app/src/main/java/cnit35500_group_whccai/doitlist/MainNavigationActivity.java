@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,8 +18,11 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import Functional.CoursesControl;
 import Functional.Globals;
+import Functional.RecyclerViewAdapterTasks;
 import Functional.SaveTasks;
 import Functional.Task;
 import Functional.TasksControl;
@@ -67,15 +71,18 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
         }
 
         // Set default fragment
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Globals.ExtraKey_Tasks, mTasks);
-        bundle.putSerializable(Globals.ExtraKey_Courses, mCourses);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(Globals.ExtraKey_Tasks, mTasks);
+//        bundle.putSerializable(Globals.ExtraKey_Courses, mCourses);
+//
+//        fragment = new TasksForDateFragment();
+//        fragment.setArguments(bundle);
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.navContent, fragment).commit();
 
-        fragment = new TasksForDateFragment();
-        fragment.setArguments(bundle);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.navContent, fragment).commit();
+        createTasksForDate();
 
+        // Add a new task action
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,22 +121,36 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
             case R.id.nav_list:
-                fragment = new TasksForDateFragment();
+//                fragment = new TasksForDateFragment();
+
+                createTasksForDate();
                 break;
             case R.id.nav_class:
                 break;
             case R.id.nav_about:
                 fragment = new AboutFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.navContent,fragment).commit();
                 break;
-            case R.id.nav_main:
-                finish();
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.navContent,fragment).commit();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.navContent,fragment).commit();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    private void createTasksForDate()
+    {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Globals.ExtraKey_Tasks, mTasks);
+        bundle.putSerializable(Globals.ExtraKey_Courses, mCourses);
+
+        fragment = new TasksForDateFragment();
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.navContent, fragment).commit();
+    }
+
+    // Open Task activity
     public void openTask(View view, Task task)
     {
         Intent i = new Intent(this, TaskActivity.class);
@@ -144,6 +165,7 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
         startActivityForResult(i, Globals.OpenTaskRequestCode);
     }
 
+    // Open Manage Task activity in New mode
     public void openManageTask_New(View view)
     {
         Intent i = new Intent(this, ManageTaskActivity.class);
@@ -175,8 +197,6 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
                 calView.setVisibility(View.VISIBLE);
                 tv.setText(R.string.lbl_hide_calendar);
             }
-
-
         } catch (Exception ignored)
         {
             Toast.makeText(this, "Failed to load calendar", Toast.LENGTH_SHORT).show();
@@ -200,6 +220,8 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
                         // Obtain data
                         mTasks = (TasksControl) data.getSerializableExtra(Globals.ExtraKey_Tasks);
                         mCourses = (CoursesControl) data.getSerializableExtra(Globals.ExtraKey_Courses);
+
+                        // Todo: notify fragment about data change
                     }
                 }
                 break;
@@ -213,6 +235,8 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
                         // Obtain data
                         mTasks = (TasksControl) data.getSerializableExtra(Globals.ExtraKey_Tasks);
                         mCourses = (CoursesControl) data.getSerializableExtra(Globals.ExtraKey_Courses);
+
+                        // Todo: notify fragment about data change
                     }
                 }
         }

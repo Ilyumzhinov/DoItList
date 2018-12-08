@@ -27,6 +27,8 @@ public class TaskActivity extends AppCompatActivity
     private Task currentTask;
     private Menu menu;
 
+    private TextView mTxtStatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -61,7 +63,7 @@ public class TaskActivity extends AppCompatActivity
         populateViews();
     }
 
-    public void OpenSessionsHistory(View view)
+    public void openSessionsHistory(View view)
     {
         Intent i = new Intent(this, SessionsHistoryActivity.class);
 
@@ -70,6 +72,13 @@ public class TaskActivity extends AppCompatActivity
         i.putExtra(Globals.ExtraKey_Sessions, currentTask.getSessions());
 
         startActivityForResult(i, Globals.SessionsHistoryRequestCode);
+    }
+
+    public void recordTaskTime(View v)
+    {
+        currentTask.updateRecordingTime();
+
+        mTxtStatus.setText(currentTask.getStatusStr());
     }
 
     private void populateViews()
@@ -88,12 +97,19 @@ public class TaskActivity extends AppCompatActivity
         //viewAdapterCourseScope.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
+        // Show status
+        TextView txt = findViewById(R.id.txtTaskStatus);
+        txt.setText(currentTask.getStatusStr().toUpperCase());
+
+        mTxtStatus = txt;
+
+        // Show deadline
         String formattedString = Globals.formatDate(currentTask.getDeadline());
 
-        TextView txt = findViewById(R.id.lblTaskDeadline);
+        txt = findViewById(R.id.lblTaskDeadline);
         txt.setText(formattedString);
 
-        // Set time before deadline label
+        // Show time before deadline label
         Long timeBeforeDeadline = currentTask.getTimeBeforeDeadline();
 
         txt = findViewById(R.id.txtTaskDeadlineTimeRemaining);
@@ -197,6 +213,8 @@ public class TaskActivity extends AppCompatActivity
                 currentTask.setStatusFinished(!currentTask.getStatusFinished());
 
                 FloatingActionButton fab = findViewById(R.id.btnFloatTaskRecord);
+
+                mTxtStatus.setText(currentTask.getStatusStr());
 
                 if (currentTask.getStatusFinished())
                     fab.hide();

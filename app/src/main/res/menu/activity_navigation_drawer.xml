@@ -7,7 +7,8 @@
         <item
             android:id="@+id/nav_list"
             android:icon="@drawable/ic_event_note"
-            android:title="Task by Date" />
+            android:title="Task by Date"
+            android:checked="true"/>
         <item
             android:id="@+id/nav_class"
             android:icon="@drawable/course_icon"
@@ -16,10 +17,6 @@
             android:id="@+id/nav_about"
             android:icon="@drawable/info_icon"
             android:title="About" />
-        <item
-            android:id="@+id/nav_main"
-            android:title="MainMenu"
-            android:icon="@drawable/ic_input"/>
     </group>
 
 

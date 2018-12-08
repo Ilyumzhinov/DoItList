@@ -24,6 +24,6 @@
     <string name="status_label_default">status</string>
     <string name="lbl_hide_calendar">Hide calendar</string>
     <string name="lbl_reveal_calendar">Reveal Calendar</string>
-    <string name="date_default">Today, 00:00</string>
-
+    <string name="date_full_default">Today, 00:00</string>
+    <string name="date_default">Dec 8, 2018</string>
 </resources>

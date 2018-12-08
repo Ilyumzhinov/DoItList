@@ -2,6 +2,7 @@ package Functional;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +66,31 @@ public class TasksControl implements Serializable
     public Task[] getTasks()
     {
         return Tasks.toArray(new Task[0]);
+    }
+
+    public List<Task> getTasksForDate(LocalDateTime xDate)
+    {
+        List<Task> tasks = new ArrayList<>();
+
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyyMMdd");
+
+        for (Task iTask : Tasks)
+            if (fmt.format(iTask.getDeadline()).equals(fmt.format(xDate)))
+                tasks.add(iTask);
+
+        return tasks;
+    }
+
+    public Long getTotalTimeRemainEst(List<Task> xTassk)
+    {
+        Long totalMinutes = 0L;
+
+        for (Task iTask : xTassk)
+        {
+            totalMinutes += iTask.getTimeRemainEst();
+        }
+
+        return totalMinutes;
     }
 
     public Task getTaskAt(Integer index) {return Tasks.get(index);}

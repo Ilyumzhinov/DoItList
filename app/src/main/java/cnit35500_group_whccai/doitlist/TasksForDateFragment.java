@@ -1,6 +1,5 @@
 package cnit35500_group_whccai.doitlist;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,40 +9,41 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
 
 import Functional.CoursesControl;
 import Functional.Globals;
+import Functional.RecyclerViewAdapterTasks;
 import Functional.Task;
 import Functional.TasksControl;
-import Functional.RecyclerViewAdapterTasks;
 
 
 public class TasksForDateFragment extends Fragment
 {
-    private View mainView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private TasksControl mTaskControl;
     private CoursesControl mCourses;
+    private RecyclerViewAdapterTasks mAdapter;
+    private List<Task> mTasksForDate;
+    private CalendarView calView;
+    private TextView txtViewDate, txtTasksRemainTotal;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mainView = inflater.inflate(R.layout.fragment_tasks_for_date, null);
-        return mainView;
+        return inflater.inflate(R.layout.fragment_tasks_for_date, null);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView recyclerView = view.findViewById(R.id.listTasks);
-        mLayoutManager = new LinearLayoutManager(recyclerView.getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
 
         // Receive object through Intent
         // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
@@ -61,50 +61,54 @@ public class TasksForDateFragment extends Fragment
             return;
         }
 
-        // Set up tasks RecyclerView
-        List<Task> tasksList = Arrays.asList(mTaskControl.getTasks());
+        // Save references
+        txtViewDate = view.findViewById(R.id.txtDate);
+        txtTasksRemainTotal = view.findViewById(R.id.txtTasksRemainTotal);
 
+        // Set Calendar onClickListener
+        calView = view.findViewById(R.id.calView);
+
+        calView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
+        {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth)
+            {
+                updateAdapterForDate(mAdapter, year, month, dayOfMonth);
+            }
+        });
+        //
+
+        // Set up tasks RecyclerView
+        RecyclerView recyclerView = view.findViewById(R.id.listTasks);
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        RecyclerViewAdapterTasks adapter = new RecyclerViewAdapterTasks(view.getContext(), tasksList, getActivity());
-        recyclerView.setAdapter(adapter);
-        //
+        // Set empty adapter
+        mAdapter = new RecyclerViewAdapterTasks(view.getContext(), null, getActivity());
+        recyclerView.setAdapter(mAdapter);
 
-        //set Calendar onClickListener
-        /*
-        recyclerView.setAdapter(adapter);
-        CalendarView calendarView = view.findViewById(R.id.calendarView);
-        TasksControl tasksControl = new TasksControl();
-        final Task[] tasks = tasksControl.getTasks();
-        calendarView.getDate();
-        calendarView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setViewLayout(R.layout.task_item_overview);
-            }
-        });
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                TasksControl tasksControl = new TasksControl();
-                tasksControl.getTasks();
-                ManageTaskActivity manageTaskActivity = new ManageTaskActivity();
-                for (Task task : manageTaskActivity.mTasks.getTasks()) {
-                    if (task.getDeadline().getYear() == year && task.getDeadline().getMonthValue() == month && task.getDeadline().getDayOfMonth() == dayOfMonth ) {
-                        tasksControl.addTask(task.getName(),task.getDetail(),task.getCourse(),task.getDeadline(),task.getTimeGoal());
-                    }
-                }
-            }
-        });
-        */
+        // Update adapter with data
+        updateAdapterForDate(mAdapter, LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue() - 1, LocalDateTime.now().getDayOfMonth());
+        //
     }
 
-    private void setViewLayout(int id){
-        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mainView = inflater.inflate(id, null);
-        ViewGroup rootView = (ViewGroup) getView();
-        rootView.addView(mainView);
+    // Update values in RecyclerView on calendar date pick
+    private void updateAdapterForDate(RecyclerViewAdapterTasks xAdapter, int year, int month, int dayOfMonth)
+    {
+        // Create date/time object
+        LocalDateTime ldt = LocalDateTime.of(year, month + 1, dayOfMonth, 0, 0);
+
+        // Get a list of tasks to display
+        mTasksForDate = mTaskControl.getTasksForDate(ldt);
+
+        // Set visual elements
+        // Todo: change to just displaying date
+        txtViewDate.setText(Globals.formatDate(ldt));
+
+        txtTasksRemainTotal.setText(Globals.formatTimeTotal(mTaskControl.getTotalTimeRemainEst(mTasksForDate)));
+
+        // Update adapter data
+        xAdapter.updateData(mTasksForDate);
     }
 }

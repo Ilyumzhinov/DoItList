@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cnit35500_group_whccai.doitlist.MainNavigationActivity;
@@ -29,7 +30,10 @@ public class RecyclerViewAdapterTasks extends RecyclerView.Adapter<RecyclerViewA
     public RecyclerViewAdapterTasks(Context context, List<Task> Tasks, Activity parent)
     {
         this.mInflater = LayoutInflater.from(context);
-        this.mTasks = Tasks;
+        if (Tasks != null)
+            this.mTasks = Tasks;
+        else
+            this.mTasks = new ArrayList<>();
         this.mParent = parent;
     }
 
@@ -157,6 +161,20 @@ public class RecyclerViewAdapterTasks extends RecyclerView.Adapter<RecyclerViewA
                 xVH.txtTaskStatus.setText(status);
             }
         });
+    }
+
+    // Update adapter
+    // Reference: https://stackoverflow.com/questions/30053610/best-way-to-update-data-with-a-recyclerview-adapter?lq=1
+    public void updateData(List<Task> xTasks)
+    {
+        if (xTasks == null)
+            return;
+
+        if (mTasks != null && mTasks.size() > 0)
+            mTasks.clear();
+
+        mTasks.addAll(xTasks);
+        notifyDataSetChanged();
     }
 
     // Receive number of items

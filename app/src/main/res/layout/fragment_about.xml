@@ -52,11 +52,12 @@
             android:layout_height="wrap_content"
             android:text="Artem Ilyumzhinov"
             android:layout_gravity="center_horizontal"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="a@purdue.edu\n"/>
+            android:text="ilyumzh@purdue.edu\n" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
