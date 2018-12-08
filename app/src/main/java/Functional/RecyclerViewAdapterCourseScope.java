@@ -15,19 +15,19 @@ import cnit35500_group_whccai.doitlist.R;
 
 // Reference: https://stackoverflow.com/questions/28460300/how-to-build-a-horizontal-listview-with-recyclerview
 // Reference: 4 - Advanced User Interface I
-public class ViewAdapterCourseSelection extends RecyclerView.Adapter<ViewAdapterCourseSelection.ViewHolder>
+public class RecyclerViewAdapterCourseScope extends RecyclerView.Adapter<RecyclerViewAdapterCourseScope.ViewHolder>
 {
     private List<Course> mCoursesAtScope;
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private RecyclerViewAdapterCourseSelection.ItemClickListener mClickListener;
     private int mSelected_position = 0;
 
-    public ViewAdapterCourseSelection(Context context, List<Course> xCourses)
+    public RecyclerViewAdapterCourseScope(Context context, List<Course> xCourses)
     {
         uglyFunc(context, xCourses);
     }
 
-    public ViewAdapterCourseSelection(Context context, Course xCourse)
+    public RecyclerViewAdapterCourseScope(Context context, Course xCourse)
     {
         List<Course> xCourses = xCourse.getScopeArrayOf(false);
 
@@ -49,15 +49,15 @@ public class ViewAdapterCourseSelection extends RecyclerView.Adapter<ViewAdapter
     // Inflate the row layout from xml
     @Override
     @NonNull
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public RecyclerViewAdapterCourseScope.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         View view = mInflater.inflate(R.layout.course_item, parent, false);
-        return new ViewHolder(view);
+        return new RecyclerViewAdapterCourseScope.ViewHolder(view);
     }
 
     // Bind data to each item
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull RecyclerViewAdapterCourseScope.ViewHolder holder, int position)
     {
         holder.itemView.setSelected(mSelected_position == position);
 
@@ -83,7 +83,7 @@ public class ViewAdapterCourseSelection extends RecyclerView.Adapter<ViewAdapter
     }
 
     // Get click events
-    public void setClickListener(ItemClickListener itemClickListener)
+    public void setClickListener(RecyclerViewAdapterCourseSelection.ItemClickListener itemClickListener)
     {
         this.mClickListener = itemClickListener;
     }

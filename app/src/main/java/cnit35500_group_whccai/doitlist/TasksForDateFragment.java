@@ -19,13 +19,12 @@ import Functional.CoursesControl;
 import Functional.Globals;
 import Functional.Task;
 import Functional.TasksControl;
-import Functional.ViewAdapterTasks;
+import Functional.RecyclerViewAdapterTasks;
 
 
 public class TasksForDateFragment extends Fragment
 {
     private View mainView;
-    private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private TasksControl mTaskControl;
@@ -42,18 +41,18 @@ public class TasksForDateFragment extends Fragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = view.findViewById(R.id.listTasks);
-        mLayoutManager = new LinearLayoutManager(mRecyclerView.getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        RecyclerView recyclerView = view.findViewById(R.id.listTasks);
+        mLayoutManager = new LinearLayoutManager(recyclerView.getContext());
+        recyclerView.setLayoutManager(mLayoutManager);
 
         // Receive object through Intent
         // Reference: https://stackoverflow.com/questions/14333449/passing-data-through-intent-using-serializable
-        Bundle extras = getActivity().getIntent().getExtras();
+        Bundle extras = getArguments();
         if (extras != null)
         {
             // Obtain data
-            mTaskControl = (TasksControl) getActivity().getIntent().getSerializableExtra(Globals.ExtraKey_Tasks);
-            mCourses = (CoursesControl) getActivity().getIntent().getSerializableExtra(Globals.ExtraKey_Courses);
+            mTaskControl = (TasksControl) extras.getSerializable(Globals.ExtraKey_Tasks);
+            mCourses = (CoursesControl) extras.getSerializable(Globals.ExtraKey_Courses);
 
         } else
         {
@@ -65,12 +64,11 @@ public class TasksForDateFragment extends Fragment
         // Set up tasks RecyclerView
         List<Task> tasksList = Arrays.asList(mTaskControl.getTasks());
 
-        RecyclerView recyclerView = view.findViewById(R.id.listTasks);
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        ViewAdapterTasks adapter = new ViewAdapterTasks(view.getContext(), tasksList, getActivity());
+        RecyclerViewAdapterTasks adapter = new RecyclerViewAdapterTasks(view.getContext(), tasksList, getActivity());
         recyclerView.setAdapter(adapter);
         //
 

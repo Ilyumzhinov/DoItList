@@ -57,12 +57,12 @@ public class Globals
         String returnMinutes;
         if (xMinutes >= 1440) {
             // If time is longer than a day
-            returnMinutes = xMinutes/24/60 + " D, " + xMinutes/60%24 + " H, " + xMinutes%60 + " min";
+            returnMinutes = xMinutes/24/60 + " d, " + xMinutes/60%24 + " h, " + xMinutes%60 + " min";
         } else if (xMinutes < 60) {
             // If time is shorter than a day
            returnMinutes = xMinutes%60 + " min";
         } else {
-            returnMinutes = xMinutes/60%24 + " H, " + xMinutes%60 + " min";
+            returnMinutes = xMinutes/60%24 + " h, " + xMinutes%60 + " min";
         }
         if (returnMinutes.contains("-")) {
             returnMinutes = returnMinutes.replaceAll("-", "");

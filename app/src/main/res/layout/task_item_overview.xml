@@ -8,7 +8,6 @@
     android:background="@drawable/roundeditem"
     android:clickable="true"
     android:focusable="auto"
-    android:onClick="RecordTask"
     android:padding="0dp">
 
     <LinearLayout

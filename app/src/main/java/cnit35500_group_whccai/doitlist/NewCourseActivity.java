@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Functional.Course;
-import Functional.ViewAdapterCourseScope;
+import Functional.RecyclerViewAdapterCourseScope;
 import Functional.CoursesControl;
 import Functional.Globals;
 
@@ -36,7 +36,7 @@ public class NewCourseActivity extends AppCompatActivity
 
     private Course parent;
     private Menu menu;
-    ViewAdapterCourseScope viewAdapterCourseScope;
+    RecyclerViewAdapterCourseScope viewAdapterCourseScope;
     private RadioGroup rgOne, rgTwo;
     // Handle radio group clicks
     // Reference: https://stackoverflow.com/questions/10425569/radiogroup-with-two-columns-which-have-ten-radiobuttons
@@ -147,7 +147,7 @@ public class NewCourseActivity extends AppCompatActivity
             LinearLayoutManager horizontalLayoutManager
                     = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
             recyclerView.setLayoutManager(horizontalLayoutManager);
-            ViewAdapterCourseScope adapter = new ViewAdapterCourseScope(this, parent);
+            RecyclerViewAdapterCourseScope adapter = new RecyclerViewAdapterCourseScope(this, parent);
             //viewAdapterCourseScope.setClickListener(this);
 
             if (adapter.getmCoursesAtScope().isEmpty())
@@ -205,7 +205,7 @@ public class NewCourseActivity extends AppCompatActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        viewAdapterCourseScope = new ViewAdapterCourseScope(this, mCoursesAtScope);
+        viewAdapterCourseScope = new RecyclerViewAdapterCourseScope(this, mCoursesAtScope);
 
         recyclerView.setAdapter(viewAdapterCourseScope);
     }

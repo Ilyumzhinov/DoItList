@@ -25,8 +25,9 @@
 
             <LinearLayout
                 android:id="@+id/lytCourseScope"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="20dp"
@@ -71,7 +72,7 @@
                     android:id="@+id/lytDiscreteColorPick"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/roundeditem_colorpicker"
+                    android:background="@drawable/roundeditem_stroke"
                     android:clickable="true"
                     android:divider="?android:attr/dividerHorizontal"
                     android:focusable="auto"

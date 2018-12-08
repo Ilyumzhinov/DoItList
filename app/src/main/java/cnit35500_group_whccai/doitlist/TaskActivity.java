@@ -18,7 +18,7 @@ import Functional.CoursesControl;
 import Functional.Globals;
 import Functional.Task;
 import Functional.TasksControl;
-import Functional.ViewAdapterCourseScope;
+import Functional.RecyclerViewAdapterCourseScope;
 
 public class TaskActivity extends AppCompatActivity
 {
@@ -84,7 +84,7 @@ public class TaskActivity extends AppCompatActivity
         LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
-        ViewAdapterCourseScope adapter = new ViewAdapterCourseScope(this, currentTask.getCourse());
+        RecyclerViewAdapterCourseScope adapter = new RecyclerViewAdapterCourseScope(this, currentTask.getCourse());
         //viewAdapterCourseScope.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
@@ -234,12 +234,5 @@ public class TaskActivity extends AppCompatActivity
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void RecordTask(View view)
-    {
-        Task taskReceived = currentTask;
-
-        taskReceived.updateRecordingTime();
     }
 }

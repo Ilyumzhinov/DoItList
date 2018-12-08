@@ -287,7 +287,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/CardTest"
                             android:layout_centerHorizontal="true"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 

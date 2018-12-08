@@ -14,11 +14,11 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import cnit35500_group_whccai.doitlist.NavigationActivity;
+import cnit35500_group_whccai.doitlist.MainNavigationActivity;
 import cnit35500_group_whccai.doitlist.R;
 
 
-public class ViewAdapterTasks extends RecyclerView.Adapter<ViewAdapterTasks.ViewHolder>
+public class RecyclerViewAdapterTasks extends RecyclerView.Adapter<RecyclerViewAdapterTasks.ViewHolder>
 {
     private List<Task> mTasks;
     private LayoutInflater mInflater;
@@ -26,7 +26,7 @@ public class ViewAdapterTasks extends RecyclerView.Adapter<ViewAdapterTasks.View
     private Activity mParent;
 
     // 1 - A common logic for both constructors to call
-    public ViewAdapterTasks(Context context, List<Task> Tasks, Activity parent)
+    public RecyclerViewAdapterTasks(Context context, List<Task> Tasks, Activity parent)
     {
         this.mInflater = LayoutInflater.from(context);
         this.mTasks = Tasks;
@@ -59,7 +59,6 @@ public class ViewAdapterTasks extends RecyclerView.Adapter<ViewAdapterTasks.View
             prgSpent = itemView.findViewById(R.id.prgSpent);
         }
 
-        // Todo: remove comment
         @Override
         public void onClick(View view)
         {
@@ -87,14 +86,7 @@ public class ViewAdapterTasks extends RecyclerView.Adapter<ViewAdapterTasks.View
         setupTaskViewHolder(holder, position);
     }
 
-    private void setupTestTaskViewHolder(ViewAdapterTasks.ViewHolder xVH, int position)
-    {
-        String name = mTasks.get(position).getName();
-
-        xVH.txtTaskName.setText(name);
-    }
-
-    private void setupTaskViewHolder(final ViewAdapterTasks.ViewHolder xVH, final int position)
+    private void setupTaskViewHolder(final RecyclerViewAdapterTasks.ViewHolder xVH, final int position)
     {
         final Task iTask = mTasks.get(position);
 
@@ -120,7 +112,21 @@ public class ViewAdapterTasks extends RecyclerView.Adapter<ViewAdapterTasks.View
         xVH.prgSpent.setMax(Math.toIntExact(timeEst));
         xVH.prgSpent.setProgress(Math.toIntExact(timeSpent));
 
-        // Set button actions
+        // Set events
+        // Start/stop recording time
+        xVH.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Task taskReceived = mTasks.get(position);
+                taskReceived.updateRecordingTime();
+
+                xVH.txtTaskStatus.setText(iTask.getStatusStr());
+            }
+        });
+
+        // Open task details
         xVH.btnTaskOpenDetails.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -128,13 +134,15 @@ public class ViewAdapterTasks extends RecyclerView.Adapter<ViewAdapterTasks.View
             {
                 try
                 {
-                    ((NavigationActivity) mParent).openTask(null, mTasks.get(position));
+                    ((MainNavigationActivity) mParent).openTask(null, mTasks.get(position));
                 } catch (Exception ignored)
                 {
                     Toast.makeText(v.getContext(), "Failed to open a task", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        // Complete task
         xVH.btnTaskComplete.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -142,10 +150,11 @@ public class ViewAdapterTasks extends RecyclerView.Adapter<ViewAdapterTasks.View
             {
                 Boolean taskStatusFinished = iTask.getStatusFinished();
 
+                iTask.setStatusFinished(!taskStatusFinished);
+
                 String status = iTask.getStatusStr();
 
                 xVH.txtTaskStatus.setText(status);
-                iTask.setStatusFinished(!taskStatusFinished);
             }
         });
     }
