@@ -52,13 +52,12 @@ public class Globals
 
     // Receive minutes as integer and parse them into a string of # days, # hours, # minutes.
     // E.g.: 110 -> “1 h, 50 min”
-    public static String formatTimeTotal(Long xMinutes)
-    {
+    public static String formatTimeTotal(Long xMinutes) {
         String returnMinutes;
-        if (xMinutes >= 1440) {
+        if (xMinutes >= 1440 || xMinutes <= -1440) {
             // If time is longer than a day
             returnMinutes = xMinutes/24/60 + " d, " + xMinutes/60%24 + " h, " + xMinutes%60 + " min";
-        } else if (xMinutes < 60) {
+        } else if (xMinutes < 60 || xMinutes > -60) {
             // If time is shorter than a day
            returnMinutes = xMinutes%60 + " min";
         } else {
@@ -74,8 +73,7 @@ public class Globals
     // Receive a date and parse it into a string of that date or one of special cases, like “Today”, “Tomorrow”, “Yesterday”.
     // E.g. (input) -> “Tomorrow, 23:59”.
     // E.g. (input) -> “12-11-2018, 23:59”.
-    public static String formatDate(LocalDateTime xLocalDate)
-    {
+    public static String formatDateAndTime(LocalDateTime xLocalDate) {
         // Reference: https://stackoverflow.com/questions/28177370/how-to-format-localdate-to-string
         // Grab local time
         Date currentTime = Calendar.getInstance().getTime();
@@ -97,6 +95,15 @@ public class Globals
             formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
             formattedString = xLocalDate.format(formatter);
         }
+        return formattedString;
+    }
+
+    // Receive a date and parse it into a string of form DayofWeek, Month day, year
+    public static String formatDate(LocalDateTime xLocalDate) {
+        String formattedString;
+        DateTimeFormatter formatter;
+        formatter = DateTimeFormatter.ofPattern("EEEE, MMM d, YYYY");
+        formattedString = xLocalDate.format(formatter);
         return formattedString;
     }
 }

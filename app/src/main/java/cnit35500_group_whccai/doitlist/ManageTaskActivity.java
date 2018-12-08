@@ -416,7 +416,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
         dueDatePicked =  LocalDateTime.of(this.year, this.month, this.day, this.hour, this.minute);
 
-        String date = Globals.formatDate(dueDatePicked);
+        String date = Globals.formatDateAndTime(dueDatePicked);
         TextView txtView = findViewById(R.id.txtDueDate);
 
         txtView.setText(date);

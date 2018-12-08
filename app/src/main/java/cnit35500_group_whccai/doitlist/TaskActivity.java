@@ -104,7 +104,7 @@ public class TaskActivity extends AppCompatActivity
         mTxtStatus = txt;
 
         // Show deadline
-        String formattedString = Globals.formatDate(currentTask.getDeadline());
+        String formattedString = Globals.formatDateAndTime(currentTask.getDeadline());
 
         txt = findViewById(R.id.lblTaskDeadline);
         txt.setText(formattedString);
