@@ -173,6 +173,10 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     {
                         // Obtain data
                         mCourses = (CoursesControl) data.getSerializableExtra(Globals.ExtraKey_Courses);
+                        mAdapterCourses.updateData(mCourses.getCoursesAtScope(mCourses.getEmptyCourseScope()));
+                        mAdapterCategories.updateData(mCourses.getCoursesAtScope(mAdapterCourses.getCoursesScope()));
+                        mAdapterCategories.notifyDataSetChanged();
+                        mAdapterCourses.notifyDataSetChanged();
                     }
 
                     // Populate spinner with courses values
