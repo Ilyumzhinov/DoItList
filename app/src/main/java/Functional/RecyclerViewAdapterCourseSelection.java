@@ -24,7 +24,12 @@ public class RecyclerViewAdapterCourseSelection extends RecyclerView.Adapter<Rec
 
     public Course getSelectedCourse()
     {
-        return mCoursesAtScope.get(mSelected_position);
+        try {
+            return mCoursesAtScope.get(mSelected_position);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public RecyclerViewAdapterCourseSelection(Context context, List<Course> xCourses)
@@ -35,17 +40,26 @@ public class RecyclerViewAdapterCourseSelection extends RecyclerView.Adapter<Rec
 
     public List<String> getCoursesScope()
     {
-        Course cr = mCoursesAtScope.get(mSelected_position);
-
-        return cr.getScopeStrArrayOf(false);
+        try {
+            Course cr = mCoursesAtScope.get(mSelected_position);
+            return cr.getScopeStrArrayOf(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     // Update adapter
     // Reference: https://stackoverflow.com/questions/30053610/best-way-to-update-data-with-a-recyclerview-adapter?lq=1
     public void updateData(List<Course> xCourses)
     {
-        if (xCourses == null)
+        try {
+            if (xCourses == null)
+                throw new Exception("null xCourses");
+        } catch (Exception e) {
+            e.printStackTrace();
             return;
+        }
 
         if (mCoursesAtScope != null && xCourses.size() > 0)
             mCoursesAtScope.clear();
@@ -81,7 +95,12 @@ public class RecyclerViewAdapterCourseSelection extends RecyclerView.Adapter<Rec
     @Override
     public int getItemCount()
     {
-        return mCoursesAtScope.size();
+        try {
+            return mCoursesAtScope.size();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     // Get item at click position
