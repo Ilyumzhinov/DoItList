@@ -32,6 +32,7 @@ public class TasksForDateFragment extends Fragment
     private List<Task> mTasksForDate;
     private CalendarView calView;
     private TextView txtViewDate, txtTasksRemainTotal;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
@@ -79,7 +80,7 @@ public class TasksForDateFragment extends Fragment
         //
 
         // Set up tasks RecyclerView
-        RecyclerView recyclerView = view.findViewById(R.id.listTasks);
+        recyclerView = view.findViewById(R.id.listTasks);
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -110,5 +111,13 @@ public class TasksForDateFragment extends Fragment
 
         // Update adapter data
         xAdapter.updateData(mTasksForDate);
+    }
+
+    public void notifyFragment(TasksControl newTasks, CoursesControl newCourses) {
+            // Obtain data
+        mTaskControl = newTasks;
+        mCourses = newCourses;
+        updateAdapterForDate(mAdapter, LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue() - 1, LocalDateTime.now().getDayOfMonth());
+
     }
 }

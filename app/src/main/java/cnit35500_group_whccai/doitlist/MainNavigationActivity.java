@@ -220,8 +220,7 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
                         // Obtain data
                         mTasks = (TasksControl) data.getSerializableExtra(Globals.ExtraKey_Tasks);
                         mCourses = (CoursesControl) data.getSerializableExtra(Globals.ExtraKey_Courses);
-
-                        // Todo: notify fragment about data change
+                        ((TasksForDateFragment) fragment).notifyFragment(mTasks, mCourses);
                     }
                 }
                 break;
@@ -235,8 +234,7 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
                         // Obtain data
                         mTasks = (TasksControl) data.getSerializableExtra(Globals.ExtraKey_Tasks);
                         mCourses = (CoursesControl) data.getSerializableExtra(Globals.ExtraKey_Courses);
-
-                        // Todo: notify fragment about data change
+                        ((TasksForDateFragment) fragment).notifyFragment(mTasks, mCourses);
                     }
                 }
         }
