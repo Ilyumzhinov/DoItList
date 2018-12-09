@@ -14,7 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import Functional.CoursesControl;
@@ -117,7 +118,8 @@ public class TasksForDateFragment extends Fragment
             // Obtain data
         mTaskControl = newTasks;
         mCourses = newCourses;
-        updateAdapterForDate(mAdapter, LocalDateTime.now().getYear(), LocalDateTime.now().getMonthValue() - 1, LocalDateTime.now().getDayOfMonth());
-
+        Date date = new Date(calView.getDate());
+        LocalDateTime ldt = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        updateAdapterForDate(mAdapter, ldt.getYear(), ldt.getMonthValue() - 1, ldt.getDayOfMonth());
     }
 }
