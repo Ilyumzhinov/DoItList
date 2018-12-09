@@ -115,7 +115,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
             @Override
             public void onItemClick(View view, int position)
             {
-                mAdapterCategories.updateData(mCourses.getCoursesAtScope(mAdapterCourses.getCoursesScope()));
+                mAdapterCategories.updateData(mCourses.getCoursesAtScope(mAdapterCourses.getItem(position).getScopeStrArrayOf(false)));
             }
         });
 
@@ -124,8 +124,9 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
         // Set up course selection
         RecyclerView rvCategories = findViewById(R.id.rvCategories);
+        // Todo: only vertial works. weirdo...
         LinearLayoutManager horizontalLayoutManager2
-                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvCategories.setLayoutManager(horizontalLayoutManager2);
 
         mAdapterCategories = new RecyclerViewAdapterCourseSelection(this, mCourses.getCoursesAtScope(mAdapterCourses.getCoursesScope()));

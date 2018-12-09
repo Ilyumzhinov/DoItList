@@ -61,7 +61,12 @@ public class RecyclerViewAdapterCourseSelection extends RecyclerView.Adapter<Rec
     public void updateData(List<Course> xCourses)
     {
         if (xCourses == null)
+        {
+            mCoursesAtScope.clear();
+            notifyDataSetChanged();
+
             return;
+        }
 
         if (mCoursesAtScope != null && xCourses.size() > 0)
             mCoursesAtScope.clear();
