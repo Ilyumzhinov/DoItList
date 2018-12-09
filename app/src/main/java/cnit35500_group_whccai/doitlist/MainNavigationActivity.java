@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,11 +17,8 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import Functional.CoursesControl;
 import Functional.Globals;
-import Functional.RecyclerViewAdapterTasks;
 import Functional.SaveTasks;
 import Functional.Task;
 import Functional.TasksControl;
@@ -120,7 +116,7 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
-            case R.id.nav_list:
+            case R.id.nav_date:
 //                fragment = new TasksForDateFragment();
 
                 createTasksForDate();

@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:checkableBehavior="single"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <item android:title="Browse Tasks">
+        <menu>
+            <item
+                android:id="@+id/nav_all"
+                android:icon="@drawable/tasks_all_icon"
+                android:title="See All" />
         <item
-            android:id="@+id/nav_list"
-            android:icon="@drawable/ic_event_note"
-            android:title="Task by Date"
-            android:checked="true"/>
+            android:id="@+id/nav_date"
+            android:icon="@drawable/calendar_icon"
+            android:title="By Date" />
         <item
             android:id="@+id/nav_class"
             android:icon="@drawable/course_icon"
-            android:title="Course" />
+            android:title="By Course" />
+    </menu>
+    </item>
+    <group android:id="@+id/group_two">
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/info_icon"
             android:title="About" />
     </group>
-
-
 </menu>
