@@ -87,8 +87,13 @@ public class Task implements Serializable
         return status;
     }
 
+    // Get total estimated time remaining which is based time goal minus spent time
+    // If task is completed, returns 0
     public Long getTimeRemainEst()
     {
+        if (taskStatusFinished)
+            return 0L;
+
         Long timeSpent = getTimeSpent();
 
         return taskTimeGoal - timeSpent;

@@ -137,15 +137,19 @@
                                 android:id="@+id/rvCourses"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:background="@drawable/roundeditem"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp" />
 
                             <ImageButton
                                 android:id="@+id/btnPlusCourse"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:layout_weight="0"
                                 android:background="?attr/selectableItemBackgroundBorderless"
-                                android:onClick="NewCourseWithScope"
+                                android:onClick="createNewCourse"
                                 android:tint="@color/colorAccent"
                                 app:srcCompat="@drawable/plus_circle_icon" />
                         </LinearLayout>
@@ -153,8 +157,7 @@
                         <RelativeLayout
                             android:id="@+id/lytCourseCategory"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="gone">
+                            android:layout_height="wrap_content">
 
                             <LinearLayout
                                 android:id="@+id/lytCourseLevelDivider"
@@ -171,17 +174,11 @@
                                     android:tint="@color/colorPrimaryDark"
                                     app:srcCompat="@drawable/sublevel_icon" />
 
-                                <TextView
-                                    android:id="@+id/textView5"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="subitems"
-                                    android:textColor="@color/colorPrimaryDark" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_below="@+id/lytCourseLevelDivider"
                                 android:orientation="horizontal">
 
@@ -189,14 +186,19 @@
                                     android:id="@+id/rvCategories"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1" />
+                                    android:layout_weight="1"
+                                    android:background="@drawable/roundeditem"
+                                    android:paddingTop="4dp"
+                                    android:paddingBottom="4dp" />
 
                                 <ImageButton
+                                    android:id="@+id/btnPlusCategory"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
                                     android:layout_weight="0"
                                     android:background="?attr/selectableItemBackgroundBorderless"
-                                    android:onClick="NewCourseWithScope"
+                                    android:onClick="createNewCategory"
                                     android:tint="@color/colorAccent"
                                     app:srcCompat="@drawable/plus_circle_icon" />
                             </LinearLayout>
@@ -280,16 +282,6 @@
 
                         </LinearLayout>
 
-                        <include
-                            android:id="@+id/CardTest2"
-                            layout="@layout/recommendation_timest"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/CardTest"
-                            android:layout_centerHorizontal="true"
-                            android:layout_weight="1"
-                            android:visibility="gone" />
-
                     </LinearLayout>
 
                 </TableRow>
@@ -342,12 +334,6 @@
 
             </TableLayout>
 
-            <Spinner
-                android:id="@+id/spnCourse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/taskDetail"
-                android:layout_weight="1" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 

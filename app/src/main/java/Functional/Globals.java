@@ -1,7 +1,6 @@
 package Functional;
 
 import android.app.Activity;
-import android.text.format.DateUtils;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -92,7 +91,7 @@ public class Globals
             formatter = DateTimeFormatter.ofPattern("HH:mm");
             formattedString = "Yesterday at " + xLocalDate.format(formatter);
         } else {
-            formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
+            formatter = DateTimeFormatter.ofPattern("EEE, MMM d, YYYY, HH:mm");
             formattedString = xLocalDate.format(formatter);
         }
         return formattedString;
@@ -117,7 +116,7 @@ public class Globals
             formatter = DateTimeFormatter.ofPattern("MMM d, YYYY");
             formattedString = "Yesterday, " + xLocalDate.format(formatter);
         } else {
-            formatter = DateTimeFormatter.ofPattern("EEEE, MMM d, YYYY");
+            formatter = DateTimeFormatter.ofPattern("EEE, MMM d, YYYY");
             formattedString = xLocalDate.format(formatter);
         }
         return formattedString;

@@ -164,7 +164,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Total spent / Goal"
+                        android:text="Spent / Goal"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                         android:textColor="@android:color/darker_gray" />
 

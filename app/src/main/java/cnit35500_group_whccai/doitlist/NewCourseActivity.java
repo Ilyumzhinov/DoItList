@@ -264,8 +264,6 @@ public class NewCourseActivity extends AppCompatActivity
             //
         } else if (id == R.id.btnToolBarDone)
         {
-            doCleanup();
-
             // Send data back
             Intent i = new Intent();
             i.putExtra(Globals.ExtraKey_Courses, mCourses);
@@ -277,9 +275,11 @@ public class NewCourseActivity extends AppCompatActivity
     }
 
     // Do the cleanup
-    public void doCleanup()
+    @Override
+    public void onPause()
     {
         mCourses.removeEmptyCourse();
+        super.onPause();
     }
 
     private Integer getSelectedColor()

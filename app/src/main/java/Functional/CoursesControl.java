@@ -78,6 +78,17 @@ public class CoursesControl implements Serializable
         emptyCourse = null;
     }
 
+    public List<String> getEmptyCourseScope()
+    {
+        addEmptyCourse();
+
+        List<String> scope = getEmptyCourse().getScopeStrArrayOf(false);
+
+        removeEmptyCourse();
+
+        return scope;
+    }
+
     // Get an array of all courses
     public Course[] getCourses()
     {

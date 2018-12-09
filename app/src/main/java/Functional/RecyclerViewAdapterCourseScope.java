@@ -19,7 +19,7 @@ public class RecyclerViewAdapterCourseScope extends RecyclerView.Adapter<Recycle
 {
     private List<Course> mCoursesAtScope;
     private LayoutInflater mInflater;
-    private RecyclerViewAdapterCourseSelection.ItemClickListener mClickListener;
+    private RecyclerViewAdapterCourseScope.ItemClickListener mClickListener;
     private int mSelected_position = 0;
 
     public RecyclerViewAdapterCourseScope(Context context, List<Course> xCourses)
@@ -83,7 +83,7 @@ public class RecyclerViewAdapterCourseScope extends RecyclerView.Adapter<Recycle
     }
 
     // Get click events
-    public void setClickListener(RecyclerViewAdapterCourseSelection.ItemClickListener itemClickListener)
+    public void setClickListener(RecyclerViewAdapterCourseScope.ItemClickListener itemClickListener)
     {
         this.mClickListener = itemClickListener;
     }

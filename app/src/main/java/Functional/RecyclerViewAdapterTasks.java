@@ -113,8 +113,16 @@ public class RecyclerViewAdapterTasks extends RecyclerView.Adapter<RecyclerViewA
         xVH.txtTaskBeforeDeadline.setText(Globals.formatTimeTotal(timeBeforeDeadline));
 
         xVH.prgSpent.setIndeterminate(false);
-        xVH.prgSpent.setMax(Math.toIntExact(timeEst));
-        xVH.prgSpent.setProgress(Math.toIntExact(timeSpent));
+        if (!iTask.getStatusFinished())
+        {
+            xVH.prgSpent.setMax(Math.toIntExact(timeEst));
+            xVH.prgSpent.setProgress(Math.toIntExact(timeSpent));
+        }
+        else
+        {
+            xVH.prgSpent.setMax(1);
+            xVH.prgSpent.setProgress(1);
+        }
 
         // Set events
         // Start/stop recording time

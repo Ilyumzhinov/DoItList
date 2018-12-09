@@ -63,9 +63,9 @@ public class TasksControl implements Serializable
     }
 
     // Get an array of all tasks
-    public Task[] getTasks()
+    public List<Task> getTasks()
     {
-        return Tasks.toArray(new Task[0]);
+        return Tasks;
     }
 
     public List<Task> getTasksForDate(LocalDateTime xDate)
@@ -81,11 +81,11 @@ public class TasksControl implements Serializable
         return tasks;
     }
 
-    public Long getTotalTimeRemainEst(List<Task> xTassk)
+    public Long getTotalTimeRemainEst(List<Task> xTasks)
     {
         Long totalMinutes = 0L;
 
-        for (Task iTask : xTassk)
+        for (Task iTask : xTasks)
         {
             totalMinutes += iTask.getTimeRemainEst();
         }

@@ -135,8 +135,16 @@ public class TaskActivity extends AppCompatActivity
         // Set progress bar
         ProgressBar timeSpent = findViewById(R.id.prgTaskSpent);
         timeSpent.setIndeterminate(false);
-        timeSpent.setMax(Math.toIntExact(currentTask.getTimeGoal()));
-        timeSpent.setProgress(Math.toIntExact(currentTask.getTimeSpent()));
+        if (!currentTask.getStatusFinished())
+        {
+            timeSpent.setMax(Math.toIntExact(currentTask.getTimeGoal()));
+            timeSpent.setProgress(Math.toIntExact(currentTask.getTimeSpent()));
+        }
+        else
+        {
+            timeSpent.setMax(1);
+            timeSpent.setProgress(1);
+        }
         //
 
         // Set Sessions info

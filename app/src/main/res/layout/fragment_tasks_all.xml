@@ -21,27 +21,6 @@
                 android:animateLayoutChanges="true"
                 android:background="@color/colorAccentLight">
 
-                <Button
-                    android:id="@+id/btnDisplayCalendar"
-                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:onClick="displayCalendar"
-                    android:paddingStart="0dp"
-                    android:paddingTop="0dp"
-                    android:paddingEnd="0dp"
-                    android:paddingBottom="0dp"
-                    android:text="@string/lbl_hide_calendar" />
-
-                <CalendarView
-                    android:id="@+id/calView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/btnDisplayCalendar"
-                    android:onClick="displayCalendar"
-                    android:visibility="visible" />
             </RelativeLayout>
 
             <LinearLayout
@@ -58,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/date_default"
+                    android:text="Total"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
                 <ImageView

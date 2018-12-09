@@ -1,7 +1,6 @@
 package Functional;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,45 +18,54 @@ public class RecyclerViewAdapterCourseSelection extends RecyclerView.Adapter<Rec
 {
     private List<Course> mCoursesAtScope;
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private RecyclerViewAdapterCourseSelection.ItemClickListener mClickListener;
     private int mSelected_position = 0;
+//    private View mSelected_view;
+
+    public Course getSelectedCourse()
+    {
+        return mCoursesAtScope.get(mSelected_position);
+    }
 
     public RecyclerViewAdapterCourseSelection(Context context, List<Course> xCourses)
-    {
-        uglyFunc(context, xCourses);
-    }
-
-    public RecyclerViewAdapterCourseSelection(Context context, Course xCourse)
-    {
-        List<Course> xCourses = xCourse.getScopeArrayOf(false);
-
-        uglyFunc(context, xCourses);
-    }
-
-    // A common logic for both constructors to call
-    private void uglyFunc(Context context, List<Course> xCourses)
     {
         this.mInflater = LayoutInflater.from(context);
         this.mCoursesAtScope = xCourses;
     }
 
-    public List<Course> getmCoursesAtScope()
+    public List<String> getCoursesScope()
     {
-        return mCoursesAtScope;
+        Course cr = mCoursesAtScope.get(mSelected_position);
+
+        return cr.getScopeStrArrayOf(false);
+    }
+
+    // Update adapter
+    // Reference: https://stackoverflow.com/questions/30053610/best-way-to-update-data-with-a-recyclerview-adapter?lq=1
+    public void updateData(List<Course> xCourses)
+    {
+        if (xCourses == null)
+            return;
+
+        if (mCoursesAtScope != null && xCourses.size() > 0)
+            mCoursesAtScope.clear();
+
+        mCoursesAtScope.addAll(xCourses);
+        notifyDataSetChanged();
     }
 
     // Inflate the row layout from xml
     @Override
     @NonNull
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public RecyclerViewAdapterCourseSelection.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        View view = mInflater.inflate(R.layout.course_item, parent, false);
-        return new ViewHolder(view);
+        View view = mInflater.inflate(R.layout.recommendation_item, parent, false);
+        return new RecyclerViewAdapterCourseSelection.ViewHolder(view);
     }
 
     // Bind data to each item
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull RecyclerViewAdapterCourseSelection.ViewHolder holder, int position)
     {
         holder.itemView.setSelected(mSelected_position == position);
 
@@ -65,8 +73,8 @@ public class RecyclerViewAdapterCourseSelection extends RecyclerView.Adapter<Rec
         String label = mCoursesAtScope.get(position).getName();
 
         holder.txtItemLabel.setText(label);
-        Drawable dr = holder.txtItemLabel.getBackground();
-        dr.setTint(color);
+//        Drawable dr = holder.txtItemLabel.getBackground();
+//        dr.setTint(color);
     }
 
     // Receive number of items
@@ -77,13 +85,13 @@ public class RecyclerViewAdapterCourseSelection extends RecyclerView.Adapter<Rec
     }
 
     // Get item at click position
-    public Course getItem(int id)
+    public Course getItem(int index)
     {
-        return mCoursesAtScope.get(id);
+        return mCoursesAtScope.get(index);
     }
 
     // Get click events
-    public void setClickListener(ItemClickListener itemClickListener)
+    public void setClickListener(RecyclerViewAdapterCourseSelection.ItemClickListener itemClickListener)
     {
         this.mClickListener = itemClickListener;
     }
@@ -103,8 +111,7 @@ public class RecyclerViewAdapterCourseSelection extends RecyclerView.Adapter<Rec
             super(itemView);
             txtItemLabel = itemView.findViewById(R.id.txtLabel);
 
-//            if (1 == 1)
-//                txtItemLabel.setOnClickListener(this);
+            txtItemLabel.setOnClickListener(this);
         }
 
         @Override
@@ -118,6 +125,11 @@ public class RecyclerViewAdapterCourseSelection extends RecyclerView.Adapter<Rec
             notifyItemChanged(mSelected_position);
             mSelected_position = getAdapterPosition();
             notifyItemChanged(mSelected_position);
+
+//            if (mSelected_view != null)
+//                ViewCompat.setElevation(mSelected_view, 3);
+//            mSelected_view = view;
+//            ViewCompat.setElevation(mSelected_view, 6);
         }
     }
 }

@@ -66,17 +66,7 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
             mTasks = new TasksControl();
         }
 
-        // Set default fragment
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable(Globals.ExtraKey_Tasks, mTasks);
-//        bundle.putSerializable(Globals.ExtraKey_Courses, mCourses);
-//
-//        fragment = new TasksForDateFragment();
-//        fragment.setArguments(bundle);
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.navContent, fragment).commit();
-
-        createTasksForDate();
+        createTasksForDateFragment();
 
         // Add a new task action
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -117,12 +107,16 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
             case R.id.nav_date:
-//                fragment = new TasksForDateFragment();
+                createTasksForDateFragment();
+                break;
 
-                createTasksForDate();
+            case R.id.nav_course:
                 break;
-            case R.id.nav_class:
+
+            case R.id.nav_all:
+                createTasksAllFragment();
                 break;
+
             case R.id.nav_about:
                 fragment = new AboutFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.navContent,fragment).commit();
@@ -134,13 +128,25 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
         return true;
     }
 
-    private void createTasksForDate()
+    private void createTasksForDateFragment()
     {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Globals.ExtraKey_Tasks, mTasks);
         bundle.putSerializable(Globals.ExtraKey_Courses, mCourses);
 
         fragment = new TasksForDateFragment();
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.navContent, fragment).commit();
+    }
+
+    private void createTasksAllFragment()
+    {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Globals.ExtraKey_Tasks, mTasks);
+        bundle.putSerializable(Globals.ExtraKey_Courses, mCourses);
+
+        fragment = new TasksAllFragment();
         fragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.navContent, fragment).commit();
@@ -216,7 +222,10 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
                         // Obtain data
                         mTasks = (TasksControl) data.getSerializableExtra(Globals.ExtraKey_Tasks);
                         mCourses = (CoursesControl) data.getSerializableExtra(Globals.ExtraKey_Courses);
-                        ((TasksForDateFragment) fragment).notifyFragment(mTasks, mCourses);
+
+                        // Notify fragment to update its data
+                        if (fragment instanceof NotifiableFragment)
+                            ((NotifiableFragment) fragment).notifyFragment(mTasks, mCourses);
                     }
                 }
                 break;
@@ -230,7 +239,10 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
                         // Obtain data
                         mTasks = (TasksControl) data.getSerializableExtra(Globals.ExtraKey_Tasks);
                         mCourses = (CoursesControl) data.getSerializableExtra(Globals.ExtraKey_Courses);
-                        ((TasksForDateFragment) fragment).notifyFragment(mTasks, mCourses);
+
+                        // Notify fragment to update its data
+                        if (fragment instanceof NotifiableFragment)
+                            ((NotifiableFragment) fragment).notifyFragment(mTasks, mCourses);
                     }
                 }
         }

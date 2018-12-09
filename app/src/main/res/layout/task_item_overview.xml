@@ -133,9 +133,12 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
+                android:layout_marginHorizontal="15dp"
                 android:gravity="center"
                 android:text="@string/default_time_spent_label"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
 
             <ProgressBar
 

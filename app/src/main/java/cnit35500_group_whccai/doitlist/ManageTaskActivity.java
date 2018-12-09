@@ -6,25 +6,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import Functional.Course;
 import Functional.CoursesControl;
 import Functional.Globals;
+import Functional.RecyclerViewAdapterCourseSelection;
 import Functional.Task;
 import Functional.TasksControl;
 
@@ -39,6 +39,8 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
     private Task currentTask;
     private Menu menu;
     private String viewMode;
+
+    private RecyclerViewAdapterCourseSelection mAdapterCourses, mAdapterCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -81,10 +83,8 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     col_toolbar.setTitle("Edit Task");
 
                     // Populate views with data
-                    DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MM-dd-yyyy, HH:mm");
-
                     ((TextView) findViewById(R.id.edtTaskName)).setText(currentTask.getName());
-                    ((TextView) findViewById(R.id.txtDueDate)).setText(dueDatePicked.format(formatter2));
+                    ((TextView) findViewById(R.id.txtDueDate)).setText(Globals.formatDateAndTime(dueDatePicked));
                     ((EditText) findViewById(R.id.edtTimeEstH)).setText(String.valueOf(Math.round(currentTask.getTimeGoal() / 60)));
                     ((EditText) findViewById(R.id.edtTimeEstM)).setText(String.valueOf(currentTask.getTimeGoal() % 60));
                     ((TextView) findViewById(R.id.edtNotes)).setText(currentTask.getDetail());
@@ -100,33 +100,60 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         }
         //
 
-        // Populate spinner with courses values
-        // Reference: SpinnerTest1
-        Spinner spinner = findViewById(R.id.spnCourse);
+        // Populate course selection
+        RecyclerView rvCourses = findViewById(R.id.rvCourses);
+        LinearLayoutManager horizontalLayoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rvCourses.setLayoutManager(horizontalLayoutManager);
 
-        // Create an ArrayAdapter
-        ArrayAdapter<Course> adapter = new ArrayAdapter<>
-                (this, android.R.layout.simple_spinner_item, mCourses.getCourses());
+        mAdapterCourses = new RecyclerViewAdapterCourseSelection(this, mCourses.getCoursesAtScope(mCourses.getEmptyCourseScope()));
 
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        if (viewMode.equals(Globals.ViewMode_Edit))
-            spinner.setSelection(mCourses.getIndexOfCourse(currentTask.getCourse()));
+        // Catch RecyclerView clicks
+        // Reference: https://stackoverflow.com/questions/27703779/detect-click-on-recyclerview-outside-of-items
+        mAdapterCourses.setClickListener(new RecyclerViewAdapterCourseSelection.ItemClickListener()
+        {
+            @Override
+            public void onItemClick(View view, int position)
+            {
+                mAdapterCategories.updateData(mCourses.getCoursesAtScope(mAdapterCourses.getCoursesScope()));
+            }
+        });
+
+        rvCourses.setAdapter(mAdapterCourses);
         //
+
+        // Set up course selection
+        RecyclerView rvCategories = findViewById(R.id.rvCategories);
+        LinearLayoutManager horizontalLayoutManager2
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rvCategories.setLayoutManager(horizontalLayoutManager2);
+
+        mAdapterCategories = new RecyclerViewAdapterCourseSelection(this, mCourses.getCoursesAtScope(mAdapterCourses.getCoursesScope()));
+
+        rvCategories.setAdapter(mAdapterCategories);
+
     }
 
     // Open a NewCourse activity with scope
-    public void NewCourseWithScope(View view)
+    public void createNewCourse(View view)
     {
-        Spinner spinner = findViewById(R.id.spnCourse);
-
         Intent i = new Intent(this, NewCourseActivity.class);
 
-        // Pass an object to another activity
-        // Reference: https://stackoverflow.com/questions/2736389/how-to-pass-an-object-from-one-activity-to-another-on-android
+        // Pass objects to another activity
         i.putExtra(Globals.ExtraKey_Courses, mCourses);
-        i.putExtra(Globals.ExtraKey_Parent, (Course)spinner.getSelectedItem());
+        i.putExtra(Globals.ExtraKey_Parent, mCourses.getEmptyCourse());
+
+        startActivityForResult(i, Globals.NewCourseRequestCode);
+    }
+
+    // Open a NewCourse activity with scope
+    public void createNewCategory(View view)
+    {
+        Intent i = new Intent(this, NewCourseActivity.class);
+
+        // Pass objects to another activity
+        i.putExtra(Globals.ExtraKey_Courses, mCourses);
+        i.putExtra(Globals.ExtraKey_Parent, mAdapterCourses.getSelectedCourse());
 
         startActivityForResult(i, Globals.NewCourseRequestCode);
     }
@@ -150,17 +177,17 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
                     // Populate spinner with courses values
                     // Reference: SpinnerTest1
-                    Spinner spinner = findViewById(R.id.spnCourse);
-                    Course courseSelected = (Course) spinner.getSelectedItem();
-
-                    // Create an ArrayAdapter
-                    ArrayAdapter<Course> adapter = new ArrayAdapter<>
-                            (this, android.R.layout.simple_spinner_item, mCourses.getCourses());
-
-                    // Specify the layout to use when the list of choices appears
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(adapter);
-                    spinner.setSelection(mCourses.getIndexOfCourse(courseSelected));
+//                    Spinner spinner = findViewById(R.id.spnCourse);
+//                    Course courseSelected = (Course) spinner.getSelectedItem();
+//
+//                    // Create an ArrayAdapter
+//                    ArrayAdapter<Course> adapter = new ArrayAdapter<>
+//                            (this, android.R.layout.simple_spinner_item, mCourses.getCourses());
+//
+//                    // Specify the layout to use when the list of choices appears
+//                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                    spinner.setAdapter(adapter);
+//                    spinner.setSelection(mCourses.getIndexOfCourse(courseSelected));
                 }
                 break;
         }
@@ -261,7 +288,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                 {
                     name = ((TextView) findViewById(R.id.edtTaskName)).getText().toString();
                     notes = ((TextView) findViewById(R.id.edtNotes)).getText().toString();
-                    course = (Course) ((Spinner) findViewById(R.id.spnCourse)).getSelectedItem();
+                    course = ((RecyclerViewAdapterCourseSelection) ((RecyclerView) findViewById(R.id.rvCourses)).getAdapter()).getSelectedCourse();
                     dueDate = dueDatePicked;
 
                     // Check time input in minutes
@@ -298,7 +325,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                             mTasks.addTask(name, notes, course, dueDate, timeEst);
                             Toast.makeText(this, "Task added!", Toast.LENGTH_LONG).show();
 
-                            cTaskIndex = mTasks.getTasks().length - 1;
+                            cTaskIndex = mTasks.getTasks().size() - 1;
 
                             break;
 
