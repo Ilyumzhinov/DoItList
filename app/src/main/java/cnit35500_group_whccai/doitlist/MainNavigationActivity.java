@@ -66,6 +66,9 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
             mTasks = new TasksControl();
         }
 
+        // Todo: remove test
+        mCourses.removeCourses();
+
         createTasksForDateFragment();
 
         // Add a new task action

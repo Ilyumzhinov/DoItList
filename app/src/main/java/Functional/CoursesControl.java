@@ -35,24 +35,29 @@ public class CoursesControl implements Serializable
         return course;
     }
 
-    // Remove a course with a name
+    // Remove a course with a scope
     // True if successful removal
-    public boolean removeCourse(String xName)
+    public void removeCourse(String xName, List<String> xParentScope)
     {
-        Course course = null;
+        Course courses = null;
 
-        // Check if a course with the name already exists
+        // Check if a course with the scope and name exists
         for (Course iCourse : Courses)
         {
-            if (xName.equals(iCourse.getName()))
-                course = iCourse;
+            if (iCourse.compareParentScopeWith(xParentScope))
+                if (iCourse.getName().equals(xName))
+                    courses = iCourse;
         }
 
         // Try to remove
-        if (course == null)
-            return false;
-        else
-            return Courses.remove(course);
+        if (courses != null)
+            Courses.remove(courses);
+    }
+
+    // Todo: remove test
+    public void removeCourses()
+    {
+        Courses.removeAll(Courses);
     }
 
     private Course emptyCourse;
@@ -90,9 +95,9 @@ public class CoursesControl implements Serializable
     }
 
     // Get an array of all courses
-    public Course[] getCourses()
+    public List<Course> getCourses()
     {
-        return Courses.toArray(new Course[0]);
+        return Courses;
     }
 
     // Get index of course

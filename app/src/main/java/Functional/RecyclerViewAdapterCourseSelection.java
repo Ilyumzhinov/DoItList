@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cnit35500_group_whccai.doitlist.R;
@@ -34,16 +35,22 @@ public class RecyclerViewAdapterCourseSelection extends RecyclerView.Adapter<Rec
 
     public RecyclerViewAdapterCourseSelection(Context context, List<Course> xCourses)
     {
-        this.mInflater = LayoutInflater.from(context);
-        this.mCoursesAtScope = xCourses;
+        mInflater = LayoutInflater.from(context);
+
+        if (xCourses != null)
+            mCoursesAtScope = xCourses;
+        else
+            mCoursesAtScope = new ArrayList<>();
     }
 
     public List<String> getCoursesScope()
     {
-        try {
+        try
+        {
             Course cr = mCoursesAtScope.get(mSelected_position);
             return cr.getScopeStrArrayOf(false);
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
             return null;
         }
@@ -53,13 +60,8 @@ public class RecyclerViewAdapterCourseSelection extends RecyclerView.Adapter<Rec
     // Reference: https://stackoverflow.com/questions/30053610/best-way-to-update-data-with-a-recyclerview-adapter?lq=1
     public void updateData(List<Course> xCourses)
     {
-        try {
-            if (xCourses == null)
-                throw new Exception("null xCourses");
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (xCourses == null)
             return;
-        }
 
         if (mCoursesAtScope != null && xCourses.size() > 0)
             mCoursesAtScope.clear();

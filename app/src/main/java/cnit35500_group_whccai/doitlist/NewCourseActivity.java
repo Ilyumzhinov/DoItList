@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Functional.Course;
-import Functional.RecyclerViewAdapterCourseScope;
 import Functional.CoursesControl;
 import Functional.Globals;
+import Functional.RecyclerViewAdapterCourseScope;
 
 public class NewCourseActivity extends AppCompatActivity
 {
