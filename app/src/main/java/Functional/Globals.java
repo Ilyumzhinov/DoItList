@@ -54,7 +54,7 @@ public class Globals
     // E.g.: 110 -> “1 h, 50 min”
     public static String formatTimeTotal(Long xMinutes) {
         String returnMinutes;
-        if (xMinutes >= 1440 && xMinutes <= -1440) {
+        if (xMinutes >= 1440 || xMinutes <= -1440) {
             // If time is longer than a day
             returnMinutes = xMinutes/24/60 + " d, " + xMinutes/60%24 + " h, " + xMinutes%60 + " min";
         } else if (xMinutes < 60 && xMinutes > -60) {
