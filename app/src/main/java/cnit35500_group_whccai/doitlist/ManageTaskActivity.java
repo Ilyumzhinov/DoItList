@@ -185,7 +185,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                         updateRecyclerViewsVisibles(mAdapterCourses, mAdapterCategories);
                     }
 
-                    // Todo: remove commented code
+                    // Todo: re-do logic for CourseSelection
                     // Populate spinner with courses values
                     // Reference: SpinnerTest1
 //                    Spinner spinner = findViewById(R.id.spnCourse);

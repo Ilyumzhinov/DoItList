@@ -54,12 +54,6 @@ public class CoursesControl implements Serializable
             Courses.remove(courses);
     }
 
-    // Todo: remove test
-    public void removeCourses()
-    {
-        Courses.removeAll(Courses);
-    }
-
     private Course emptyCourse;
 
     public void addEmptyCourse()
