@@ -31,7 +31,6 @@ public class TasksForCourseFragment extends Fragment implements NotifiableFragme
     private List<Task> mTasksForScope;
 
     private TextView txtViewDate, txtTasksRemainTotal;
-    private RecyclerView rvCourses, rvCategories;
 
     private RecyclerViewAdapterTasks mAdapter;
     private RecyclerViewAdapterCourseSelection mAdapterCourses, mAdapterCategories;
@@ -70,7 +69,7 @@ public class TasksForCourseFragment extends Fragment implements NotifiableFragme
         txtTasksRemainTotal = view.findViewById(R.id.txtTasksRemainTotal);
 
         // Populate course selection
-        rvCourses = view.findViewById(R.id.rvCourses);
+        RecyclerView rvCourses = view.findViewById(R.id.rvCourses);
         LinearLayoutManager horizontalLayoutManager
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvCourses.setLayoutManager(horizontalLayoutManager);
@@ -92,7 +91,7 @@ public class TasksForCourseFragment extends Fragment implements NotifiableFragme
         //
 
         // Set up course selection
-        rvCategories = view.findViewById(R.id.rvCategories);
+        RecyclerView rvCategories = view.findViewById(R.id.rvCategories);
         LinearLayoutManager horizontalLayoutManager2
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvCategories.setLayoutManager(horizontalLayoutManager2);
@@ -201,6 +200,9 @@ public class TasksForCourseFragment extends Fragment implements NotifiableFragme
         txtTasksRemainTotal.setText(Globals.formatTimeTotal(mTaskControl.getTotalTimeRemainEst(mTasksForScope)));
 
         // Update adapter data
+        mAdapterCourses.updateData(mCoursesControl.getCoursesAtScope(mCoursesControl.getEmptyCourseScope()));
+        mAdapterCategories.updateData(mCoursesControl.getCoursesAtScope(mAdapterCourses.getSelectedCourse().getScopeStrArrayOf(false)));
+
         xAdapter.updateData(mTasksForScope);
     }
 
