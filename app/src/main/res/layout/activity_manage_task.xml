@@ -133,20 +133,28 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
+                            <TextView
+                                android:id="@+id/lblCoursesNoItems"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="no courses" />
+
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/rvCourses"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:background="@drawable/roundeditem"
                                 android:paddingTop="4dp"
-                                android:paddingBottom="4dp" />
+                                android:paddingBottom="4dp"
+                                android:visibility="gone" />
 
                             <ImageButton
                                 android:id="@+id/btnPlusCourse"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
+                                android:layout_gravity="center"
                                 android:layout_weight="0"
                                 android:background="?attr/selectableItemBackgroundBorderless"
                                 android:onClick="createNewCourse"
@@ -154,56 +162,57 @@
                                 app:srcCompat="@drawable/plus_circle_icon" />
                         </LinearLayout>
 
-                        <RelativeLayout
+                        <LinearLayout
+                            android:id="@+id/lytCourseLevelDivider"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/imageView3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:tint="@color/colorPrimaryDark"
+                                app:srcCompat="@drawable/sublevel_icon" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/lytCourseCategory"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:id="@+id/lytCourseLevelDivider"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:id="@+id/imageView3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:tint="@color/colorPrimaryDark"
-                                    app:srcCompat="@drawable/sublevel_icon" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
+                            <TextView
+                                android:id="@+id/lblCategoriesNoItems"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/lytCourseLevelDivider"
-                                android:orientation="horizontal">
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="no categories" />
 
-                                <android.support.v7.widget.RecyclerView
-                                    android:id="@+id/rvCategories"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/roundeditem"
-                                    android:paddingTop="4dp"
-                                    android:paddingBottom="4dp" />
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rvCategories"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:visibility="gone" />
 
-                                <ImageButton
-                                    android:id="@+id/btnPlusCategory"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_weight="0"
-                                    android:background="?attr/selectableItemBackgroundBorderless"
-                                    android:onClick="createNewCategory"
-                                    android:tint="@color/colorAccent"
-                                    app:srcCompat="@drawable/plus_circle_icon" />
-                            </LinearLayout>
-
-                        </RelativeLayout>
+                            <ImageButton
+                                android:id="@+id/btnPlusCategory"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="0"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:onClick="createNewCategory"
+                                android:tint="@color/colorAccent"
+                                app:srcCompat="@drawable/plus_circle_icon" />
+                        </LinearLayout>
 
                     </LinearLayout>
 

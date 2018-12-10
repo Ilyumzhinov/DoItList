@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -116,6 +117,8 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
             public void onItemClick(View view, int position)
             {
                 mAdapterCategories.updateData(mCourses.getCoursesAtScope(mAdapterCourses.getItem(position).getScopeStrArrayOf(false)));
+
+                updateRecyclerViewsVisibles(mAdapterCourses, mAdapterCategories);
             }
         });
 
@@ -124,15 +127,15 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
         // Set up course selection
         RecyclerView rvCategories = findViewById(R.id.rvCategories);
-        // Todo: only vertial works. weirdo...
         LinearLayoutManager horizontalLayoutManager2
-                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvCategories.setLayoutManager(horizontalLayoutManager2);
 
         mAdapterCategories = new RecyclerViewAdapterCourseSelection(this, mCourses.getCoursesAtScope(mAdapterCourses.getCoursesScope()));
 
         rvCategories.setAdapter(mAdapterCategories);
 
+        updateRecyclerViewsVisibles(mAdapterCourses, mAdapterCategories);
     }
 
     // Open a NewCourse activity with scope
@@ -178,6 +181,8 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                         //
                         mAdapterCourses.updateData(mCourses.getCoursesAtScope(mCourses.getEmptyCourseScope()));
                         mAdapterCategories.updateData(mCourses.getCoursesAtScope(mAdapterCourses.getCoursesScope()));
+
+                        updateRecyclerViewsVisibles(mAdapterCourses, mAdapterCategories);
                     }
 
                     // Todo: remove commented code
@@ -196,6 +201,46 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 //                    spinner.setSelection(mCourses.getIndexOfCourse(courseSelected));
                 }
                 break;
+        }
+    }
+
+    private void updateRecyclerViewsVisibles(RecyclerViewAdapterCourseSelection xCoursesAdapter, RecyclerViewAdapterCourseSelection xCategoriesAdapter)
+    {
+        final RecyclerView rvCourses = findViewById(R.id.rvCourses),
+                rvCategories = findViewById(R.id.rvCategories);
+
+        final TextView txtCoursesNoItems = findViewById(R.id.lblCoursesNoItems),
+                txtCategoriesNoItems = findViewById(R.id.lblCategoriesNoItems);
+
+        final LinearLayout lytCourseLevelDivider = findViewById(R.id.lytCourseLevelDivider),
+                lytCategories = findViewById(R.id.lytCourseCategory);
+
+        // Update categories visible
+        if (xCoursesAdapter.getItemCount() < 1)
+        {
+            txtCoursesNoItems.setVisibility(View.VISIBLE);
+            rvCourses.setVisibility(View.GONE);
+
+            lytCourseLevelDivider.setVisibility(View.GONE);
+            lytCategories.setVisibility(View.GONE);
+        } else
+        {
+            txtCoursesNoItems.setVisibility(View.GONE);
+            rvCourses.setVisibility(View.VISIBLE);
+
+            lytCourseLevelDivider.setVisibility(View.VISIBLE);
+            lytCategories.setVisibility(View.VISIBLE);
+        }
+
+        // Update categories visible
+        if (xCategoriesAdapter.getItemCount() < 1)
+        {
+            txtCategoriesNoItems.setVisibility(View.VISIBLE);
+            rvCategories.setVisibility(View.GONE);
+        } else
+        {
+            txtCategoriesNoItems.setVisibility(View.GONE);
+            rvCategories.setVisibility(View.VISIBLE);
         }
     }
 
@@ -285,7 +330,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
             case (R.id.btnToolBarSave):
                 String name,
                         notes;
-                Course course;
+                Course course = null;
                 LocalDateTime dueDate;
                 Long timeEst;
 
@@ -294,7 +339,11 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                 {
                     name = ((TextView) findViewById(R.id.edtTaskName)).getText().toString();
                     notes = ((TextView) findViewById(R.id.edtNotes)).getText().toString();
-                    course = ((RecyclerViewAdapterCourseSelection) ((RecyclerView) findViewById(R.id.rvCourses)).getAdapter()).getSelectedCourse();
+
+                    if (null != ((RecyclerViewAdapterCourseSelection) ((RecyclerView) findViewById(R.id.rvCategories)).getAdapter()).getSelectedCourse())
+                        course = ((RecyclerViewAdapterCourseSelection) ((RecyclerView) findViewById(R.id.rvCategories)).getAdapter()).getSelectedCourse();
+                    else if (null != ((RecyclerViewAdapterCourseSelection) ((RecyclerView) findViewById(R.id.rvCourses)).getAdapter()).getSelectedCourse())
+                        course = ((RecyclerViewAdapterCourseSelection) ((RecyclerView) findViewById(R.id.rvCourses)).getAdapter()).getSelectedCourse();
                     dueDate = dueDatePicked;
 
                     // Check time input in minutes
@@ -302,17 +351,17 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     if (timefromInput >= 0)
                         timeEst = timefromInput;
                     else
-                        throw new Exception("Check time input!");
+                        throw new Exception("Check time input");
 
                     // Check that there is a name
                     if (name.trim().length() == 0)
-                        throw new Exception("Task must have a name!");
+                        throw new Exception("Task must have a name");
                     // Check that we have a due date
                     if (dueDate == null)
-                        throw new Exception("Task must have a due date!");
+                        throw new Exception("Task must have a due date");
                     // Check that there is a course selected
-                    if (course.equals(mCourses.getEmptyCourse()))
-                        throw new Exception("Task must have a Course!");
+                    if (null == course || course.equals(mCourses.getEmptyCourse()))
+                        throw new Exception("Task must have a Course");
                 } catch (Exception e)
                 {
                     Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
