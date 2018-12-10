@@ -143,19 +143,14 @@ public class RecyclerViewAdapterCourseSelection extends RecyclerView.Adapter<Rec
         @Override
         public void onClick(View view)
         {
-            if (mClickListener != null)
-                mClickListener.onItemClick(view, getAdapterPosition());
-
             // Set activated item
             // Reference: https://stackoverflow.com/questions/27194044/how-to-properly-highlight-selected-item-on-recyclerview
             notifyItemChanged(mSelected_position);
             mSelected_position = getAdapterPosition();
             notifyItemChanged(mSelected_position);
 
-//            if (mSelected_view != null)
-//                ViewCompat.setElevation(mSelected_view, 3);
-//            mSelected_view = view;
-//            ViewCompat.setElevation(mSelected_view, 6);
+            if (mClickListener != null)
+                mClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 }

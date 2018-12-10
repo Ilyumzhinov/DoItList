@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -111,6 +112,7 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
                 break;
 
             case R.id.nav_course:
+                createTasksForCourseFragment();
                 break;
 
             case R.id.nav_all:
@@ -122,7 +124,7 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
                 getSupportFragmentManager().beginTransaction().replace(R.id.navContent,fragment).commit();
                 break;
         }
-//        getSupportFragmentManager().beginTransaction().replace(R.id.navContent,fragment).commit();
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -135,6 +137,18 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
         bundle.putSerializable(Globals.ExtraKey_Courses, mCourses);
 
         fragment = new TasksForDateFragment();
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.navContent, fragment).commit();
+    }
+
+    private void createTasksForCourseFragment()
+    {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Globals.ExtraKey_Tasks, mTasks);
+        bundle.putSerializable(Globals.ExtraKey_Courses, mCourses);
+
+        fragment = new TasksForCourseFragment();
         fragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.navContent, fragment).commit();
@@ -181,7 +195,6 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
         startActivityForResult(i, Globals.ManageTaskRequestCode);
     }
 
-
     // Show or hide calendar view
     public void displayCalendar(View v)
     {
@@ -202,6 +215,29 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
         } catch (Exception ignored)
         {
             Toast.makeText(this, "Failed to load calendar", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Show or hide course selection view
+    public void displayCourseSelection(View v)
+    {
+        try
+        {
+            LinearLayout lytCourseSelection = findViewById(R.id.lytCourseSelection);
+            TextView tv = (TextView) v;
+
+            if (lytCourseSelection.getVisibility() == View.VISIBLE)
+            {
+                lytCourseSelection.setVisibility(View.GONE);
+                tv.setText(R.string.lbl_course_selection_reveal);
+            } else
+            {
+                lytCourseSelection.setVisibility(View.VISIBLE);
+                tv.setText(R.string.lbl_course_selection_hide);
+            }
+        } catch (Exception ignored)
+        {
+            Toast.makeText(this, "Failed to load Course selection", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -256,86 +292,4 @@ public class MainNavigationActivity extends AppCompatActivity implements Navigat
         saveTasks.saveFile(mCourses);
         super.onStop();
     }
-
-    // Todo: thread code
-    //    Thread thUpdateViews = new Thread()
-//    {
-//        @Override
-//        public void run()
-//        {
-//            int spentTime = 0;
-//            int totalTime = 9999;
-//
-//            while (spentTime < totalTime)
-//            {
-//                handler.sendMessage(new Message());
-//
-//                try
-//                {
-//                    Thread.sleep(1000); // Just to display the progress
-//                } catch (InterruptedException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//                spentTime += 1;
-//            }
-//        }
-//    };
-//
-//    @SuppressLint("HandlerLeak")
-//    private Handler handler = new Handler()
-//    {
-//        @Override
-//        public void handleMessage(Message msg)
-//        {
-//            Task xtask;
-//
-//            try
-//            {
-//                xtask = mTasks.getTaskAt(0);
-//            }
-//            catch (Exception c)
-//            {
-//                return;
-//            }
-//
-//            TextView txt;
-//
-//            // Set status label
-//            txt = findViewById(R.id.txtTaskStatus);
-//
-//            String status;
-//
-//            if (xtask.getStatusFinished())
-//                status = "Finished";
-//            else
-//            {
-//                if (xtask.getSessions().getSessions().length == 0)
-//                    status = "Not started";
-//                else if (xtask.getSessions().checkOpenSession())
-//                    status = "Active";
-//                else
-//                    status = "Not finished";
-//            }
-//            txt.setText(status);
-//            //
-//
-//            //
-//            Integer remain = xtask.getTimeGoal() - xtask.getTimeSpent();
-//
-//            txt = findViewById(R.id.txtTimePrg);
-//            txt.setText(String.valueOf(remain) + " min");
-//
-//            //
-//            long timeBefore = ChronoUnit.MINUTES.between(LocalDateTime.now(), xtask.getDeadline());
-//
-//            txt = findViewById(R.id.txtTaskBeforeDeadline);
-//            txt.setText(String.valueOf(timeBefore) + " min");
-//
-//
-//            //
-//            ProgressBar timeSpent = findViewById(R.id.prgSpent);
-//            timeSpent.setProgress(xtask.getTimeSpent());
-//        }
-//    };
 }

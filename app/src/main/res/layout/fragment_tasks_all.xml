@@ -15,7 +15,7 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/lytCalendar"
+                android:id="@+id/lytCCSelection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
@@ -27,7 +27,7 @@
                 android:id="@+id/lytDateInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lytCalendar"
+                android:layout_below="@+id/lytCCSelection"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal">

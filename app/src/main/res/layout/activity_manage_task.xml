@@ -139,7 +139,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="no courses" />
+                                android:text="@string/lbl_no_courses" />
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/rvCourses"
@@ -191,7 +191,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="no categories" />
+                                android:text="@string/lbl_no_categories" />
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/rvCategories"

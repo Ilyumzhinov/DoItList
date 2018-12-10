@@ -44,7 +44,7 @@ public class CoursesControl implements Serializable
         // Check if a course with the scope and name exists
         for (Course iCourse : Courses)
         {
-            if (iCourse.compareParentScopeWith(xParentScope))
+            if (iCourse.compareScopeWith(xParentScope, true))
                 if (iCourse.getName().equals(xName))
                     courses = iCourse;
         }
@@ -132,7 +132,7 @@ public class CoursesControl implements Serializable
         List<Course> courses = new ArrayList<>();
 
         for (Course iCourse : Courses)
-            if (iCourse.compareParentScopeWith(scope))
+            if (iCourse.compareScopeWith(scope, true))
                 courses.add(iCourse);
 
         if (!courses.isEmpty())

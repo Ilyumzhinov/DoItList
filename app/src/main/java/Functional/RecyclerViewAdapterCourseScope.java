@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cnit35500_group_whccai.doitlist.R;
@@ -19,26 +20,27 @@ public class RecyclerViewAdapterCourseScope extends RecyclerView.Adapter<Recycle
 {
     private List<Course> mCoursesAtScope;
     private LayoutInflater mInflater;
-    private RecyclerViewAdapterCourseScope.ItemClickListener mClickListener;
     private int mSelected_position = 0;
 
-    public RecyclerViewAdapterCourseScope(Context context, List<Course> xCourses)
+    public RecyclerViewAdapterCourseScope(Context context)
     {
-        uglyFunc(context, xCourses);
+        uglyFunc(context, null);
     }
 
     public RecyclerViewAdapterCourseScope(Context context, Course xCourse)
     {
-        List<Course> xCourses = xCourse.getScopeArrayOf(false);
-
-        uglyFunc(context, xCourses);
+        uglyFunc(context, xCourse);
     }
 
     // A common logic for both constructors to call
-    private void uglyFunc(Context context, List<Course> xCourses)
+    private void uglyFunc(Context context, Course xCourse)
     {
-        this.mInflater = LayoutInflater.from(context);
-        this.mCoursesAtScope = xCourses;
+        mInflater = LayoutInflater.from(context);
+
+        mCoursesAtScope = new ArrayList<>();
+
+        if (null != xCourse)
+            mCoursesAtScope.add(xCourse);
     }
 
     public List<Course> getmCoursesAtScope()
@@ -82,19 +84,8 @@ public class RecyclerViewAdapterCourseScope extends RecyclerView.Adapter<Recycle
         return mCoursesAtScope.get(id);
     }
 
-    // Get click events
-    public void setClickListener(RecyclerViewAdapterCourseScope.ItemClickListener itemClickListener)
-    {
-        this.mClickListener = itemClickListener;
-    }
-
-    public interface ItemClickListener
-    {
-        void onItemClick(View view, int position);
-    }
-
     // Do the recycle view stuff
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    public class ViewHolder extends RecyclerView.ViewHolder
     {
         TextView txtItemLabel;
 
@@ -102,22 +93,26 @@ public class RecyclerViewAdapterCourseScope extends RecyclerView.Adapter<Recycle
         {
             super(itemView);
             txtItemLabel = itemView.findViewById(R.id.txtLabel);
-
-//            if (1 == 1)
-//                txtItemLabel.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view)
+    }
+
+    // Update adapter
+    // Reference: https://stackoverflow.com/questions/30053610/best-way-to-update-data-with-a-recyclerview-adapter?lq=1
+    public void updateData(List<Course> xCourses)
+    {
+        if (xCourses == null)
         {
-            if (mClickListener != null)
-                mClickListener.onItemClick(view, getAdapterPosition());
+            mCoursesAtScope.clear();
+            notifyDataSetChanged();
 
-            // Set activated item
-            // Reference: https://stackoverflow.com/questions/27194044/how-to-properly-highlight-selected-item-on-recyclerview
-            notifyItemChanged(mSelected_position);
-            mSelected_position = getAdapterPosition();
-            notifyItemChanged(mSelected_position);
+            return;
         }
+
+        if (mCoursesAtScope != null && !xCourses.isEmpty())
+            mCoursesAtScope.clear();
+
+        mCoursesAtScope.addAll(xCourses);
+        notifyDataSetChanged();
     }
 }

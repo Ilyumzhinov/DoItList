@@ -29,11 +29,11 @@ public class TasksForDateFragment extends Fragment implements NotifiableFragment
 {
     private TasksControl mTaskControl;
     private CoursesControl mCoursesControl;
-    private RecyclerViewAdapterTasks mAdapter;
     private List<Task> mTasksForDate;
     private CalendarView calView;
     private TextView txtViewDate, txtTasksRemainTotal;
-    private RecyclerView recyclerView;
+
+    private RecyclerViewAdapterTasks mAdapter;
 
     @Nullable
     @Override
@@ -81,7 +81,7 @@ public class TasksForDateFragment extends Fragment implements NotifiableFragment
         //
 
         // Set up tasks RecyclerView
-        recyclerView = view.findViewById(R.id.listTasks);
+        RecyclerView recyclerView = view.findViewById(R.id.listTasks);
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -102,7 +102,7 @@ public class TasksForDateFragment extends Fragment implements NotifiableFragment
         LocalDateTime ldt = LocalDateTime.of(year, month + 1, dayOfMonth, 0, 0);
 
         // Get a list of tasks to display
-        mTasksForDate = mTaskControl.getTasksForDate(ldt);
+        mTasksForDate = mTaskControl.getTasks(ldt);
 
         // Set visual elements
         txtViewDate.setText(Globals.formatDate(ldt));

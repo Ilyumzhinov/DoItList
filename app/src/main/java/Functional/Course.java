@@ -194,24 +194,24 @@ public class Course implements Serializable
         return getFullScopeStrOf(this.getParent());
     }
 
-    public Boolean compareParentScopeWith(List<String> xScope)
+    public Boolean compareScopeWith(List<String> xScope, Boolean ofParent)
     {
-        List<String> parentScope = getScopeStrArrayOf(true);
+        List<String> scope = getScopeStrArrayOf(ofParent);
 
         if (xScope == null)
             return false;
 
-        if (parentScope.isEmpty() && this.isNull())
+        if (scope.isEmpty() && this.isNull())
             return false;
-        else if (parentScope.isEmpty() && xScope.isEmpty())
+        else if (scope.isEmpty() && xScope.isEmpty())
             return true;
-        else if (parentScope.size() != xScope.size())
+        else if (scope.size() != xScope.size())
             return false;
 
         int i = 0;
-        while (i < parentScope.size())
+        while (i < scope.size())
         {
-            if (!parentScope.get(i).equals(xScope.get(i)))
+            if (!scope.get(i).equals(xScope.get(i)))
                 return false;
 
             i++;

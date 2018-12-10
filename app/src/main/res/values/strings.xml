@@ -26,4 +26,8 @@
     <string name="lbl_reveal_calendar">Reveal Calendar</string>
     <string name="date_full_default">Today, 00:00</string>
     <string name="date_default">Dec 8, 2018</string>
+    <string name="lbl_course_selection_hide">Hide course selection</string>
+    <string name="lbl_course_selection_reveal">Reveal course selection</string>
+    <string name="lbl_no_courses">Add a course first</string>
+    <string name="lbl_no_categories">Add a category first</string>
 </resources>

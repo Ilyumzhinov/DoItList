@@ -32,7 +32,6 @@ import Functional.RecyclerViewAdapterCourseScope;
 public class NewCourseActivity extends AppCompatActivity
 {
     private CoursesControl mCourses;
-    private List<Course> mCoursesAtScope;
 
     private Course parent;
     private Menu menu;
@@ -148,7 +147,6 @@ public class NewCourseActivity extends AppCompatActivity
                     = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
             recyclerView.setLayoutManager(horizontalLayoutManager);
             RecyclerViewAdapterCourseScope adapter = new RecyclerViewAdapterCourseScope(this, parent);
-            //viewAdapterCourseScope.setClickListener(this);
 
             if (adapter.getmCoursesAtScope().isEmpty())
             {
@@ -195,19 +193,17 @@ public class NewCourseActivity extends AppCompatActivity
         });
 
         // Populate Saved at scope RecyclerView
-        // Get courses at scope
-        mCoursesAtScope = mCourses.getCoursesAtScope(parent.getScopeStrArrayOf(false));
-
-        if (mCoursesAtScope == null)
-            mCoursesAtScope = new ArrayList<>();
 
         RecyclerView recyclerView = findViewById(R.id.rvCoursesAtScope);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        viewAdapterCourseScope = new RecyclerViewAdapterCourseScope(this, mCoursesAtScope);
+        viewAdapterCourseScope = new RecyclerViewAdapterCourseScope(this);
 
         recyclerView.setAdapter(viewAdapterCourseScope);
+
+        // Update RecyclerView
+        viewAdapterCourseScope.updateData(mCourses.getCoursesAtScope(parent.getScopeStrArrayOf(false)));
     }
 
     // Handle button activities
@@ -249,15 +245,12 @@ public class NewCourseActivity extends AppCompatActivity
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
 
+            // Update RecyclerView
+            viewAdapterCourseScope.updateData(mCourses.getCoursesAtScope(parent.getScopeStrArrayOf(false)));
+
             Toast.makeText(this, "Added as " + courseTemp.getScopeStrOf(false), Toast.LENGTH_LONG).show();
 
-            // Add to Saved at scope RecyclerView
-            // Todo: This is ugly
-            List<Course> cs = mCourses.getCoursesAtScope(parent.getScopeStrArrayOf(false));
-
-            mCoursesAtScope.add(cs.get(cs.size() - 1));
-            viewAdapterCourseScope.notifyItemInserted(mCoursesAtScope.size() - 1);
-
+            // Clean up
             txt.setText("");
             rgOne.clearCheck();
             rgTwo.clearCheck();

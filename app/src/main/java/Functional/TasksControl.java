@@ -68,7 +68,8 @@ public class TasksControl implements Serializable
         return Tasks;
     }
 
-    public List<Task> getTasksForDate(LocalDateTime xDate)
+    // Retrieve a list of tasks for a given date (time is not taken into account)
+    public List<Task> getTasks(LocalDateTime xDate)
     {
         List<Task> tasks = new ArrayList<>();
 
@@ -76,6 +77,18 @@ public class TasksControl implements Serializable
 
         for (Task iTask : Tasks)
             if (fmt.format(iTask.getDeadline()).equals(fmt.format(xDate)))
+                tasks.add(iTask);
+
+        return tasks;
+    }
+
+    // Retrieve a list of tasks for a given scope
+    public List<Task> getTasks(List<String> xScope)
+    {
+        List<Task> tasks = new ArrayList<>();
+
+        for (Task iTask : Tasks)
+            if (iTask.getCourse().compareScopeWith(xScope, false))
                 tasks.add(iTask);
 
         return tasks;

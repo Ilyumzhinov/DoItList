@@ -135,6 +135,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         mAdapterCategories = new RecyclerViewAdapterCourseSelection(this, mCourses.getCoursesAtScope(mAdapterCourses.getCoursesScope()));
 
         rvCategories.setAdapter(mAdapterCategories);
+        //
 
         updateRecyclerViewsVisibles(mAdapterCourses, mAdapterCategories);
     }
@@ -190,6 +191,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
         }
     }
 
+    // Update RecyclerViews visibility state
     private void updateRecyclerViewsVisibles(RecyclerViewAdapterCourseSelection xCoursesAdapter, RecyclerViewAdapterCourseSelection xCategoriesAdapter)
     {
         final RecyclerView rvCourses = findViewById(R.id.rvCourses),
@@ -330,6 +332,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                         course = ((RecyclerViewAdapterCourseSelection) ((RecyclerView) findViewById(R.id.rvCategories)).getAdapter()).getSelectedCourse();
                     else if (null != ((RecyclerViewAdapterCourseSelection) ((RecyclerView) findViewById(R.id.rvCourses)).getAdapter()).getSelectedCourse())
                         course = ((RecyclerViewAdapterCourseSelection) ((RecyclerView) findViewById(R.id.rvCourses)).getAdapter()).getSelectedCourse();
+
                     dueDate = dueDatePicked;
 
                     // Check time input in minutes
