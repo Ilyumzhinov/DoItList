@@ -54,6 +54,11 @@ public class CoursesControl implements Serializable
             Courses.remove(courses);
     }
 
+    public void remove()
+    {
+        Courses.removeAll(Courses);
+    }
+
     private Course emptyCourse;
 
     public void addEmptyCourse()

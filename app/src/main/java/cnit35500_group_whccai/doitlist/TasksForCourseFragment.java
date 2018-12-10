@@ -84,7 +84,7 @@ public class TasksForCourseFragment extends Fragment implements NotifiableFragme
             @Override
             public void onItemClick(View view, int position)
             {
-                performOnClickChanges(view, position);
+                performOnClickChanges();
             }
         });
 
@@ -104,7 +104,7 @@ public class TasksForCourseFragment extends Fragment implements NotifiableFragme
             @Override
             public void onItemClick(View view, int position)
             {
-                performOnClickChanges(view, position);
+                performOnClickChanges();
             }
         });
 
@@ -138,9 +138,9 @@ public class TasksForCourseFragment extends Fragment implements NotifiableFragme
         return course;
     }
 
-    private void performOnClickChanges(View v, int position)
+    private void performOnClickChanges()
     {
-        mAdapterCategories.updateData(mCoursesControl.getCoursesAtScope(mAdapterCourses.getItem(position).getScopeStrArrayOf(false)));
+        mAdapterCategories.updateData(mCoursesControl.getCoursesAtScope(mAdapterCourses.getSelectedCourse().getScopeStrArrayOf(false)));
 
         updateRecyclerViewsVisibles(mAdapterCourses, mAdapterCategories);
 

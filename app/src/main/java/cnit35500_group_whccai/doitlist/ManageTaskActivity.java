@@ -89,7 +89,6 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     ((EditText) findViewById(R.id.edtTimeEstH)).setText(String.valueOf(Math.round(currentTask.getTimeGoal() / 60)));
                     ((EditText) findViewById(R.id.edtTimeEstM)).setText(String.valueOf(currentTask.getTimeGoal() % 60));
                     ((TextView) findViewById(R.id.edtNotes)).setText(currentTask.getDetail());
-                    // Todo: set CourseSelection based on saved value
 
                     break;
             }
