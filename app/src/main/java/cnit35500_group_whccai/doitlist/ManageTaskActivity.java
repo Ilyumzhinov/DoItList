@@ -89,6 +89,7 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
                     ((EditText) findViewById(R.id.edtTimeEstH)).setText(String.valueOf(Math.round(currentTask.getTimeGoal() / 60)));
                     ((EditText) findViewById(R.id.edtTimeEstM)).setText(String.valueOf(currentTask.getTimeGoal() % 60));
                     ((TextView) findViewById(R.id.edtNotes)).setText(currentTask.getDetail());
+                    // Todo: set CourseSelection based on saved value
 
                     break;
             }
@@ -184,21 +185,6 @@ public class ManageTaskActivity extends AppCompatActivity implements DatePickerD
 
                         updateRecyclerViewsVisibles(mAdapterCourses, mAdapterCategories);
                     }
-
-                    // Todo: re-do logic for CourseSelection
-                    // Populate spinner with courses values
-                    // Reference: SpinnerTest1
-//                    Spinner spinner = findViewById(R.id.spnCourse);
-//                    Course courseSelected = (Course) spinner.getSelectedItem();
-//
-//                    // Create an ArrayAdapter
-//                    ArrayAdapter<Course> adapter = new ArrayAdapter<>
-//                            (this, android.R.layout.simple_spinner_item, mCourses.getCourses());
-//
-//                    // Specify the layout to use when the list of choices appears
-//                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                    spinner.setAdapter(adapter);
-//                    spinner.setSelection(mCourses.getIndexOfCourse(courseSelected));
                 }
                 break;
         }
